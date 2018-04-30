@@ -1,0 +1,49 @@
+import { StyleSheet } from 'react-native'
+
+export default StyleSheet.create({
+  container: {
+    alignSelf:"center",
+    backgroundColor:"transparent",
+    height:"10%",
+    width:"50%",
+    marginTop:"30%",
+    justifyContent:"center",
+    alignItems:"center",
+    borderRadius:100,
+    elevation:10
+  },
+  opacity:{
+    height:"100%",
+    width:"100%",
+    borderRadius:100
+  },
+  linearGradient:{
+    height:"100%",
+    width:"100%",
+    borderRadius:100,
+    flexDirection:"row",
+    justifyContent:"space-between"
+  },
+  buttonText:{
+    marginRight:"14%",
+    marginTop:"8%",
+    color:"white",
+    fontSize:24   
+  },
+  priceView:{
+    width:"40%",
+    height:"70%",
+    backgroundColor:"white",
+    borderRadius:100,
+    marginTop:"5%",
+    marginLeft:"10%",
+    elevation:50,
+    justifyContent:"center",
+  },
+  priceText:{
+    color:"#rgb(31,127,169)",
+    fontSize:13,
+    alignSelf:"center",
+    textAlign:"center"
+  },
+})

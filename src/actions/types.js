@@ -1,0 +1,6 @@
+export const FETCH_POSTS='FETCH_POSTS'
+export const NEW_POST = "NEW_POST";
+export const LOGIN = "LOGIN";
+export const GETSERVESIES = "GETSERVESIES";
+export const REVERSE_GEOLOCATION="REVERSE_GEOLOCATION";
+export const SETCOORDINATES="SETCOORDINATES";
