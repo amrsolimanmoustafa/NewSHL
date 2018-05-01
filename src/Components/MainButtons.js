@@ -1,6 +1,4 @@
-'use strict';
 import React, { Component } from 'react'
-// import PropTypes from 'prop-types';
 import {
   View,
   ScrollView,
@@ -23,28 +21,30 @@ import { connect } from 'react-redux'
 import * as Animatable from "react-native-animatable";
 import CarouselPager from 'react-native-carousel-pager';
 
-  class MainButtons extends Component {
-    componentWillMount() {
-      // this.props.getServices(this.props.adress)
-      // console.log(this.props)
-      var self=this
-      this.reverseLoc().then(()=>self.props.getServices('Mohammed Farid'))
-
-    }
-state={secondryServiceIcons:[],showMainServices:true,showMainButtons:false}
-constructor(props) {
-  super(props);
-MainButtons = Animatable.createAnimatableComponent(MainButtons);
-
-}
-reverseLoc(){
-return new Promise((resolve,reject)=>{this.props.reverseCoordinatesToAdress('37.78825','-122.4324')
-resolve('')})
-
-}
-secondryServeciesButtons_View=()=>{
-return
+class MainButtons extends Component {
+  componentWillMount() {
+    // this.props.getServices(this.props.adress)
+    // console.log(this.props)
+    var self=this
+    this.reverseLoc().then(()=>self.props.getServices('Mohammed Farid'))
   }
+
+  state={secondryServiceIcons:[],showMainServices:true,showMainButtons:false}
+  constructor(props) {
+    super(props);
+    MainButtons = Animatable.createAnimatableComponent(MainButtons);
+
+  }
+
+  reverseLoc(){
+    return new Promise((resolve,reject)=>{this.props.reverseCoordinatesToAdress('37.78825','-122.4324')
+    resolve('')})
+  }
+
+  secondryServeciesButtons_View=()=>{
+    return
+  }
+  
   renderSecondryIcons(secSrvs){
     console.log(secSrvs.sup_serivces_data)
     this.setState({secondryServiceIcons:secSrvs.sup_serivces_data})
@@ -52,18 +52,19 @@ return
     let base=new Base
     var self=this
     
-     this.secondryServeciesButtons_View=()=>   
-        self.state.secondryServiceIcons.map((seCservice,index) => (
-          <TouchableOpacity onPress={()=>{
-            this.setState({showMainButtons:true})
-          }} key={index} style={styles.chooseServiceButton2}>
-            <Image
-              source={{ uri: base.icon_url + seCservice["icone"] }}
-              style={styles.chooseServiceImage2}
-            />
-          </TouchableOpacity>
-        ));
-      }
+    this.secondryServeciesButtons_View=()=>   
+      self.state.secondryServiceIcons.map((seCservice,index) => (
+        <TouchableOpacity onPress={()=>{
+          this.setState({showMainButtons:true})
+        }} key={index} style={styles.chooseServiceButton2}>
+          <Image
+            source={{ uri: base.icon_url + seCservice["icone"] }}
+            style={styles.chooseServiceImage2}
+          />
+        </TouchableOpacity>
+      ));
+  }
+
   mainServeciesButtons_View = () =>{
     let base=new Base
     if(this.state.showMainServices)
@@ -82,22 +83,26 @@ return
         />
       </TouchableOpacity>
     ));
+  }
 
-}
-
-orderButtons_View=()=>{
-
-
-if(this.showMainButtons){return <View style={styles.whenToOrderView}>
-<View style={styles.opacityView}>
- <TouchableOpacity style={styles.opacityWight}><Text style={styles.opacityWightText}>اطلب لاحقاً</Text></TouchableOpacity>
-</View>
-
-<View style={styles.opacityView2}>
-  <LinearGradientForMap  text="اطلب الان" style={styles.opacity}  press={() => {}} />
-</View>
-</View>}
-}
+  orderButtons_View=()=>{
+    if(this.showMainButtons){
+      return (
+        <View style={styles.whenToOrderView}>
+          <View style={styles.opacityView}>
+            <TouchableOpacity style={styles.opacityWight}>
+              <Text style={styles.opacityWightText}>
+                اطلب لاحقاً
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.opacityView2}>
+            <LinearGradientForMap text="اطلب الان" style={styles.opacity}  press={() => {}}/>
+          </View>
+        </View>
+      )
+    }
+  }
 
   //componnent render//
   render () {
@@ -105,20 +110,27 @@ if(this.showMainButtons){return <View style={styles.whenToOrderView}>
         <View style={styles.chooseServiceView}>
           {this.secondryServeciesButtons_View()}
         </View>
-        <View style={styles.chooseServiceView}>
-          {/* <ScrollView showsHorizontalScrollIndicator={false}   horizontal={true}> */}
-            <View style={styles.scrollViewServices}>
-
-   <View style={{flex: 2}}>
-        <CarouselPager ref={ref => this.carousel = ref} pageSpacing={30} initialPage={2} pageStyle={{backgroundColor:"#fff",   hight:200, borderRadius: 100}}>
-          <View   key={'page0'}></View>
-          {this.mainServeciesButtons_View()} 
-        </CarouselPager>
-      </View>
-              {/* {this.mainServeciesButtons_View()} */}
+        {this.props.service.length > 0?
+            <View style={styles.chooseServiceView}>
+              {/* <ScrollView showsHorizontalScrollIndicator={false}   horizontal={true}> */}
+                <View style={styles.scrollViewServices}>
+                  <View style={{flex: 2,backgroundColor: 'red'}}>
+                    <CarouselPager
+                      ref={ref => this.carousel = ref}
+                      pageSpacing={30}
+                      initialPage={2}
+                      pageStyle={{height: 100,borderRadius: 50,backgroundColor: '#ffffff'}}
+                    >
+                      {this.mainServeciesButtons_View()} 
+                    </CarouselPager>
+                  </View>
+                  {/* {this.mainServeciesButtons_View()} */}
+                </View>
+              {/* </ScrollView> */}
             </View>
-          {/* </ScrollView> */}
-        </View>
+          :
+            <View  style={{width: 0,height: 0}}/>
+        }
 
         {this.orderButtons_View()}
       </View>;
@@ -127,15 +139,15 @@ if(this.showMainButtons){return <View style={styles.whenToOrderView}>
 //===============================//
 const mapStateToProps = state => {
   // console.log(state.makeOrder.service)
-    return {
-      
-      services:state.makeOrder.services.data,
-      service:state.makeOrder.service ,
-      common:state.common
-    }
-    }
-  const mapDispatchToProps = (dispatch) => {
-    return {
-    }
+  return {
+    services: state.makeOrder.services.data,
+    service: state.makeOrder.service ,
+    common: state.common
   }
-  export default connect(mapStateToProps, { getServices, reverseCoordinatesToAdress}) (withNavigation(MainButtons))
+}
+  
+const mapDispatchToProps = (dispatch) => {
+  return {
+  }
+}
+export default connect(mapStateToProps, { getServices, reverseCoordinatesToAdress}) (withNavigation(MainButtons))
