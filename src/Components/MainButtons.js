@@ -105,37 +105,49 @@ class MainButtons extends Component {
   }
 
   //componnent render//
-  render () {
-    return <View style={styles.container}>
-        <View style={styles.chooseServiceView}>
+  render() {
+    const base = new Base()
+    return (
+      <View style={styles.container}>
+        {/*<View style={styles.chooseServiceView}>
           {this.secondryServeciesButtons_View()}
-        </View>
+        </View>*/}
         {this.props.service.length > 0?
-            <View style={styles.chooseServiceView}>
-              {/* <ScrollView showsHorizontalScrollIndicator={false}   horizontal={true}> */}
-                <View style={styles.scrollViewServices}>
-                  <View style={{flex: 2,backgroundColor: 'red'}}>
-                    <CarouselPager
-                      ref={ref => this.carousel = ref}
-                      pageSpacing={30}
-                      initialPage={2}
-                      pageStyle={{height: 100,borderRadius: 50,backgroundColor: '#ffffff'}}
-                    >
-                      {this.mainServeciesButtons_View()} 
-                    </CarouselPager>
-                  </View>
-                  {/* {this.mainServeciesButtons_View()} */}
-                </View>
-              {/* </ScrollView> */}
-            </View>
-          :
-            <View  style={{width: 0,height: 0}}/>
+          <View style={{height: 100,backgroundColor: 'red'}}>
+            <CarouselPager
+              ref={ref => this.carousel = ref}
+              initialPage={2}
+              pageStyle={{height: 100,backgroundColor: 'green',alignItems: 'center',justifyContent: 'center'}}
+            >
+              {this.props.service.map((mainService) => (
+                <TouchableOpacity
+                  key={mainService.services_id}
+                  //onPress={() => this.renderSecondryIcons(mainservice)}
+                  style={{width: 70,height: 70,borderRadius: 35,backgroundColor: 'yellow',justifyContent: 'center',alignItems: 'center'}}
+                >
+                  <Animatable.Image
+                    animation="zoomIn"
+                    iterationCount={1}
+                    direction="alternate"
+                    source={{ uri: base.icon_url + mainService.icone }}
+                    style={{width: 42.7,height: 22.8,resizeMode: 'cover'}}
+                  />
+                  <Text style={{marginTop: 10,fontSize: 12}}>
+                    {mainService.services_name_ar}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </CarouselPager>
+          </View>
+        :
+          <View  style={{width: 0,height: 0}}/>
         }
 
-        {this.orderButtons_View()}
-      </View>;
+        {/*this.orderButtons_View()*/}
+      </View>)
   }
 }
+
 //===============================//
 const mapStateToProps = state => {
   // console.log(state.makeOrder.service)

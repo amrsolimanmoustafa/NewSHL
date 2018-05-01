@@ -4,9 +4,7 @@ export default StyleSheet.create({
   container: {
     flex: 1,
     marginTop: "10%",
-    flexDirection: "column",
-    alignItems: "center",
-    height: "100%"
+    //alignItems: "center",
   },
   whenToOrderView: {
     flexDirection: "row",
@@ -52,9 +50,9 @@ export default StyleSheet.create({
     fontSize: 18
   },
   chooseServiceView: {
-    height: "60%",
-    width: "100%",
-    flexDirection: "row",
+    //height: "60%",
+    //width: "100%",
+    //flexDirection: "row",
     // backgroundColor: "#rgba(256, 256, 256, 0.2)",
     // borderRadius: 20,
     // borderColor: "#rgba(256, 256, 256, 0.8)",
@@ -66,8 +64,8 @@ export default StyleSheet.create({
     flex: 1
   },
   scrollViewServices: {
-    height: 80,
-    width: 380,
+    //height: 80,
+    //width: 380,
     flexDirection: "row",
     // backgroundColor: "#rgba(256, 256, 256, 0.2)",
     // borderRadius: 20,
@@ -77,13 +75,11 @@ export default StyleSheet.create({
     flex: 1
   },
   chooseServiceButton: {
-    // backgroundColor: "white",
-    borderRadius: 100,
-    height: "100%",
-    width: "22%",
+    //backgroundColor: "red",
+    flex: 1,
     // elevation: 10,
     alignItems: "center",
-    marginLeft: "2%",
+    //marginLeft: "2%",
     justifyContent: "center",
     // borderWidth: 2,
     // borderColor: "#rgb(57,180,76)"
