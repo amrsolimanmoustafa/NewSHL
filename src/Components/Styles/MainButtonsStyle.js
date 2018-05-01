@@ -91,6 +91,7 @@ export default StyleSheet.create({
   chooseServiceImage: {
     height: "100%",
     width: "100%",
+    flex:1,
     borderWidth: 1,
     borderRadius: 100,
 

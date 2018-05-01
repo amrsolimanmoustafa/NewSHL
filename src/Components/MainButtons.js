@@ -21,6 +21,7 @@ import { withNavigation } from "react-navigation";
 import { connect } from 'react-redux'
 
 import * as Animatable from "react-native-animatable";
+import CarouselPager from 'react-native-carousel-pager';
 
   class MainButtons extends Component {
     componentWillMount() {
@@ -105,11 +106,18 @@ if(this.showMainButtons){return <View style={styles.whenToOrderView}>
           {this.secondryServeciesButtons_View()}
         </View>
         <View style={styles.chooseServiceView}>
-          <ScrollView showsHorizontalScrollIndicator={false}   horizontal={true}>
+          {/* <ScrollView showsHorizontalScrollIndicator={false}   horizontal={true}> */}
             <View style={styles.scrollViewServices}>
-              {this.mainServeciesButtons_View()}
+
+   <View style={{flex: 2}}>
+        <CarouselPager ref={ref => this.carousel = ref} pageSpacing={30} initialPage={2} pageStyle={{backgroundColor:"#fff",   hight:200, borderRadius: 100}}>
+          <View   key={'page0'}></View>
+          {this.mainServeciesButtons_View()} 
+        </CarouselPager>
+      </View>
+              {/* {this.mainServeciesButtons_View()} */}
             </View>
-          </ScrollView>
+          {/* </ScrollView> */}
         </View>
 
         {this.orderButtons_View()}
