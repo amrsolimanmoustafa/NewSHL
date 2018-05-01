@@ -14,6 +14,8 @@ export default function(state=initialState,action){
         return {...state,
         adress:action.payload.address_components[0]['long_name']}
         case SETCOORDINATES:
+        console.log('SETCOORDINATES dispached : ',action)
+
         return{...state,lat:action.payload.lat,lng:action.payload.lng}
         default:
         return state;

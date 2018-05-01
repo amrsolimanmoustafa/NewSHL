@@ -27,7 +27,7 @@ axios.get(GOOGLEGEOLOCATION_URL+'?latlng=' + lat + ','
 
 }
 export const setCoordnates=(lat,lng)=>dispatch=>{
-    console.log('setCoordnates ::')
+    console.log('setCoordnates ::',lat,lng)
     try{
     dispatch({
 type:SETCOORDINATES,

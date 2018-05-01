@@ -29,7 +29,7 @@ class MainButtons extends Component {
     this.reverseLoc().then(()=>self.props.getServices('Mohammed Farid'))
   }
 
-  state={secondryServiceIcons:[],showMainServices:true,showMainButtons:false}
+  state={secondryServiceIcons:[],showMainServices:true,showMainButtons:false,page:null}
   constructor(props) {
     super(props);
     MainButtons = Animatable.createAnimatableComponent(MainButtons);
@@ -41,52 +41,10 @@ class MainButtons extends Component {
     resolve('')})
   }
 
-  secondryServeciesButtons_View=()=>{
-    return
-  }
   
-  renderSecondryIcons(secSrvs){
-    console.log(secSrvs.sup_serivces_data)
-    this.setState({secondryServiceIcons:secSrvs.sup_serivces_data})
-
-    let base=new Base
-    var self=this
-    
-    this.secondryServeciesButtons_View=()=>   
-      self.state.secondryServiceIcons.map((seCservice,index) => (
-        <TouchableOpacity onPress={()=>{
-          this.setState({showMainButtons:true})
-        }} key={index} style={styles.chooseServiceButton2}>
-          <Image
-            source={{ uri: base.icon_url + seCservice["icone"] }}
-            style={styles.chooseServiceImage2}
-          />
-        </TouchableOpacity>
-      ));
-  }
-
-  mainServeciesButtons_View = () =>{
-    let base=new Base
-    if(this.state.showMainServices)
-    return this.props.service.map((mainservice, index) => (
-      <TouchableOpacity
-        key={index}
-        onPress={() => this.renderSecondryIcons(mainservice)}
-        style={styles.chooseServiceButton}
-      >
-        <Animatable.Image
-          animation="zoomIn"
-          iterationCount={1}
-          direction="alternate"
-          source={{ uri: base.icon_url + mainservice["icone"] }}
-          style={styles.chooseServiceImage}
-        />
-      </TouchableOpacity>
-    ));
-  }
 
   orderButtons_View=()=>{
-    if(this.showMainButtons){
+    if(this.state.showMainButtons){
       return (
         <View style={styles.whenToOrderView}>
           <View style={styles.opacityView}>
@@ -109,30 +67,72 @@ class MainButtons extends Component {
     const base = new Base()
     return (
       <View style={styles.container}>
-        {/*<View style={styles.chooseServiceView}>
-          {this.secondryServeciesButtons_View()}
-        </View>*/}
+        <View style={styles.chooseServiceView}>
+
+
+{
+//render subservices when main service pager changed  
+  this.state.page!=null?
+  this.props.services[this.state.page].sup_serivces_data?
+  <View style={{height: 50}}>
+  <CarouselPager
+    ref={ref => this.carousel = ref}
+    initialPage={0}
+    pageStyle={{height: 100,alignItems: 'center',justifyContent: 'center'}}
+ onPageChange={(selectedService)=>{
+  this.setState({showMainButtons:true})
+
+          console.log( this.props.services[this.state.page].sup_serivces_data[selectedService])
+
+    }} >
+  {this.props.services[this.state.page].sup_serivces_data.map((seCservice,index) => (
+
+  <TouchableOpacity 
+  key={index} 
+  style={{width: 100,height: 100,borderRadius: 35}}
+  >
+    <Image
+      source={{ uri: base.icon_url + seCservice["icone"] }}
+      style={{width: 60,height: 60,borderRadius: 35,zIndex:20 }}
+      />
+  </TouchableOpacity>
+))}</CarouselPager></View>
+:null :<View></View>
+  }
+
+        </View>
         {this.props.service.length > 0?
-          <View style={{height: 100,backgroundColor: 'red'}}>
+          <View style={{height: 100}}>
             <CarouselPager
               ref={ref => this.carousel = ref}
-              initialPage={2}
-              pageStyle={{height: 100,backgroundColor: 'green',alignItems: 'center',justifyContent: 'center'}}
-            >
-              {this.props.service.map((mainService) => (
+              initialPage={0}
+              pageStyle={{height: 100,alignItems: 'center',justifyContent: 'center'}}
+           
+              onPageChange={(page)=>{
+                console.log( page)
+                this.setState({page:page})
+                
+                console.log( this.props.services[page].sup_serivces_data)
+
+            
+              }}
+           >
+              {
+                //render main services 
+                this.props.service.map((mainService) => (
+
                 <TouchableOpacity
                   key={mainService.services_id}
-                  //onPress={() => this.renderSecondryIcons(mainservice)}
-                  style={{width: 70,height: 70,borderRadius: 35,backgroundColor: 'yellow',justifyContent: 'center',alignItems: 'center'}}
+                  style={{width: 70,height: 70,borderRadius: 35,justifyContent: 'center',alignItems: 'center'}}
                 >
-                  <Animatable.Image
-                    animation="zoomIn"
-                    iterationCount={1}
-                    direction="alternate"
+                  <Image
+                  
                     source={{ uri: base.icon_url + mainService.icone }}
-                    style={{width: 42.7,height: 22.8,resizeMode: 'cover'}}
+                   
+                    style={{width: 70,height: 70,borderRadius: 35,justifyContent: 'center',alignItems: 'center'}}
+
                   />
-                  <Text style={{marginTop: 10,fontSize: 12}}>
+                  <Text style={{ marginTop: 10,fontSize: 8}}>
                     {mainService.services_name_ar}
                   </Text>
                 </TouchableOpacity>
@@ -142,15 +142,13 @@ class MainButtons extends Component {
         :
           <View  style={{width: 0,height: 0}}/>
         }
-
-        {/*this.orderButtons_View()*/}
+{this.orderButtons_View()}
       </View>)
   }
 }
 
 //===============================//
 const mapStateToProps = state => {
-  // console.log(state.makeOrder.service)
   return {
     services: state.makeOrder.services.data,
     service: state.makeOrder.service ,

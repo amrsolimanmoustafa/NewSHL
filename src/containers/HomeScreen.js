@@ -19,37 +19,44 @@ class HomeScreen extends Component  {
 
    
   }
-
-  componentDidMount() {
-  var self=this
-    this.watchId = navigator.geolocation.watchPosition(
-      (position) => {
-        console.log(position)
-        // this.setState({
-        //   latitude: position.coords.latitude,
-        //   longitude: position.coords.longitude,
-        //   error: null,
-        // });
-        this.props.setCoordnates(position.coords.latitude,position.coords.longitude)
-      
-      },
-      (error) => this.setState({ error: error.message }),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000, distanceFilter: 10 },
-    );
+  componentWillMount(){
+   this.watchPosition()
   }
-
+  componentDidMount() {
+  
+  
+  }
+  watchPosition(){
+  var self=this
+  //subscribe for location when changed
+  
+    
+    
+    this.watchId = navigator.geolocation.watchPosition(
+    (position) => {
+      console.log(position)
+     
+      this.props.setCoordnates(position.coords.latitude,position.coords.longitude)
+    },
+    (error) => self.setState({ error: error.message }),
+    { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000, distanceFilter: 100 },
+  );
+}
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchId);
   }
-  // componentWillMount() {
-  //   this.props.getServices()
-  // }
+renderMap=()=>{
+// this.renderMap().then(mapa=> { })
+  
+  return ( <View style={styles.Map}>
+    <Map/>
+
+  </View>)}
   render() {
     return (
       <View style={styles.container}>
        <ImageBackground style={styles.loginBackground} source={Images.loginBackground} resizeMode={'cover'}>
         <Header/>
-
         <View style={styles.Map}>
           <Map/>
 
