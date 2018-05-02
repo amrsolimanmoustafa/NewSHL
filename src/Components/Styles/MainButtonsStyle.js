@@ -2,8 +2,8 @@ import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   container: {
-    backgroundColor: 'rgba(0,0,255,1)', overflow: 'hidden',
-    
+   backgroundColor: 'rgba(0,0,0,0)', overflow: 'hidden',
+    flex: 1,
     marginTop: "10%",    
     // backgroundColor:"red",
   },
