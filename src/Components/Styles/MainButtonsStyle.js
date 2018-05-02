@@ -2,17 +2,21 @@ import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   container: {
-    flex: 1,
-    marginTop: "10%",
-    //alignItems: "center",
+    backgroundColor: 'rgba(0,0,255,1)', overflow: 'hidden',
+    
+    marginTop: "10%",    
+    // backgroundColor:"red",
   },
   whenToOrderView: {
     flexDirection: "row",
     alignItems: "center",
     height: "25%",
-    marginTop: "3%"
+marginLeft:"30%",
+    // marginTop: "3%"
   },
   opacityView: {
+    
+    // backgroundColor:"green",
     marginTop: "0%",
     borderRadius: 100,
     width: "45%",
@@ -27,7 +31,9 @@ export default StyleSheet.create({
     height: "90%",
     marginRight: "10%",
     elevation: 10,
-    marginLeft: "5%"
+   marginLeft: "5%",
+    alignItems: "center",
+
   },
   opacity: {
     marginTop: "0%",
@@ -40,6 +46,8 @@ export default StyleSheet.create({
     marginTop: "0%",
     borderRadius: 80,
     width: "100%",
+    alignItems: "center",
+
     height: "100%",
     backgroundColor: "white",
     alignItems: "center",

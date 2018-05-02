@@ -6,7 +6,11 @@ import SearchButton from "./SearchButton"
 import SideMapButtonsForOtlobNow from "./SideMapButtonsForOtlobNow"
 import SelectedServices from "./SelectedServices"
 import PriceLinearGradient from "./PriceLinearGradient"
-export default class OtlobNow extends Component {
+import {selectedServices} from "../actions/makeOrderAction"
+import { connect } from 'react-redux'
+import { withNavigation } from "react-navigation";
+
+ class OtlobNow extends Component {
   // // Prop type warnings
   // static propTypes = {
   //   someProperty: PropTypes.object,
@@ -19,9 +23,16 @@ export default class OtlobNow extends Component {
   // }
 
   render () {
+    console.log(this.props.makeOrder)
     return (
       <View style={styles.container}>
-        <SearchButton/>
+        <View  style={{
+    height:"10%",
+    width:"100%",
+    marginBottom:"5%",
+    position:'relative'
+
+  }}/>
         <View style={styles.main}>
           <SelectedServices/>
           <SideMapButtonsForOtlobNow/>
@@ -31,3 +42,15 @@ export default class OtlobNow extends Component {
     )
   }
 }
+// export default class OtlobNow
+const mapStateToProps = state => {
+  return {
+    // services: state.makeOrder.services.data,
+    // service: state.makeOrder.service ,
+    // common: state.common,
+    // compState:state.compState,
+    makeOrder:state.makeOrder
+
+  }
+}
+export default connect(mapStateToProps, {selectedServices}) (withNavigation(OtlobNow))

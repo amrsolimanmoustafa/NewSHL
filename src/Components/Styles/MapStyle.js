@@ -7,6 +7,7 @@ export default StyleSheet.create({
     left: 0,
     right: 0,
     bottom: 0,
+    
     justifyContent: 'flex-start',
     alignItems: 'center',
     borderRadius:10
@@ -14,6 +15,7 @@ export default StyleSheet.create({
   map: {
     position:"absolute",
     borderRadius:10,
+    zIndex:0,
     borderWidth: 2,
     borderColor: '#fff',
     top: 0,

@@ -20,6 +20,8 @@ import { connect } from 'react-redux'
 
 import * as Animatable from "react-native-animatable";
 import CarouselPager from 'react-native-carousel-pager';
+import {setHomeComponent} from "../actions/UpdateComponentsStateAction/updateComponentsStateAction"
+import {selectedServices} from "../actions/makeOrderAction"
 
 class MainButtons extends Component {
   componentWillMount() {
@@ -55,7 +57,11 @@ class MainButtons extends Component {
             </TouchableOpacity>
           </View>
           <View style={styles.opacityView2}>
-            <LinearGradientForMap text="اطلب الان" style={styles.opacity}  press={() => {}}/>
+            <LinearGradientForMap text="اطلب الان" style={styles.opacity}  press={() => {
+//dispach 2nd component in map view
+this.props.setHomeComponent(2)
+
+            }}/>
           </View>
         </View>
       )
@@ -80,9 +86,13 @@ class MainButtons extends Component {
     initialPage={0}
     pageStyle={{height: 100,alignItems: 'center',justifyContent: 'center'}}
  onPageChange={(selectedService)=>{
-  this.setState({showMainButtons:true})
+//dispach selected services
+this.props.selectedServices([this.props.services[this.state.page].sup_serivces_data[selectedService],this.props.services[this.state.page]])
+console.log(this.props.makeOrder)
+this.setState({showMainButtons:true})
 
-          console.log( this.props.services[this.state.page].sup_serivces_data[selectedService])
+////////////////////////////
+          // console.log( this.props.services[this.state.page].sup_serivces_data[selectedService])
 
     }} >
   {this.props.services[this.state.page].sup_serivces_data.map((seCservice,index) => (
@@ -152,7 +162,10 @@ const mapStateToProps = state => {
   return {
     services: state.makeOrder.services.data,
     service: state.makeOrder.service ,
-    common: state.common
+    common: state.common,
+    compState:state.compState,
+    makeOrder:state.makeOrder
+
   }
 }
   
@@ -160,4 +173,4 @@ const mapDispatchToProps = (dispatch) => {
   return {
   }
 }
-export default connect(mapStateToProps, { getServices, reverseCoordinatesToAdress}) (withNavigation(MainButtons))
+export default connect(mapStateToProps, {selectedServices, getServices,setHomeComponent, reverseCoordinatesToAdress}) (withNavigation(MainButtons))

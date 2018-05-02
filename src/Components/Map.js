@@ -12,13 +12,24 @@ import OtlobNow from "./OtlobNow"
 import {reverseCoordinatesToAdress} from "../actions/CommonServicesActions/commonServicesActions"
 import { withNavigation } from "react-navigation";
 import { connect } from 'react-redux'
+import {setHomeComponent} from "../actions/UpdateComponentsStateAction/updateComponentsStateAction"
+
 class Map extends Component {
-state= {lat:0,lng:0}
+ //1: <OtlobMain/> 
+  state= {lat:0,lng:0,currentComponent:1}
+
   constructor(props) {
     super(props);
   
   }
   componentDidMount() {
+    this.props.setHomeComponent(1)
+
+// setTimeout(() => {
+//   this.props.setHomeComponent(2)
+
+// }, 3000);    
+    console.log(this.props)
     navigator.geolocation.getCurrentPosition(
       (position) => {
         this.setState({
@@ -33,7 +44,23 @@ state= {lat:0,lng:0}
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
   }
+components=()=>  {
+    
+  console.log('comp no . ::',this.props.compState.__CurrentComponent)
 
+      
+
+switch (this.props.compState.__CurrentComponent){
+  case 1:
+  return (<OtlobMain/>)
+  case 2:
+  return (<OtlobNow/>)
+  case 3:
+  return ( <FavoritePlaces/>)
+default: return
+}
+    
+    }
   render () {
 
 
@@ -54,17 +81,18 @@ state= {lat:0,lng:0}
           followsUserLocation={true}
           >
         </MapView>
-          {/* <OtlobMain/> */}
-          <OtlobNow/>
-          {/* <FavoritePlaces/> */}
+
  
+{this.components()}
       </View>
     )
-  }
- }
+  }}
+ 
  const mapStateToProps = state => {
   return {
-    common:state.common
+    common:state.common,
+    compState:state.compState
+
    }
   }
- export default connect(mapStateToProps, {reverseCoordinatesToAdress }) (withNavigation(Map))
+ export default connect(mapStateToProps, {setHomeComponent,reverseCoordinatesToAdress }) (withNavigation(Map))

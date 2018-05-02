@@ -1,4 +1,4 @@
-import {  GETSERVESIES } from "../actions/types";
+import {  GETSERVESIES ,GETSELECTED_SERVICES} from "../actions/types";
 import Base from "../Base"
 import axios from 'axios';
 
@@ -23,4 +23,12 @@ console.log(GETALLSERVICES_URL)
       console.error(error);
     }
 
+}
+export const selectedServices=(selectedServices)=>dispatch=>{
+
+
+  dispatch({
+    type:GETSELECTED_SERVICES,
+    payload:selectedServices
+  })
 }

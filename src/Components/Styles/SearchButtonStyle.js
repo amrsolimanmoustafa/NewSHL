@@ -2,9 +2,11 @@ import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   container: {
-    height:"6%",
+    height:"10%",
     width:"100%",
-    marginBottom:"5%"
+    marginBottom:"5%",
+    position:'relative'
+
   },
   searchTouchable:{
     flexDirection:"row",
@@ -16,6 +18,7 @@ export default StyleSheet.create({
     marginRight:"0%",
     marginTop:"2%",
     justifyContent:"center",
+    position:'absolute'
   },
   searchTouchableText:{
     marginRight:"0%",
@@ -27,7 +30,7 @@ export default StyleSheet.create({
     fontSize:34,
     marginTop:"2%",
     color:"grey",
-    backgroundColor:"white",
+    // backgroundColor:"white",
     borderRadius:100
   },
 })

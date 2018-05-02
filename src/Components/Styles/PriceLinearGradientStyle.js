@@ -4,13 +4,14 @@ export default StyleSheet.create({
   container: {
     alignSelf:"center",
     backgroundColor:"transparent",
-    height:"10%",
+    height:"2%",
     width:"50%",
-    marginTop:"30%",
+    marginTop:"16%",
     justifyContent:"center",
     alignItems:"center",
-    borderRadius:100,
+    borderRadius:10,
     elevation:10
+    ,flex:1
   },
   opacity:{
     height:"100%",
