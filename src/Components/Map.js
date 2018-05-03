@@ -22,16 +22,18 @@ import { connect } from 'react-redux'
 import {setHomeComponent} from "../actions/UpdateComponentsStateAction/updateComponentsStateAction"
 import {getServices} from "../actions/makeOrderAction"
 import Base from '../Base'
+import LinearGradientForMap from "./LinearGradientForMap"
+import style from './Styles/MainButtonsStyle'
 
 const {width,height} = Dimensions.get('window')
 class Map extends Component {
  //1: <OtlobMain/> 
-  state= {lat:0,lng:0,currentComponent:1}
+  state= {lat:0,lng:0,currentComponent:1,showMainButtons:true}
 
   constructor(props) {
     super(props);
     this.state = {
-
+      showMainButtons:true
     }
   }
   componentWillMount() {
@@ -57,7 +59,31 @@ class Map extends Component {
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
   }
+  orderButtons_View(){
+    // if(this.state.showMainButtons){
+      if(true){
 
+      return (
+        
+          <View style={{ backgroundColor: 'rgba(255,255,255,0.8)',justifyContent:"center",flexDirection:"row",position:"relative",zIndex:0,flex:1}}>
+      <View style={style.opacityView}>
+        <TouchableOpacity style={style.opacityWight}>
+          <Text style={style.opacityWightText}>
+            اطلب لاحقاً
+          </Text>
+        </TouchableOpacity>
+      </View>
+      <View style={style.opacityView2}>
+        <LinearGradientForMap text="اطلب الان" style={style.opacity}  press={() => {
+//dispach 2nd component in map view
+this.props.setHomeComponent(2)
+
+        }}/>
+      </View>
+    </View>
+      )
+    }
+  }
   components=()=>  {
     console.log('comp no . ::',this.props.compState.__CurrentComponent)
     switch (this.props.compState.__CurrentComponent){
@@ -138,6 +164,14 @@ class Map extends Component {
                   ref={ref => this.carousel = ref}
                   initialPage={0}
                   pageStyle={{height: 110,alignItems: 'center',justifyContent: 'center'}}
+                  onPageChange={(page)=>{
+                    console.log( page)
+                    // this.setState({page:page,MainButtons:true})
+                    
+                    console.log( this.props.services[page].sup_serivces_data)
+    
+                
+                  }}
                 >
                   {service[parseInt(this.state.page)].sup_serivces_data.map((subService) => (
                     <TouchableOpacity
@@ -183,7 +217,11 @@ class Map extends Component {
                   </TouchableOpacity>
                 ))}
               </CarouselPager>
+        
             </View>
+              {this.orderButtons_View()}
+
+       
           </View>
         :
           <View  style={{width: 0,height: 0}}/>

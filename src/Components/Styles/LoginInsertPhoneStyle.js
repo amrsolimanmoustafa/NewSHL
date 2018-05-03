@@ -85,10 +85,11 @@ export default StyleSheet.create({
     marginBottom:"0%"
   },
   opacity: {
+    
     marginTop:"2%",
     borderRadius: 80,
     width:"90%",
-    height:"60%",
+    height:"30%",
     
   },
 

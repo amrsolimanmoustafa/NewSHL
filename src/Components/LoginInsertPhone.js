@@ -71,7 +71,7 @@ import {loginUser} from "../../src/actions/authAction"
        return (<ActivityIndicator start={{ x: 0.0, y: 0.25 }} end={{ x: 0.9, y: 1.0 }} locations={[0, 0.5, 0.9]} size="large" colors={["rgb(57,180,76)", "#299386", "rgb(29,122,179)"]}) />;
      } else {*/
        return <View style={styles.opacity}>
-           <LinearGradientButton press={this.doLogIn.bind(this)} navigateScreen={this.state.VerifyPhoneScreen} text="التسجيل" style={styles.opacity} />
+           <LinearGradientButton press={this.doLogIn.bind(this)} navigateScreen={this.state.VerifyPhoneScreen} text="التسجيل" style={{}} />
          </View>;
      //}
    };

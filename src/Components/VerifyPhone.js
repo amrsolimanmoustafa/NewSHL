@@ -76,9 +76,12 @@ import {loginUser} from "../../src/actions/authAction"
                          </Text>
                        </View>
                        {/* Two Linear Gradient */}
-                       <View style={styles.opacity}>
-                         <LinearGradientButton press={this.goToLoginScreen.bind(this)} navigateScreen="LoginScreen" text="تغيير رقم الجوال" />
-                         <LinearGradientButton press={this.goToHomeScreen.bind(this)} navigateScreen="HomeScreen" text="الدخول" />
+                       <View style={{flex:1,width:"100%",justifyContent:'space-between'}} >
+                         <LinearGradientButton style={{flex:1}}  press={this.goToLoginScreen.bind(this)} navigateScreen="LoginScreen" text="تغيير رقم الجوال" />
+</View>
+                         <View style={{flex:1,width:"100%",position:'relative',zIndex:-2,justifyContent:'space-between'}} >
+
+                         <LinearGradientButton   press={this.goToHomeScreen.bind(this)} navigateScreen="HomeScreen" text="الدخول" />
                        </View>
                      </View>;
                  }
