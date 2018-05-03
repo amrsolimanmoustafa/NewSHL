@@ -57,11 +57,9 @@ renderMap=()=>{
       <View style={styles.container}>
        <ImageBackground style={styles.loginBackground} source={Images.loginBackground} resizeMode={'cover'}>
         <Header/>
-        <View style={styles.Map}>
+        <View style={{flex: 1,padding: 12}}>
           <Map/>
-
         </View>
-
        </ImageBackground>
       </View>
     );

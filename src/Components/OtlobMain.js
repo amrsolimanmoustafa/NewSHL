@@ -21,7 +21,7 @@ export default class OtlobMain extends Component {
     return (
       <View style={styles.container}>
           <SearchButton/>
-          <SideMapButtons/>
+          {<SideMapButtons/>}
           <MainButtons/>
       </View>
     )
