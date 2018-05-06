@@ -10,7 +10,7 @@ import { withNavigation } from "react-navigation";
 class PriceLinearGradient extends Component {
  
   render () {
-    console.log(this.props.makeOrder.selectedServices[0].services_zone[0].price)
+    console.log(this.props.makeOrder)
     return (
       <View style={styles.container}>
         <TouchableOpacity style={styles.opacity}>

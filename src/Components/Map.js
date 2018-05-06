@@ -20,7 +20,7 @@ import {reverseCoordinatesToAdress} from "../actions/CommonServicesActions/commo
 import { withNavigation } from "react-navigation";
 import { connect } from 'react-redux'
 import {setHomeComponent} from "../actions/UpdateComponentsStateAction/updateComponentsStateAction"
-import {getServices} from "../actions/makeOrderAction"
+import {getServices,selectedServices} from "../actions/makeOrderAction"
 import Base from '../Base'
 import LinearGradientForMap from "./LinearGradientForMap"
 import style from './Styles/MainButtonsStyle'
@@ -28,7 +28,7 @@ import style from './Styles/MainButtonsStyle'
 const {width,height} = Dimensions.get('window')
 class Map extends Component {
  //1: <OtlobMain/> 
-  state= {lat:0,lng:0,currentComponent:1,showMainButtons:true}
+  state= {lat:0,lng:0,currentComponent:2,showMainButtons:true,page:0}
 
   constructor(props) {
     super(props);
@@ -99,14 +99,14 @@ this.props.setHomeComponent(2)
 
   render () {
     const {
-      service
+      service,selectedServices,services
     } =  this.props
     const base = new Base()
     console.log('lat ',this.props.common.lat)
     return (
-      <View style={{flex: 1}}>
+      <View style={{flex: 1,position:'relative',zIndex:0}}>
         <MapView
-          style={{flex: 1,borderRadius: 10,borderWidth: 2,borderColor: '#fff'}}
+          style={{flex: 1,borderRadius: 10,borderWidth: 2,zIndex:0,borderColor: '#fff'}}
           region={{
             latitude: this.state.lat,
             longitude:this.state.lng,
@@ -115,7 +115,10 @@ this.props.setHomeComponent(2)
           }}
           followsUserLocation={true}
         >
+
         </MapView>
+        {this.props.compState.__CurrentComponent==2? <OtlobNow />:<View  style={{width: 0,height: 0}}/>}
+
         {/* Right side buttons */}
         <View style={{position: 'absolute',right: 16,top: 105}}>
           <TouchableOpacity
@@ -155,7 +158,8 @@ this.props.setHomeComponent(2)
             />
           </TouchableOpacity>
         </View>
-        {service.length > 0?
+
+        {service.length > 0 && this.props.compState.__CurrentComponent==1  ?
           <View style={{position: 'absolute',left: 0,bottom: 10,right: 0}}>
             {/* Sub services */}
             {this.state.page?
@@ -164,11 +168,14 @@ this.props.setHomeComponent(2)
                   ref={ref => this.carousel = ref}
                   initialPage={0}
                   pageStyle={{height: 110,alignItems: 'center',justifyContent: 'center'}}
-                  onPageChange={(page)=>{
-                    console.log( page)
+                  onPageChange={(selectedService)=>{
                     // this.setState({page:page,MainButtons:true})
-                    
-                    console.log( this.props.services[page].sup_serivces_data)
+                    //dispach selected services
+                    selectedServices([services[this.state.page].sup_serivces_data[selectedService],services[this.state.page]])
+                    console.log(this.props)
+this.setState({showMainButtons:true})
+
+////////////////////////////
     
                 
                   }}
@@ -199,6 +206,7 @@ this.props.setHomeComponent(2)
                 initialPage={0}
                 pageStyle={{height: 110,alignItems: 'center',justifyContent: 'center'}}
                 onPageChange={(page)=>{
+                  {selectedServices([services[page].sup_serivces_data[0],services[page]])}
                   this.setState({page: page.toString()})
                 }}
               >
@@ -225,7 +233,11 @@ this.props.setHomeComponent(2)
           </View>
         :
           <View  style={{width: 0,height: 0}}/>
+        
+        
+        
         }
+
       </View>
     )
   }
@@ -258,5 +270,6 @@ const mapStateToProps = state => {
   {
     getServices,
     setHomeComponent,
+    selectedServices,
     reverseCoordinatesToAdress
   }) (withNavigation(Map))

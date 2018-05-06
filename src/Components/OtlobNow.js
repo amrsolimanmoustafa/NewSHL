@@ -23,7 +23,7 @@ import { withNavigation } from "react-navigation";
   // }
 
   render () {
-    console.log(this.props.makeOrder)
+    // console.log(this.props.makeOrder)
     return (
       <View style={styles.container}>
         <View  style={{
