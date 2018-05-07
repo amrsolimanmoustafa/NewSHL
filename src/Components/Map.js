@@ -108,8 +108,8 @@ this.props.setHomeComponent(2)
         <MapView
           style={{flex: 1,borderRadius: 10,borderWidth: 2,zIndex:0,borderColor: '#fff'}}
           region={{
-            latitude: this.state.lat,
-            longitude:this.state.lng,
+            latitude: this.state.lat?this.state.lat:0,
+            longitude:this.state.lng?this.state.lng:0,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}

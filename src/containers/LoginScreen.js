@@ -16,7 +16,7 @@ import * as Animatable from "react-native-animatable";
 class LoginScreen extends Component {
   constructor(){
     super()
-LoginScreen = Animatable.createAnimatableComponent(LoginScreen);
+// LoginScreen = Animatable.createAnimatableComponent(LoginScreen);
 
 
   }
@@ -72,4 +72,5 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)
+// export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)
+module.exports = connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
