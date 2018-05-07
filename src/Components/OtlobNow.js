@@ -1,28 +1,24 @@
 import React, { Component } from 'react'
 // import PropTypes from 'prop-types';
-import { View, Text } from 'react-native'
 import styles from './Styles/OtlobNowStyle'
 import SearchButton from "./SearchButton"
 import SideMapButtonsForOtlobNow from "./SideMapButtonsForOtlobNow"
 import SelectedServices from "./SelectedServices"
-import PriceLinearGradient from "./PriceLinearGradient"
-import {selectedServices} from "../actions/makeOrderAction"
+// import PriceLinearGradient from "./PriceLinearGradient"
+import {selectedServices,createorder} from "../actions/makeOrderAction"
 import { connect } from 'react-redux'
 import { withNavigation } from "react-navigation";
-
+import { View, Text,TouchableOpacity } from 'react-native'
+import stylesP from './Styles/PriceLinearGradientStyle'
+import OrderService from '../service_api/OrderService'
+import LinearGradient from "react-native-linear-gradient"
  class OtlobNow extends Component {
-  // // Prop type warnings
-  // static propTypes = {
-  //   someProperty: PropTypes.object,
-  //   someSetting: PropTypes.bool.isRequired,
-  // }
-  //
-  // // Defaults for props
-  // static defaultProps = {
-  //   someSetting: false
-  // }
+  
 
   render () {
+    const {
+      auth,makeOrder
+    }=this.props
     // console.log(this.props.makeOrder)
     return (
       <View style={styles.container}>
@@ -37,7 +33,32 @@ import { withNavigation } from "react-navigation";
           <SelectedServices/>
           <SideMapButtonsForOtlobNow/>
         </View>
-        <PriceLinearGradient text="تأكيد"/>
+        {/* <PriceLinearGradient  
+        text="تأكيد"/> */}
+        <View style={stylesP.container}>
+        <TouchableOpacity   
+        onPress={()=>{
+
+          let order={services_id:makeOrder.services_id,sub_services_id:makeOrder.sub_services_id,user_id:auth.user_id,user_lat:makeOrder.user_lat,user_long:makeOrder.user_long}
+let orderService=new OrderService
+orderService.createorder(order).then(res=>{
+console.log(res)
+
+},e=>{
+console.log(e)
+})
+          console.log(order)
+
+          console.log(auth.user_id)
+
+                  }} 
+        style={stylesP.opacity}>
+          <LinearGradient start={{ x: 0.0, y: 0.35 }} end={{ x: 0.9, y: 0.3 }} locations={[0, 0.5, 0.9]} colors={["rgb(57,180,76)", "#299386", "rgb(29,122,179)"]} style={stylesP.linearGradient}>
+            <View style={stylesP.priceView}><Text style={styles.priceText}>{this.props.makeOrder.selectedServices[0].services_zone[0].price!=undefined?this.props.makeOrder.selectedServices[0].services_zone[0].price:''}ريال الدفع كاش</Text></View>
+            <Text style={stylesP.buttonText}>تأكيد</Text>
+          </LinearGradient>
+        </TouchableOpacity>
+      </View>
       </View>
     )
   }
@@ -49,8 +70,9 @@ const mapStateToProps = state => {
     // service: state.makeOrder.service ,
     // common: state.common,
     // compState:state.compState,
-    makeOrder:state.makeOrder
+    makeOrder:state.makeOrder,
+    auth:state.auth
 
   }
 }
-export default connect(mapStateToProps, {selectedServices}) (withNavigation(OtlobNow))
+export default connect(mapStateToProps, {selectedServices,createorder}) (withNavigation(OtlobNow))

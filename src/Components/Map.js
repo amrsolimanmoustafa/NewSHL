@@ -20,11 +20,11 @@ import {reverseCoordinatesToAdress} from "../actions/CommonServicesActions/commo
 import { withNavigation } from "react-navigation";
 import { connect } from 'react-redux'
 import {setHomeComponent} from "../actions/UpdateComponentsStateAction/updateComponentsStateAction"
-import {getServices,selectedServices} from "../actions/makeOrderAction"
+import {getServices,selectedServices,createorder} from "../actions/makeOrderAction"
 import Base from '../Base'
 import LinearGradientForMap from "./LinearGradientForMap"
 import style from './Styles/MainButtonsStyle'
-
+import OrderService from '../service_api/OrderService'
 const {width,height} = Dimensions.get('window')
 class Map extends Component {
  //1: <OtlobMain/> 
@@ -35,6 +35,7 @@ class Map extends Component {
     this.state = {
       showMainButtons:true
     }
+ 
   }
   componentWillMount() {
     this.props.getServices('Mohammed Farid')
@@ -53,7 +54,13 @@ class Map extends Component {
           error: null,
         });
         this.setState({lat:position.coords.latitude,lng:position.coords.longitude})
+        let orderService=new OrderService
+        orderService.setOrderLat(this.state.lat)
+        orderService.setOrderLng(this.state.lng)
+        ////***/////  */
+    this.props.createorder({user_lat:orderService.getOrderLat(),user_long:orderService.getOrderLng()})
 
+    console.log(orderService.getOrderLat())
       },
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
@@ -99,7 +106,7 @@ this.props.setHomeComponent(2)
 
   render () {
     const {
-      service,selectedServices,services
+      service,selectedServices,services,createorder
     } =  this.props
     const base = new Base()
     console.log('lat ',this.props.common.lat)
@@ -172,6 +179,10 @@ this.props.setHomeComponent(2)
                     // this.setState({page:page,MainButtons:true})
                     //dispach selected services
                     selectedServices([services[this.state.page].sup_serivces_data[selectedService],services[this.state.page]])
+                    // console.log('services obj ::: ',{services_id:services[this.state.page]['services_id']
+                    // ,sub_services_id:services[this.state.page].sup_serivces_data[selectedService]['sub_services_id']})
+                    createorder({services_id:services[this.state.page]['services_id']
+                    ,sub_services_id:services[this.state.page].sup_serivces_data[selectedService]['sub_services_id']})
                     console.log(this.props)
 this.setState({showMainButtons:true})
 
@@ -207,6 +218,12 @@ this.setState({showMainButtons:true})
                 pageStyle={{height: 110,alignItems: 'center',justifyContent: 'center'}}
                 onPageChange={(page)=>{
                   {selectedServices([services[page].sup_serivces_data[0],services[page]])}
+                  
+                  
+                  createorder({services_id:services[page]['services_id']
+                  ,sub_services_id:services[page].sup_serivces_data[0]['sub_services_id']})
+
+
                   this.setState({page: page.toString()})
                 }}
               >
@@ -271,5 +288,6 @@ const mapStateToProps = state => {
     getServices,
     setHomeComponent,
     selectedServices,
-    reverseCoordinatesToAdress
+    reverseCoordinatesToAdress,
+    createorder
   }) (withNavigation(Map))

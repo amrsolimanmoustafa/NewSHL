@@ -13,7 +13,11 @@ class PriceLinearGradient extends Component {
     console.log(this.props.makeOrder)
     return (
       <View style={styles.container}>
-        <TouchableOpacity style={styles.opacity}>
+        <TouchableOpacity   
+        onPress={()=>{
+          console.log(this.props)
+                  }} 
+        style={styles.opacity}>
           <LinearGradient start={{ x: 0.0, y: 0.35 }} end={{ x: 0.9, y: 0.3 }} locations={[0, 0.5, 0.9]} colors={["rgb(57,180,76)", "#299386", "rgb(29,122,179)"]} style={styles.linearGradient}>
             <View style={styles.priceView}><Text style={styles.priceText}>{this.props.makeOrder.selectedServices[0].services_zone[0].price}ريال الدفع كاش</Text></View>
             <Text style={styles.buttonText}>{this.props.text}</Text>
