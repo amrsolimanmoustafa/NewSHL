@@ -62,5 +62,5 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-// export default connect(mapStateToProps, mapDispatchToProps)(SplashScreen)
-module.exports =connect(mapStateToProps, mapDispatchToProps)(SplashScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(SplashScreen)
+// module.exports =connect(mapStateToProps, mapDispatchToProps)(SplashScreen);

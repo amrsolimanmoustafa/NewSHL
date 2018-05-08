@@ -7,4 +7,6 @@ target 'Shl' do
 
   # Pods for Shl
 
+  pod 'ReactNativeLocalization', :path => '../node_modules/react-native-localization'
+
 end

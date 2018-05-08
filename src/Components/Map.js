@@ -25,6 +25,7 @@ import Base from '../Base'
 import LinearGradientForMap from "./LinearGradientForMap"
 import style from './Styles/MainButtonsStyle'
 import OrderService from '../service_api/OrderService'
+import GooglePlacesInput from "./GooglePlacesInput";
 const {width,height} = Dimensions.get('window')
 class Map extends Component {
  //1: <OtlobMain/> 
@@ -110,153 +111,142 @@ this.props.setHomeComponent(2)
     } =  this.props
     const base = new Base()
     console.log('lat ',this.props.common.lat)
-    return (
-      <View style={{flex: 1,position:'relative',zIndex:0}}>
-        <MapView
-          style={{flex: 1,borderRadius: 10,borderWidth: 2,zIndex:0,borderColor: '#fff'}}
-          region={{
-            latitude: this.state.lat?this.state.lat:0,
-            longitude:this.state.lng?this.state.lng:0,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
-          }}
-          followsUserLocation={true}
-        >
+    return <View style={{ flex: 1, position: "relative", zIndex: 0 }}>
+        <View style={{ width: "100%",position:'absolute',zIndex:3}}>
+          <GooglePlacesInput  />
+        </View>
 
-        </MapView>
-        {this.props.compState.__CurrentComponent==2? <OtlobNow />:<View  style={{width: 0,height: 0}}/>}
+        <MapView style={{ flex: 1, borderRadius: 10, borderWidth: 2, zIndex: 0, borderColor: "#fff" }} region={{ latitude: this.state.lat ? this.state.lat : 0, longitude: this.state.lng ? this.state.lng : 0, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }} followsUserLocation={true} />
+
+        {this.props.compState.__CurrentComponent == 2 ? <OtlobNow /> : <View style={{ width: 0, height: 0 }} />}
 
         {/* Right side buttons */}
-        <View style={{position: 'absolute',right: 16,top: 105}}>
-          <TouchableOpacity
-            onPress={()=>{}}
-            style={styles.touchable}
-          >
-            <Image
-              source={Images.pinIcon}
-              style={styles.image}
-            />
+        <View style={{ position: "absolute", right: 16, top: 105 }}>
+          <TouchableOpacity onPress={() => {}} style={styles.touchable}>
+            <Image source={Images.pinIcon} style={styles.image} />
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={()=>{}}
-            style={[styles.touchable,{marginTop: 16}]}
-          >
-            <Image
-              source={Images.sataliteIcon}
-              style={styles.image}
-            />
+          <TouchableOpacity onPress={() => {}} style={[styles.touchable, { marginTop: 16 }]}>
+            <Image source={Images.sataliteIcon} style={styles.image} />
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={()=>{}}
-            style={[styles.touchable,{marginTop: 16}]}
-          >
-            <Image
-              source={Images.kabbaIcon}
-              style={styles.image}
-            />
+          <TouchableOpacity onPress={() => {}} style={[styles.touchable, { marginTop: 16 }]}>
+            <Image source={Images.kabbaIcon} style={styles.image} />
           </TouchableOpacity>
-          <TouchableOpacity
-            onPress={()=>{}}
-            style={[styles.touchable,{marginTop: 16}]}
-          >
-            <Image
-              source={Images.locatiOnMapIcon}
-              style={styles.image}
-            />
+          <TouchableOpacity onPress={() => {}} style={[styles.touchable, { marginTop: 16 }]}>
+            <Image source={Images.locatiOnMapIcon} style={styles.image} />
           </TouchableOpacity>
         </View>
 
-        {service.length > 0 && this.props.compState.__CurrentComponent==1  ?
-          <View style={{position: 'absolute',left: 0,bottom: 10,right: 0}}>
+        {service.length > 0 && this.props.compState.__CurrentComponent == 1 ? <View style={{ position: "absolute", left: 0, bottom: 10, right: 0 }}>
             {/* Sub services */}
-            {this.state.page?
-              <View style={{height: 130,padding: 10,backgroundColor: 'rgba(255,255,255,0.8)',justifyContent: 'center',alignItems: 'center'}}>
-                <CarouselPager
-                  ref={ref => this.carousel = ref}
-                  initialPage={0}
-                  pageStyle={{height: 110,alignItems: 'center',justifyContent: 'center'}}
-                  onPageChange={(selectedService)=>{
+            {this.state.page ? <View style={{ height: 130, padding: 10, backgroundColor: "rgba(255,255,255,0.8)", justifyContent: "center", alignItems: "center" }}>
+                <CarouselPager ref={ref => (this.carousel = ref)} initialPage={0} pageStyle={{ height: 110, alignItems: "center", justifyContent: "center" }} onPageChange={selectedService => {
                     // this.setState({page:page,MainButtons:true})
                     //dispach selected services
-                    selectedServices([services[this.state.page].sup_serivces_data[selectedService],services[this.state.page]])
+                    selectedServices([
+                      services[this.state.page].sup_serivces_data[
+                        selectedService
+                      ],
+                      services[this.state.page]
+                    ]);
                     // console.log('services obj ::: ',{services_id:services[this.state.page]['services_id']
                     // ,sub_services_id:services[this.state.page].sup_serivces_data[selectedService]['sub_services_id']})
-                    createorder({services_id:services[this.state.page]['services_id']
-                    ,sub_services_id:services[this.state.page].sup_serivces_data[selectedService]['sub_services_id']})
-                    console.log(this.props)
-this.setState({showMainButtons:true})
+                    createorder({
+                      services_id: services[this.state.page]["services_id"],
+                      sub_services_id:
+                        services[this.state.page].sup_serivces_data[
+                          selectedService
+                        ]["sub_services_id"]
+                    });
+                    console.log(this.props);
+                    this.setState({ showMainButtons: true });
 
-////////////////////////////
-    
-                
-                  }}
-                >
-                  {service[parseInt(this.state.page)].sup_serivces_data.map((subService) => (
-                    <TouchableOpacity
-                      key={subService.services_id}
-                      style={{height: 110,justifyContent: 'center',alignItems: 'center'}}
-                    >
-                      <Image
-                        source={{ uri: base.icon_url + subService.icone }}
-                        style={{width: 70,height: 70,borderRadius: 35,resizeMode: 'contain'}}
-                      />
-                      <Text style={{ marginTop: 5,fontSize: 12,color: 'rgb(30,123,177)'}}>
-                        {subService.services_name_ar}
-                      </Text>
-                    </TouchableOpacity>
-                  ))}
+                    ////////////////////////////
+                  }}>
+                  {service[parseInt(this.state.page)].sup_serivces_data.map(
+                    subService => (
+                      <TouchableOpacity
+                        key={subService.services_id}
+                        style={{
+                          height: 110,
+                          justifyContent: "center",
+                          alignItems: "center"
+                        }}
+                      >
+                        <Image
+                          source={{ uri: base.icon_url + subService.icone }}
+                          style={{
+                            width: 70,
+                            height: 70,
+                            borderRadius: 35,
+                            resizeMode: "contain"
+                          }}
+                        />
+                        <Text
+                          style={{
+                            marginTop: 5,
+                            fontSize: 12,
+                            color: "rgb(30,123,177)"
+                          }}
+                        >
+                          {subService.services_name_ar}
+                        </Text>
+                      </TouchableOpacity>
+                    )
+                  )}
                 </CarouselPager>
-              </View>
-            :
-              <View style={{width: 0,height: 0}}/>
-            }
+              </View> : <View style={{ width: 0, height: 0 }} />}
             {/* Main services */}
-            <View style={{height: 130,padding: 10,backgroundColor: 'rgba(255,255,255,0.8)',justifyContent: 'center',alignItems: 'center'}}>
-              <CarouselPager
-                ref={ref => this.carousel = ref}
-                initialPage={0}
-                pageStyle={{height: 110,alignItems: 'center',justifyContent: 'center'}}
-                onPageChange={(page)=>{
-                  {selectedServices([services[page].sup_serivces_data[0],services[page]])}
-                  
-                  
-                  createorder({services_id:services[page]['services_id']
-                  ,sub_services_id:services[page].sup_serivces_data[0]['sub_services_id']})
+            <View style={{ height: 130, padding: 10, backgroundColor: "rgba(255,255,255,0.8)", justifyContent: "center", alignItems: "center" }}>
+              <CarouselPager ref={ref => (this.carousel = ref)} initialPage={0} pageStyle={{ height: 110, alignItems: "center", justifyContent: "center" }} onPageChange={page => {
+                  {
+                    selectedServices([
+                      services[page].sup_serivces_data[0],
+                      services[page]
+                    ]);
+                  }
 
+                  createorder({
+                    services_id: services[page]["services_id"],
+                    sub_services_id:
+                      services[page].sup_serivces_data[0]["sub_services_id"]
+                  });
 
-                  this.setState({page: page.toString()})
-                }}
-              >
-                {service.map((mainService) => (
+                  this.setState({ page: page.toString() });
+                }}>
+                {service.map(mainService => (
                   <TouchableOpacity
                     key={mainService.services_id}
-                    style={{height: 110,justifyContent: 'center',alignItems: 'center'}}
+                    style={{
+                      height: 110,
+                      justifyContent: "center",
+                      alignItems: "center"
+                    }}
                   >
                     <Image
                       source={{ uri: base.icon_url + mainService.icone }}
-                      style={{width: 70,height: 70,borderRadius: 35,resizeMode: 'contain'}}
+                      style={{
+                        width: 70,
+                        height: 70,
+                        borderRadius: 35,
+                        resizeMode: "contain"
+                      }}
                     />
-                    <Text style={{ marginTop: 5,fontSize: 12,color: 'rgb(30,123,177)'}}>
+                    <Text
+                      style={{
+                        marginTop: 5,
+                        fontSize: 12,
+                        color: "rgb(30,123,177)"
+                      }}
+                    >
                       {mainService.services_name_ar}
                     </Text>
                   </TouchableOpacity>
                 ))}
               </CarouselPager>
-        
             </View>
-              {this.orderButtons_View()}
-
-       
-          </View>
-        :
-          <View  style={{width: 0,height: 0}}/>
-        
-        
-        
-        }
-
-      </View>
-    )
+            {this.orderButtons_View()}
+          </View> : <View style={{ width: 0, height: 0 }} />}
+      </View>;
   }
 }
 
