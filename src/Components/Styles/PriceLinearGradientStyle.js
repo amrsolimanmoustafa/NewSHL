@@ -4,9 +4,12 @@ export default StyleSheet.create({
   container: {
     alignSelf:"center",
     backgroundColor:"transparent",
-    height:"2%",
+    height:"5%",
     width:"50%",
-    marginTop:"16%",
+    marginLeft:"20%",
+    // marginTop:"20",
+    // position:'absolute',
+    bottom:0,
     justifyContent:"center",
     alignItems:"center",
     borderRadius:10,
@@ -14,12 +17,12 @@ export default StyleSheet.create({
     ,flex:1
   },
   opacity:{
-    height:"100%",
+    height:"35%",
     width:"100%",
-    borderRadius:100
+    borderRadius:70
   },
   linearGradient:{
-    height:"100%",
+    height:"45%",
     width:"100%",
     borderRadius:100,
     flexDirection:"row",
@@ -32,8 +35,8 @@ export default StyleSheet.create({
     fontSize:24   
   },
   priceView:{
-    width:"40%",
-    height:"70%",
+    width:"50%",
+    height:"80%",
     backgroundColor:"white",
     borderRadius:100,
     marginTop:"5%",
@@ -43,7 +46,7 @@ export default StyleSheet.create({
   },
   priceText:{
     color:"#rgb(31,127,169)",
-    fontSize:13,
+    fontSize:8,
     alignSelf:"center",
     textAlign:"center"
   },

@@ -25,7 +25,9 @@ import LinearGradient from "react-native-linear-gradient"
         <View  style={{
     height:"10%",
     width:"100%",
-    marginBottom:"5%",
+    // marginBottom:"5%",
+    justifyContent:'center',
+    marginLeft:20,
     position:'relative'
 
   }}/>
@@ -54,7 +56,8 @@ console.log(e)
                   }} 
         style={stylesP.opacity}>
           <LinearGradient start={{ x: 0.0, y: 0.35 }} end={{ x: 0.9, y: 0.3 }} locations={[0, 0.5, 0.9]} colors={["rgb(57,180,76)", "#299386", "rgb(29,122,179)"]} style={stylesP.linearGradient}>
-            <View style={stylesP.priceView}><Text style={styles.priceText}>{this.props.makeOrder.selectedServices[0].services_zone[0].price!=undefined?this.props.makeOrder.selectedServices[0].services_zone[0].price:''}ريال الدفع كاش</Text></View>
+            <View style={stylesP.priceView}><Text style={styles.priceText}>{this.props.makeOrder.selectedServices[0].services_zone[0].price!=undefined?this.props.makeOrder.selectedServices[0].services_zone[0].price:''}ريال
+            </Text></View>
             <Text style={stylesP.buttonText}>تأكيد</Text>
           </LinearGradient>
         </TouchableOpacity>

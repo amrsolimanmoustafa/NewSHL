@@ -4,8 +4,9 @@ import {
   View,
   Text,
   TouchableOpacity,
-  Image,
-  StyleSheet,
+  Image,  Platform,
+  StyleSheet,  DeviceEventEmitter,
+  NativeEventEmitter,
   Dimensions
 } from 'react-native'
 import MapView from 'react-native-maps';
@@ -27,6 +28,8 @@ import style from './Styles/MainButtonsStyle'
 import OrderService from '../service_api/OrderService'
 import GooglePlacesInput from "./GooglePlacesInput";
 const {width,height} = Dimensions.get('window')
+var { RNLocation: Location } = require('NativeModules');
+
 class Map extends Component {
  //1: <OtlobMain/> 
   state= {lat:0,lng:0,currentComponent:2,showMainButtons:true,page:0}
@@ -40,14 +43,20 @@ class Map extends Component {
   }
   componentWillMount() {
     this.props.getServices('Mohammed Farid')
+    const myModuleEvt = new NativeEventEmitter(Location)
+    myModuleEvt.removeListener('locationUpdated')
+
   }
 
   componentDidMount() {
     this.props.setHomeComponent(1)
 
 
-    console.log(this.props)
-    navigator.geolocation.getCurrentPosition(
+    // console.log(this.props)
+    this.currentLocationSetToOrder()
+  }
+  currentLocationSetToOrder(){
+      navigator.geolocation.getCurrentPosition(
       (position) => {
         this.setState({
           latitude: position.coords.latitude,
@@ -66,7 +75,7 @@ class Map extends Component {
       (error) => this.setState({ error: error.message }),
       { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
     );
-  }
+ }
   orderButtons_View(){
     // if(this.state.showMainButtons){
       if(true){
@@ -116,9 +125,20 @@ this.props.setHomeComponent(2)
           <GooglePlacesInput  />
         </View>
 
-        <MapView style={{ flex: 1, borderRadius: 10, borderWidth: 2, zIndex: 0, borderColor: "#fff" }} region={{ latitude: this.state.lat ? this.state.lat : 0, longitude: this.state.lng ? this.state.lng : 0, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }} followsUserLocation={true} />
-
-        {this.props.compState.__CurrentComponent == 2 ? <OtlobNow /> : <View style={{ width: 0, height: 0 }} />}
+        <MapView style={{ flex: 1, borderRadius: 10, borderWidth: 2, zIndex: 0, borderColor: "#fff" }}
+         region={{ latitude: this.state.lat ? this.state.lat : 0, 
+         longitude: this.state.lng ? this.state.lng : 0, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }} 
+         followsUserLocation={true} >
+          <MapView.Marker.Animated 
+                    coordinate={
+                      new MapView.AnimatedRegion({
+                        latitude: this.state.lat? this.state.lat : 6.2672295570373535,
+                        longitude:this.state.lng? this.state.lng : 31.229478498675235,
+                      })
+                    }
+                />
+       </MapView>
+        {this.props.compState.__CurrentComponent == 2 ? <OtlobNow  /> : <View style={{ width: 0, height: 0 }} />}
 
         {/* Right side buttons */}
         <View style={{ position: "absolute", right: 16, top: 105 }}>
@@ -138,7 +158,7 @@ this.props.setHomeComponent(2)
 
         {service.length > 0 && this.props.compState.__CurrentComponent == 1 ? <View style={{ position: "absolute", left: 0, bottom: 10, right: 0 }}>
             {/* Sub services */}
-            {this.state.page ? <View style={{ height: 130, padding: 10, backgroundColor: "rgba(255,255,255,0.8)", justifyContent: "center", alignItems: "center" }}>
+            {this.state.page ? <View style={{ height: 110,marginTop:10, padding: 10, backgroundColor: "rgba(255,255,255,0.8)"}}>
                 <CarouselPager ref={ref => (this.carousel = ref)} initialPage={0} pageStyle={{ height: 110, alignItems: "center", justifyContent: "center" }} onPageChange={selectedService => {
                     // this.setState({page:page,MainButtons:true})
                     //dispach selected services
@@ -167,7 +187,8 @@ this.props.setHomeComponent(2)
                       <TouchableOpacity
                         key={subService.services_id}
                         style={{
-                          height: 110,
+                          height: 110,                            
+                          marginTop: 20,
                           justifyContent: "center",
                           alignItems: "center"
                         }}
@@ -196,8 +217,8 @@ this.props.setHomeComponent(2)
                 </CarouselPager>
               </View> : <View style={{ width: 0, height: 0 }} />}
             {/* Main services */}
-            <View style={{ height: 130, padding: 10, backgroundColor: "rgba(255,255,255,0.8)", justifyContent: "center", alignItems: "center" }}>
-              <CarouselPager ref={ref => (this.carousel = ref)} initialPage={0} pageStyle={{ height: 110, alignItems: "center", justifyContent: "center" }} onPageChange={page => {
+            <View style={{ height: 130, padding: 10, backgroundColor: "rgba(255,255,255,0.8)", justifyContent: "center" }}>
+              <CarouselPager ref={ref => (this.carousel = ref)} initialPage={0} pageStyle={{height: 130, alignItems: "center", justifyContent: "center" }} onPageChange={page => {
                   {
                     selectedServices([
                       services[page].sup_serivces_data[0],
@@ -216,8 +237,8 @@ this.props.setHomeComponent(2)
                 {service.map(mainService => (
                   <TouchableOpacity
                     key={mainService.services_id}
-                    style={{
-                      height: 110,
+                    style={{marginBottom:40,
+                      height: 130,
                       justifyContent: "center",
                       alignItems: "center"
                     }}
@@ -248,6 +269,42 @@ this.props.setHomeComponent(2)
           </View> : <View style={{ width: 0, height: 0 }} />}
       </View>;
   }
+//   locationUpdated() {
+//     if (Platform.OS=='ios'){
+//         Location.requestAlwaysAuthorization();
+//         Location.setAllowsBackgroundLocationUpdates(true);
+//         Location.setDistanceFilter(50);
+//         Location.requestWhenInUseAuthorization();
+//     }else{
+//         Location.requestWhenInUseAuthorization();
+//     }
+//     Location.startUpdatingLocation();
+//     const myModuleEvt = new NativeEventEmitter(Location)
+//     var subscription = myModuleEvt.addListener(
+//         'locationUpdated',
+//         (position) => {
+
+
+// //update order location
+// this.setState({lat:position.coords.latitude,lng:position.coords.longitude})
+// let orderService=new OrderService
+// orderService.setOrderLat(this.state.lat)
+// orderService.setOrderLng(this.state.lng)
+// ////***/////  */
+// this.props.createorder({user_lat:orderService.getOrderLat(),user_long:orderService.getOrderLng()})
+
+// console.log(orderService.getOrderLat())
+
+//           // console.log(location)
+//           // var position = {
+//           //     lat: (Platform.OS=='ios')?location.coords.latitude : location.latitude,
+//           //     long: (Platform.OS=='ios')?location.coords.longitude : location.longitude
+//           // };
+//           // this.setState({position: position})
+//           // this.props.updateProvidorLocation(position)
+//         }
+//     );
+//   }
 }
 
 const styles = StyleSheet.create({
