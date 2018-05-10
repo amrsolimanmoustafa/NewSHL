@@ -41,20 +41,66 @@ class Map extends Component {
     }
  
   }
-  componentWillMount() {
-    this.props.getServices('Mohammed Farid')
+  componentWillUnmount() {
+    navigator.geolocation.clearWatch(this.watchId);
+    //Location.stopUpdatingLocation();
     const myModuleEvt = new NativeEventEmitter(Location)
     myModuleEvt.removeListener('locationUpdated')
-
   }
 
-  componentDidMount() {
-    this.props.setHomeComponent(1)
 
+async componentDidMount() {
+  this.props.setHomeComponent(1)
+var self =this
 
-    // console.log(this.props)
-    this.currentLocationSetToOrder()
+  // console.log(this.props)
+  this.currentLocationSetToOrder()
+    this.watchId = navigator.geolocation.watchPosition(
+      (position) => {
+        console.log(position)
+        self.locationUpdated();      
+      },
+      (error) => this.setState({ error: error.message }),
+      { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000, distanceFilter: 10 },
+    );
+
+    // FCM.getInitialNotification().then(notif => {
+    //   this.setState({
+    //     initNotif: notif
+    //   })
+    //   if(notif && notif.targetScreen === 'detail'){
+    //     setTimeout(()=>{
+    //       this.props.navigation.navigate('Detail')
+    //     }, 500)
+    //   }
+    // });
+
+    // try{
+    //   let result = await FCM.requestPermissions({badge: false, sound: true, alert: true});
+    // } catch(e){
+    //   console.error(e);
+    // }
+
+    // FCM.getFCMToken().then(token => {
+    //   console.log("TOKEN (getFCMToken)", token);
+    //   ////// send this token to backend
+    //   this.setState({token: token || ""})
+    // });
+
+    // if(Platform.OS === 'ios'){
+    //   FCM.getAPNSToken().then(token => {
+    //     console.log("APNS TOKEN (getFCMToken)", token);
+    //   });
+    // }    
   }
+
+  // componentDidMount() {
+  //   this.props.setHomeComponent(1)
+
+
+  //   // console.log(this.props)
+  //   this.currentLocationSetToOrder()
+  // }
   currentLocationSetToOrder(){
       navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -269,42 +315,42 @@ this.props.setHomeComponent(2)
           </View> : <View style={{ width: 0, height: 0 }} />}
       </View>;
   }
-//   locationUpdated() {
-//     if (Platform.OS=='ios'){
-//         Location.requestAlwaysAuthorization();
-//         Location.setAllowsBackgroundLocationUpdates(true);
-//         Location.setDistanceFilter(50);
-//         Location.requestWhenInUseAuthorization();
-//     }else{
-//         Location.requestWhenInUseAuthorization();
-//     }
-//     Location.startUpdatingLocation();
-//     const myModuleEvt = new NativeEventEmitter(Location)
-//     var subscription = myModuleEvt.addListener(
-//         'locationUpdated',
-//         (position) => {
+  locationUpdated() {
+    if (Platform.OS=='ios'){
+        Location.requestAlwaysAuthorization();
+        Location.setAllowsBackgroundLocationUpdates(true);
+        Location.setDistanceFilter(50);
+        Location.requestWhenInUseAuthorization();
+    }else{
+        Location.requestWhenInUseAuthorization();
+    }
+    Location.startUpdatingLocation();
+    const myModuleEvt = new NativeEventEmitter(Location)
+    var subscription = myModuleEvt.addListener(
+        'locationUpdated',
+        (position) => {
 
 
-// //update order location
-// this.setState({lat:position.coords.latitude,lng:position.coords.longitude})
-// let orderService=new OrderService
-// orderService.setOrderLat(this.state.lat)
-// orderService.setOrderLng(this.state.lng)
-// ////***/////  */
-// this.props.createorder({user_lat:orderService.getOrderLat(),user_long:orderService.getOrderLng()})
+//update order location
+this.setState({lat:position.coords.latitude,lng:position.coords.longitude})
+let orderService=new OrderService
+orderService.setOrderLat(this.state.lat)
+orderService.setOrderLng(this.state.lng)
+////***/////  */
+this.props.createorder({user_lat:orderService.getOrderLat(),user_long:orderService.getOrderLng()})
 
-// console.log(orderService.getOrderLat())
+console.log(orderService.getOrderLat())
 
-//           // console.log(location)
-//           // var position = {
-//           //     lat: (Platform.OS=='ios')?location.coords.latitude : location.latitude,
-//           //     long: (Platform.OS=='ios')?location.coords.longitude : location.longitude
-//           // };
-//           // this.setState({position: position})
-//           // this.props.updateProvidorLocation(position)
-//         }
-//     );
-//   }
+          // console.log(location)
+          // var position = {
+          //     lat: (Platform.OS=='ios')?location.coords.latitude : location.latitude,
+          //     long: (Platform.OS=='ios')?location.coords.longitude : location.longitude
+          // };
+          // this.setState({position: position})
+          // this.props.updateProvidorLocation(position)
+        }
+    );
+  }
 }
 
 const styles = StyleSheet.create({

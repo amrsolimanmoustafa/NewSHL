@@ -5,6 +5,7 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
 		00C302E71ABCBA2D00DB3ED1 /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
@@ -13,6 +14,8 @@
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		03964A36E58B40F180CDF18F /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1AE67DB5250A4E0BA3D21963 /* FontAwesome.ttf */; };
 		03B191CCF8E8413CBF967004 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0CD9163A3BC74B189A811407 /* Ionicons.ttf */; };
+		0463971620A4748D004E625C /* libRNLocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04701BCD20A4716F003A4927 /* libRNLocation.a */; };
+		04701BC720A470F8003A4927 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04701B9D20A470F7003A4927 /* CoreLocation.framework */; };
 		0D97B31A0ADB40898286582D /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 126C9A2AB02E4CC0939F6FF7 /* Octicons.ttf */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
@@ -75,6 +78,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 832C81801AAF6DEF007FA2F7;
 			remoteInfo = RCTVibration;
+		};
+		04701BCC20A4716F003A4927 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 04701BC820A47167003A4927 /* RNLocation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNLocation;
 		};
 		139105C01AF99BAD00B5F7CC /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -340,6 +350,8 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* ShlTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ShlTests.m; sourceTree = "<group>"; };
 		046E83CB209F35B20088FE11 /* Shl.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = Shl.entitlements; path = Shl/Shl.entitlements; sourceTree = "<group>"; };
+		04701B9D20A470F7003A4927 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		04701BC820A47167003A4927 /* RNLocation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; path = RNLocation.xcodeproj; sourceTree = "<group>"; };
 		0CD9163A3BC74B189A811407 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/native-base/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		126C9A2AB02E4CC0939F6FF7 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/native-base/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		139105B61AF99BAD00B5F7CC /* RCTSettings.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTSettings.xcodeproj; path = "../node_modules/react-native/Libraries/Settings/RCTSettings.xcodeproj"; sourceTree = "<group>"; };
@@ -383,6 +395,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				04701BC720A470F8003A4927 /* CoreLocation.framework in Frameworks */,
+				0463971620A4748D004E625C /* libRNLocation.a in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -465,6 +479,14 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		04701BC920A47167003A4927 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				04701BCD20A4716F003A4927 /* libRNLocation.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		139105B71AF99BAD00B5F7CC /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -526,6 +548,8 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				04701BC820A47167003A4927 /* RNLocation.xcodeproj */,
+				04701B9D20A470F7003A4927 /* CoreLocation.framework */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
 				DCD7021F7763A5D28E6FCCCF /* libPods-Shl.a */,
 			);
@@ -710,7 +734,8 @@
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
-						DevelopmentTeam = 7D8VEM7KR4;
+						DevelopmentTeam = QNXSA88A9R;
+						ProvisioningStyle = Manual;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -791,6 +816,10 @@
 					ProductGroup = 146834001AC3E56700842450 /* Products */;
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
+				{
+					ProductGroup = 04701BC920A47167003A4927 /* Products */;
+					ProjectRef = 04701BC820A47167003A4927 /* RNLocation.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -833,6 +862,13 @@
 			fileType = archive.ar;
 			path = libRCTVibration.a;
 			remoteRef = 00C302E31ABCB9EE00DB3ED1 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		04701BCD20A4716F003A4927 /* libRNLocation.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNLocation.a;
+			remoteRef = 04701BCC20A4716F003A4927 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		139105C11AF99BAD00B5F7CC /* libRCTSettings.a */ = {
@@ -1179,9 +1215,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Shl/Shl.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = 7D8VEM7KR4;
+				DEVELOPMENT_TEAM = QNXSA88A9R;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-simple-toast/ios/LRDRCTSimpleToast",
@@ -1195,7 +1233,10 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = shlClient.com;
 				PRODUCT_NAME = Shl;
+				PROVISIONING_PROFILE = "62cb7bac-e507-44fd-8a8c-a861517a967c";
+				PROVISIONING_PROFILE_SPECIFIER = shlClient;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1206,8 +1247,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Shl/Shl.entitlements;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 7D8VEM7KR4;
+				DEVELOPMENT_TEAM = QNXSA88A9R;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-simple-toast/ios/LRDRCTSimpleToast",
@@ -1221,7 +1264,10 @@
 					"-ObjC",
 					"-lc++",
 				);
+				PRODUCT_BUNDLE_IDENTIFIER = shlClient.com;
 				PRODUCT_NAME = Shl;
+				PROVISIONING_PROFILE = "62cb7bac-e507-44fd-8a8c-a861517a967c";
+				PROVISIONING_PROFILE_SPECIFIER = shlClient;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
