@@ -36,7 +36,7 @@ backgroundColor:'#FFF'
         // }
         ,
           textInputContainer: {
-      backgroundColor: 'rgb(0,0,0,0)',
+      // backgroundColor: 'rgb(0,0,0,0)',
       borderWidth: 2,
       borderColor:'#FFF',
       borderRadius:20

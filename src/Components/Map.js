@@ -17,7 +17,7 @@ import SideMapButtons from "./SideMapButtons"
 import MainButtons from "./MainButtons"
 import OtlobMain from "./OtlobMain"
 import OtlobNow from "./OtlobNow"
-import {reverseCoordinatesToAdress} from "../actions/CommonServicesActions/commonServicesActions"
+import {reverseCoordinatesToAdress,setCoordnates} from "../actions/CommonServicesActions/commonServicesActions"
 import { withNavigation } from "react-navigation";
 import { connect } from 'react-redux'
 import {setHomeComponent} from "../actions/UpdateComponentsStateAction/updateComponentsStateAction"
@@ -28,7 +28,7 @@ import style from './Styles/MainButtonsStyle'
 import OrderService from '../service_api/OrderService'
 import GooglePlacesInput from "./GooglePlacesInput";
 const {width,height} = Dimensions.get('window')
-var { RNLocation: Location } = require('NativeModules');
+// var { RNLocation: Location } = require('NativeModules');
 
 class Map extends Component {
  //1: <OtlobMain/> 
@@ -43,87 +43,23 @@ class Map extends Component {
   }
   componentWillUnmount() {
     navigator.geolocation.clearWatch(this.watchId);
-    //Location.stopUpdatingLocation();
-    const myModuleEvt = new NativeEventEmitter(Location)
-    myModuleEvt.removeListener('locationUpdated')
+
   }
 
 
-async componentDidMount() {
+ componentWillMount() {
+
   this.props.setHomeComponent(1)
+  this.props.getServices('Mohammed Farid')
+
 var self =this
-
-  // console.log(this.props)
-  this.currentLocationSetToOrder()
-    this.watchId = navigator.geolocation.watchPosition(
-      (position) => {
-        console.log(position)
-        self.locationUpdated();      
-      },
-      (error) => this.setState({ error: error.message }),
-      { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000, distanceFilter: 10 },
-    );
-
-    // FCM.getInitialNotification().then(notif => {
-    //   this.setState({
-    //     initNotif: notif
-    //   })
-    //   if(notif && notif.targetScreen === 'detail'){
-    //     setTimeout(()=>{
-    //       this.props.navigation.navigate('Detail')
-    //     }, 500)
-    //   }
-    // });
-
-    // try{
-    //   let result = await FCM.requestPermissions({badge: false, sound: true, alert: true});
-    // } catch(e){
-    //   console.error(e);
-    // }
-
-    // FCM.getFCMToken().then(token => {
-    //   console.log("TOKEN (getFCMToken)", token);
-    //   ////// send this token to backend
-    //   this.setState({token: token || ""})
-    // });
-
-    // if(Platform.OS === 'ios'){
-    //   FCM.getAPNSToken().then(token => {
-    //     console.log("APNS TOKEN (getFCMToken)", token);
-    //   });
-    // }    
+console.log('lat ',this.props.common.lat)
+ 
   }
 
-  // componentDidMount() {
-  //   this.props.setHomeComponent(1)
-
-
-  //   // console.log(this.props)
-  //   this.currentLocationSetToOrder()
-  // }
-  currentLocationSetToOrder(){
-      navigator.geolocation.getCurrentPosition(
-      (position) => {
-        this.setState({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-          error: null,
-        });
-        this.setState({lat:position.coords.latitude,lng:position.coords.longitude})
-        let orderService=new OrderService
-        orderService.setOrderLat(this.state.lat)
-        orderService.setOrderLng(this.state.lng)
-        ////***/////  */
-    this.props.createorder({user_lat:orderService.getOrderLat(),user_long:orderService.getOrderLng()})
-
-    console.log(orderService.getOrderLat())
-      },
-      (error) => this.setState({ error: error.message }),
-      { enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
-    );
- }
+  
+  
   orderButtons_View(){
-    // if(this.state.showMainButtons){
       if(true){
 
       return (
@@ -172,14 +108,14 @@ this.props.setHomeComponent(2)
         </View>
 
         <MapView style={{ flex: 1, borderRadius: 10, borderWidth: 2, zIndex: 0, borderColor: "#fff" }}
-         region={{ latitude: this.state.lat ? this.state.lat : 0, 
-         longitude: this.state.lng ? this.state.lng : 0, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }} 
+         region={{  latitude:this.props.common.lat? this.props.common.lat : 6.2672295570373535,
+          longitude:this.props.common.lng?this.props.common.lng : 31.229478498675235, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }} 
          followsUserLocation={true} >
-          <MapView.Marker.Animated 
+          <MapView.Marker.Animated  draggable
                     coordinate={
                       new MapView.AnimatedRegion({
-                        latitude: this.state.lat? this.state.lat : 6.2672295570373535,
-                        longitude:this.state.lng? this.state.lng : 31.229478498675235,
+                        latitude:this.props.common.lat? this.props.common.lat : 6.2672295570373535,
+                        longitude:this.props.common.lng?this.props.common.lng : 31.229478498675235
                       })
                     }
                 />
@@ -206,16 +142,14 @@ this.props.setHomeComponent(2)
             {/* Sub services */}
             {this.state.page ? <View style={{ height: 110,marginTop:10, padding: 10, backgroundColor: "rgba(255,255,255,0.8)"}}>
                 <CarouselPager ref={ref => (this.carousel = ref)} initialPage={0} pageStyle={{ height: 110, alignItems: "center", justifyContent: "center" }} onPageChange={selectedService => {
-                    // this.setState({page:page,MainButtons:true})
-                    //dispach selected services
+               
                     selectedServices([
                       services[this.state.page].sup_serivces_data[
                         selectedService
                       ],
                       services[this.state.page]
                     ]);
-                    // console.log('services obj ::: ',{services_id:services[this.state.page]['services_id']
-                    // ,sub_services_id:services[this.state.page].sup_serivces_data[selectedService]['sub_services_id']})
+                 
                     createorder({
                       services_id: services[this.state.page]["services_id"],
                       sub_services_id:
@@ -315,42 +249,7 @@ this.props.setHomeComponent(2)
           </View> : <View style={{ width: 0, height: 0 }} />}
       </View>;
   }
-  locationUpdated() {
-    if (Platform.OS=='ios'){
-        Location.requestAlwaysAuthorization();
-        Location.setAllowsBackgroundLocationUpdates(true);
-        Location.setDistanceFilter(50);
-        Location.requestWhenInUseAuthorization();
-    }else{
-        Location.requestWhenInUseAuthorization();
-    }
-    Location.startUpdatingLocation();
-    const myModuleEvt = new NativeEventEmitter(Location)
-    var subscription = myModuleEvt.addListener(
-        'locationUpdated',
-        (position) => {
 
-
-//update order location
-this.setState({lat:position.coords.latitude,lng:position.coords.longitude})
-let orderService=new OrderService
-orderService.setOrderLat(this.state.lat)
-orderService.setOrderLng(this.state.lng)
-////***/////  */
-this.props.createorder({user_lat:orderService.getOrderLat(),user_long:orderService.getOrderLng()})
-
-console.log(orderService.getOrderLat())
-
-          // console.log(location)
-          // var position = {
-          //     lat: (Platform.OS=='ios')?location.coords.latitude : location.latitude,
-          //     long: (Platform.OS=='ios')?location.coords.longitude : location.longitude
-          // };
-          // this.setState({position: position})
-          // this.props.updateProvidorLocation(position)
-        }
-    );
-  }
 }
 
 const styles = StyleSheet.create({
@@ -381,6 +280,6 @@ const mapStateToProps = state => {
     getServices,
     setHomeComponent,
     selectedServices,
-    reverseCoordinatesToAdress,
+    reverseCoordinatesToAdress,setCoordnates,
     createorder
   }) (withNavigation(Map))

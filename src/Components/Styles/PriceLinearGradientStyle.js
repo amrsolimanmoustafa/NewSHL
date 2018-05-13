@@ -13,8 +13,9 @@ export default StyleSheet.create({
     justifyContent:"center",
     alignItems:"center",
     borderRadius:10,
-    elevation:10
-    ,flex:1
+    // elevation:10
+    // ,
+    flex:1
   },
   opacity:{
     height:"35%",
