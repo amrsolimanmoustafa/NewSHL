@@ -5,9 +5,9 @@
 	};
 	objectVersion = 46;
 	objects = {
-
 /* Begin PBXBuildFile section */
 		13BE3DEE1AC21097009241FE /* RNLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BE3DED1AC21097009241FE /* RNLocation.m */; };
+		19E9D66D89944F0082A54791 /* libRNFIRMessaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 54A4A0173BFA423483298162 /* libRNFIRMessaging.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -26,6 +26,8 @@
 		134814201AA4EA6300B7C361 /* libRNLocation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNLocation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		13BE3DEC1AC21097009241FE /* RNLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNLocation.h; sourceTree = "<group>"; };
 		13BE3DED1AC21097009241FE /* RNLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNLocation.m; sourceTree = "<group>"; };
+		9D86DF48D91F4631962F78FB /* RNFIRMessaging.xcodeproj */ = {isa = PBXFileReference; name = "RNFIRMessaging.xcodeproj"; path = "../node_modules/react-native-fcm/ios/RNFIRMessaging.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		54A4A0173BFA423483298162 /* libRNFIRMessaging.a */ = {isa = PBXFileReference; name = "libRNFIRMessaging.a"; path = "libRNFIRMessaging.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19E9D66D89944F0082A54791 /* libRNFIRMessaging.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -53,7 +56,17 @@
 				13BE3DEC1AC21097009241FE /* RNLocation.h */,
 				13BE3DED1AC21097009241FE /* RNLocation.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
+				26E60E8D0B3542A8B3A7C6E9 /* Libraries */,
 			);
+			sourceTree = "<group>";
+		};
+		26E60E8D0B3542A8B3A7C6E9 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				9D86DF48D91F4631962F78FB /* RNFIRMessaging.xcodeproj */,
+			);
+			name = Libraries;
+			path = "";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -82,7 +95,7 @@
 		58B511D31A9E6C8500147676 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0610;
+				LastUpgradeCheck = 610;
 				ORGANIZATIONNAME = Facebook;
 				TargetAttributes = {
 					58B511DA1A9E6C8500147676 = {
@@ -202,8 +215,12 @@
 					"$(SRCROOT)/../../React/**",
 					"$(SRCROOT)/node_modules/react-native/React/**",
 					"$(SRCROOT)/../react-native/React/**",
+					"$(SRCROOT)\..\node_modules\react-native-fcm\ios",
 				);
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/RNLocation\"",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = RNLocation;
 				SKIP_INSTALL = YES;
@@ -220,8 +237,12 @@
 					"$(SRCROOT)/../../React/**",
 					"$(SRCROOT)/node_modules/react-native/React/**",
 					"$(SRCROOT)/../react-native/React/**",
+					"$(SRCROOT)\..\node_modules\react-native-fcm\ios",
 				);
-				LIBRARY_SEARCH_PATHS = "$(inherited)";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/RNLocation\"",
+				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = RNLocation;
 				SKIP_INSTALL = YES;

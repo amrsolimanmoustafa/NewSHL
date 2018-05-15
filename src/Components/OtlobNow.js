@@ -40,8 +40,9 @@ import LinearGradient from "react-native-linear-gradient"
         <View style={stylesP.container}>
         <TouchableOpacity   
         onPress={()=>{
-
-          let order={services_id:makeOrder.services_id,sub_services_id:makeOrder.sub_services_id,user_id:auth.user_id,user_lat:makeOrder.user_lat,user_long:makeOrder.user_long}
+//     this.props.common.lat;
+//  this.props.common.lng;
+          let order = { services_id: makeOrder.services_id, sub_services_id: makeOrder.sub_services_id, user_id: auth.user_id, user_lat: this.props.common.lat, user_long: this.props.common.lat };
 let orderService=new OrderService
 orderService.createorder(order).then(res=>{
 console.log(res)
@@ -74,7 +75,9 @@ const mapStateToProps = state => {
     // common: state.common,
     // compState:state.compState,
     makeOrder:state.makeOrder,
-    auth:state.auth
+    auth:state.auth,
+        common: state.common,
+
 
   }
 }
