@@ -1,7 +1,7 @@
 package com.shl;
 
 import com.facebook.react.ReactActivity;
-import com.evollu.react.fcm.FIRMessagingPackage;
+//import com.evollu.react.fcm.FIRMessagingPackage;
 
 import android.content.Intent;
 public class MainActivity extends ReactActivity {
