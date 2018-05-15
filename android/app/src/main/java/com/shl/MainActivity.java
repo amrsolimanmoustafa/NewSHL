@@ -3,6 +3,7 @@ package com.shl;
 import com.facebook.react.ReactActivity;
 import com.evollu.react.fcm.FIRMessagingPackage;
 
+import android.content.Intent;
 public class MainActivity extends ReactActivity {
 
     /**
@@ -13,4 +14,8 @@ public class MainActivity extends ReactActivity {
     protected String getMainComponentName() {
         return "Shl";
     }
+
+     
+     
+       
 }

@@ -1,0 +1,73 @@
+{
+  "project_info": {
+    "project_number": "663864784757",
+    "firebase_url": "https://shlapp-fd7eb.firebaseio.com",
+    "project_id": "shlapp-fd7eb",
+    "storage_bucket": "shlapp-fd7eb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:663864784757:android:5adaa1e39bad189a",
+        "android_client_info": {
+          "package_name": "com.shl"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "663864784757-n3ufouslf8sif1aio3r0f6ceenmr0hbb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdduxa5uEPAqcKBndalSuXOO8o8XG3Z-k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:663864784757:android:c6b79c414dbaab3c",
+        "android_client_info": {
+          "package_name": "com.shlprovider"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "663864784757-n3ufouslf8sif1aio3r0f6ceenmr0hbb.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDdduxa5uEPAqcKBndalSuXOO8o8XG3Z-k"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
