@@ -8,6 +8,7 @@
 /* Begin PBXBuildFile section */
 		13BE3DEE1AC21097009241FE /* RNLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BE3DED1AC21097009241FE /* RNLocation.m */; };
 		19E9D66D89944F0082A54791 /* libRNFIRMessaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 54A4A0173BFA423483298162 /* libRNFIRMessaging.a */; };
+		608DC4B6179A4EABB640D707 /* libRCTOneSignal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 08F5D67E63D844028F2474BA /* libRCTOneSignal.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +29,8 @@
 		13BE3DED1AC21097009241FE /* RNLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNLocation.m; sourceTree = "<group>"; };
 		9D86DF48D91F4631962F78FB /* RNFIRMessaging.xcodeproj */ = {isa = PBXFileReference; name = "RNFIRMessaging.xcodeproj"; path = "../node_modules/react-native-fcm/ios/RNFIRMessaging.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		54A4A0173BFA423483298162 /* libRNFIRMessaging.a */ = {isa = PBXFileReference; name = "libRNFIRMessaging.a"; path = "libRNFIRMessaging.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		EE993DBD542842B49D3F3D6B /* RCTOneSignal.xcodeproj */ = {isa = PBXFileReference; name = "RCTOneSignal.xcodeproj"; path = "../node_modules/react-native-onesignal/ios/RCTOneSignal.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		08F5D67E63D844028F2474BA /* libRCTOneSignal.a */ = {isa = PBXFileReference; name = "libRCTOneSignal.a"; path = "libRCTOneSignal.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -36,6 +39,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				19E9D66D89944F0082A54791 /* libRNFIRMessaging.a in Frameworks */,
+				608DC4B6179A4EABB640D707 /* libRCTOneSignal.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,6 +68,7 @@
 			isa = PBXGroup;
 			children = (
 				9D86DF48D91F4631962F78FB /* RNFIRMessaging.xcodeproj */,
+				EE993DBD542842B49D3F3D6B /* RCTOneSignal.xcodeproj */,
 			);
 			name = Libraries;
 			path = "";
@@ -216,9 +221,11 @@
 					"$(SRCROOT)/node_modules/react-native/React/**",
 					"$(SRCROOT)/../react-native/React/**",
 					"$(SRCROOT)\..\node_modules\react-native-fcm\ios",
+					"$(SRCROOT)\..\node_modules\react-native-onesignal\ios/**",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/RNLocation\"",
 					"\"$(SRCROOT)/RNLocation\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
@@ -238,9 +245,11 @@
 					"$(SRCROOT)/node_modules/react-native/React/**",
 					"$(SRCROOT)/../react-native/React/**",
 					"$(SRCROOT)\..\node_modules\react-native-fcm\ios",
+					"$(SRCROOT)\..\node_modules\react-native-onesignal\ios/**",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/RNLocation\"",
 					"\"$(SRCROOT)/RNLocation\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";

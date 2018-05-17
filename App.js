@@ -14,6 +14,7 @@ import store from './src/store'
 import ReduxNavigation from './src/router/ReduxNavigation'
 
 export default class App extends Component<> {
+ 
   constructor(props){
     super(props),
     this.state = {

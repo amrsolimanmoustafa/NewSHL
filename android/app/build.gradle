@@ -1,3 +1,16 @@
+buildscript {
+    repositories {
+        maven { url 'https://plugins.gradle.org/m2/'}
+    }
+    dependencies {
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:0.8.1'
+    }
+}
+apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
+
+repositories {
+    maven { url 'https://maven.google.com' }
+}
 apply plugin: "com.android.application"
 import com.android.build.OutputFile
 
@@ -98,6 +111,11 @@ android {
 
     defaultConfig {
         applicationId "com.shl"
+        manifestPlaceholders = [
+                onesignal_app_id: 'a3551d54-e1bc-4f12-874c-7f6cb7982f95',
+                // Project number pulled from dashboard, local value is ignored.
+                onesignal_google_project_number: 'REMOTE'
+        ]
         minSdkVersion 16
         targetSdkVersion 22
         versionCode 1
@@ -139,6 +157,15 @@ dependencies {
     compile project(':react-native-localization')
     compile project(':react-native-linear-gradient')
     compile project(':react-native-maps')
+    compile project(':react-native-onesignal')
+  compile('com.onesignal:OneSignal:3.9.0') {
+        // Exclude com.android.support(Android Support library) as the version range starts at 26.0.0
+        //    This is due to compileSdkVersion defaulting to 23 which cant' be lower than the support library version
+        //    And the fact that the default root project is missing the Google Maven repo required to pull down 26.0.0+
+        exclude group: 'com.android.support'
+        // Keeping com.google.android.gms(Google Play services library) as this version range starts at 10.2.1
+    }
+    // compile project(':react-native-onesignal')
 //    compile project(':react-native-fcm')
 //    compile 'com.google.firebase:firebase-core:10.0.1' //this decides your firebase SDK version
 //    compile 'com.google.firebase:firebase-messaging:10.0.1'

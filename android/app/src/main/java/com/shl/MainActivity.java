@@ -1,6 +1,7 @@
 package com.shl;
 
 import com.facebook.react.ReactActivity;
+import com.geektime.rnonesignalandroid.ReactNativeOneSignalPackage;
 //import com.evollu.react.fcm.FIRMessagingPackage;
 
 import android.content.Intent;

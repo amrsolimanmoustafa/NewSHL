@@ -11,6 +11,7 @@ import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
+import com.geektime.rnonesignalandroid.ReactNativeOneSignalPackage;
 
 import java.util.Arrays;
 import java.util.List;
@@ -30,6 +31,8 @@ public class MainApplication extends Application implements ReactApplication {
             new ReactNativeLocalizationPackage(),
             // new ReactNativeLocalizationPackage(),
             new LinearGradientPackage(),
+            new ReactNativeOneSignalPackage(),
+
             new MapsPackage()
       );
     }

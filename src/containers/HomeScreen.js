@@ -12,6 +12,7 @@ import Map from '../Components/Map';
 
 import { withNavigation } from "react-navigation";
 import {reverseCoordinatesToAdress,setCoordnates} from "../actions/CommonServicesActions/commonServicesActions"
+import OneSignal from 'react-native-onesignal'; // Import package from node modules
 
 class HomeScreen extends Component  {
   constructor(props) {
@@ -19,9 +20,70 @@ class HomeScreen extends Component  {
 
    
   }
+  
   componentWillMount(){
+    // try{
+    OneSignal.init();
+    // }catch(e){
+      // console.log(e)
+    // }
    this.watchPosition()
+  
+   OneSignal.addEventListener('received', this.onReceived);
+   OneSignal.addEventListener('opened', this.onOpened);
+   OneSignal.addEventListener('ids', this.onIds);
+   OneSignal.configure({
+    onIdsAvailable: (device) =>{
+        console.log('UserId = ', device.userId);
+        console.log('PushToken = ', device.pushToken);
+        // device.pushToken.map(e=>{
+          alert(toString(device.userId))
+
+        // })
+    },
+  onNotificationReceived: function(notification) {
+    console.log('MESSAGE RECEIVED: ', notification["notification"]["notificationID"]);
+  },
+  onNotificationOpened: function(openResult) {
+      console.log('MESSAGE: ', openResult["notification"]["payload"]["body"]);
+      console.log('DATA: ', openResult["notification"]["payload"]["additionalData"]);
+      console.log('ISACTIVE: ', openResult["notification"]["isAppInFocus"]);
+      // Do whatever you want with the objects here
+      // _navigator.to('main.post', data.title, { // If applicable
+      //  article: {
+      //    title: openResult["notification"]["payload"]["body"],
+      //    link: openResult["notification"]["payload"]["launchURL"],
+      //    action: data.openResult["notification"]["action"]["actionSelected"]
+      //  }
+      // });
   }
+});
+}
+
+componentWillUnmount() {
+   OneSignal.removeEventListener('received', this.onReceived);
+   OneSignal.removeEventListener('opened', this.onOpened);
+   OneSignal.removeEventListener('ids', this.onIds);
+   navigator.geolocation.clearWatch(this.watchId);
+
+}
+
+onReceived(notification) {
+   console.log("Notification received: ", notification);
+}
+
+onOpened(openResult) {
+ console.log('Message: ', openResult.notification.payload.body);
+ console.log('Data: ', openResult.notification.payload.additionalData);
+ console.log('isActive: ', openResult.notification.isAppInFocus);
+ console.log('openResult: ', openResult);
+}
+
+onIds(device) {
+  // alert(device)
+  
+console.log('Device info: ', device);
+}
   componentDidMount() {
   
   
@@ -42,9 +104,9 @@ class HomeScreen extends Component  {
     { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000, distanceFilter: 100 },
   );
 }
-  componentWillUnmount() {
-    navigator.geolocation.clearWatch(this.watchId);
-  }
+  // componentWillUnmount() {
+  //   navigator.geolocation.clearWatch(this.watchId);
+  // }
 renderMap=()=>{
 // this.renderMap().then(mapa=> { })
   
