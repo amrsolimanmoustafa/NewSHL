@@ -1,9 +1,9 @@
-import {REVERSE_GEOLOCATION,SETCOORDINATES} from '../../actions/types'
+import {REVERSE_GEOLOCATION,SETCOORDINATES,SET_DRIVER_COORDINATES} from '../../actions/types'
 const initialState={
     location:'',
     adress:'',
     lng:'',
-    lat:'',
+    lat:'',driverLat:'',driverLng:''
    
 
 }
@@ -17,6 +17,10 @@ export default function(state=initialState,action){
         console.log('SETCOORDINATES dispached : ',action)
 
         return{...state,lat:action.payload.lat,lng:action.payload.lng}
+        case SET_DRIVER_COORDINATES:
+        console.log('SETCOORDINATES dispached : ',action)
+
+        return{...state,driverLat:action.payload.driverLat,driverLng:action.payload.driverLng}
         default:
         return state;
     }

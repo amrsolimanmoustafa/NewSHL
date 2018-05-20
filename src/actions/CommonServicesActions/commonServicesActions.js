@@ -1,4 +1,4 @@
-import {REVERSE_GEOLOCATION,SETCOORDINATES} from '../types'
+import {REVERSE_GEOLOCATION,SETCOORDINATES,SET_DRIVER_COORDINATES} from '../types'
 import Base from "../../Base"
 import axios from 'axios';
 
@@ -32,5 +32,13 @@ export const setCoordnates=(lat,lng)=>dispatch=>{
     dispatch({
 type:SETCOORDINATES,
 payload:{lat:lat,lng:lng}
+    })}catch(e){}
+}
+export const setDriverCoordnates=(lat,lng)=>dispatch=>{
+    console.log('setDriverCoordnates ::',lat,lng)
+    try{
+    dispatch({
+type:SET_DRIVER_COORDINATES,
+payload:{driverLat:lat,driverLng:lng}
     })}catch(e){}
 }

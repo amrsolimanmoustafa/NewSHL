@@ -21,7 +21,6 @@ import axios from 'axios';
 import { withNavigation } from "react-navigation";
 import Toast from "react-native-simple-toast";
 import { connect } from 'react-redux'
-import { fetchPosts } from "../../src/actions/postActions";
 import {loginUser} from "../../src/actions/authAction"
  class LoginInsertPhone extends Component<props> {
    state = { token_id:'',lang_id:'',phone: "", logedIn: null, loading: false, VerifyPhoneScreen: "", error: "" };
@@ -37,7 +36,6 @@ import {loginUser} from "../../src/actions/authAction"
    // }
 
    componentWillMount() {
-     this.props.fetchPosts();
    }
    render() {
      return <View style={styles.container}>
@@ -96,9 +94,8 @@ this.props.loginUser(data,this)
   // console.log(this.props)
   return {
     user:state.auth.user,
-    posts:state.posts
   }
 }
- export default connect(mapStateToProps, { loginUser,fetchPosts }) (withNavigation(LoginInsertPhone));
+ export default connect(mapStateToProps, { loginUser }) (withNavigation(LoginInsertPhone));
 
 // export default  withNavigation(LoginInsertPhone)

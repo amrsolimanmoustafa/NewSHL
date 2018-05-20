@@ -12,7 +12,7 @@ import Map from '../Components/Map';
 
 import { withNavigation } from "react-navigation";
 import {reverseCoordinatesToAdress,setCoordnates} from "../actions/CommonServicesActions/commonServicesActions"
-import OneSignal from 'react-native-onesignal'; // Import package from node modules
+// import OneSignal from 'react-native-onesignal'; // Import package from node modules
 import {refreshPlayerId} from "../../src/actions/authAction"
 
 
@@ -26,33 +26,33 @@ class HomeScreen extends Component  {
   
   componentWillMount(){
     // try{
-    OneSignal.init();
+    // OneSignal.init('a3551d54-e1bc-4f12-874c-7f6cb7982f95',  {kOSSettingsKeyAutoPrompt : true});
     // }catch(e){
       // console.log(e)
     // }
    this.watchPosition()
   self=this
-   OneSignal.addEventListener('received', this.onReceived);
-   OneSignal.addEventListener('opened', this.onOpened);
-   OneSignal.addEventListener('ids', this.onIds);
-   console.log('Device info: ',this.props);
+  //  OneSignal.addEventListener('received', this.onReceived);
+  //  OneSignal.addEventListener('opened', this.onOpened);
+  //  OneSignal.addEventListener('ids', this.onIds);
+  //  console.log('Device info: ',this.props);
 
-   OneSignal.configure({
-    onIdsAvailable: (device) =>{
-        console.log('UserId = ', device.userId);
-        console.log('PushToken = ', device.pushToken);
-        // device.pushToken.map(e=>{
-          alert(toString(device.userId))
+  //  OneSignal.configure({
+  //   onIdsAvailable: (device) =>{
+  //       console.log('UserId = ', device.userId);
+  //       console.log('PushToken = ', device.pushToken);
+  //       // device.pushToken.map(e=>{
+  //         // alert(toString(device.userId))
 
-        // })
-    },
-  onNotificationReceived: function(notification) {
-    console.log('MESSAGE RECEIVED: ', notification["notification"]["notificationID"]);
-  },
-  onNotificationOpened: function(openResult) {
-      console.log('MESSAGE: ', openResult["notification"]["payload"]["body"]);
-      console.log('DATA: ', openResult["notification"]["payload"]["additionalData"]);
-      console.log('ISACTIVE: ', openResult["notification"]["isAppInFocus"]);
+  //       // })
+  //   },
+  // onNotificationReceived: function(notification) {
+  //   console.log('MESSAGE RECEIVED: ', notification["notification"]["notificationID"]);
+  // },
+  // onNotificationOpened: function(openResult) {
+  //     console.log('MESSAGE: ', openResult["notification"]["payload"]["body"]);
+  //     console.log('DATA: ', openResult["notification"]["payload"]["additionalData"]);
+  //     console.log('ISACTIVE: ', openResult["notification"]["isAppInFocus"]);
       // Do whatever you want with the objects here
       // _navigator.to('main.post', data.title, { // If applicable
       //  article: {
@@ -61,33 +61,31 @@ class HomeScreen extends Component  {
       //    action: data.openResult["notification"]["action"]["actionSelected"]
       //  }
       // });
-  }
-});
+//   }
+// });
 }
 
 componentWillUnmount() {
-   OneSignal.removeEventListener('received', this.onReceived);
-   OneSignal.removeEventListener('opened', this.onOpened);
-   OneSignal.removeEventListener('ids', this.onIds);
+  //  OneSignal.removeEventListener('received', this.onReceived);
+  //  OneSignal.removeEventListener('opened', this.onOpened);
+  //  OneSignal.removeEventListener('ids', this.onIds);
    navigator.geolocation.clearWatch(this.watchId);
 
 }
 
-onReceived(notification) {
-   console.log("Notification received: ", notification);
-}
+// onReceived(notification) {
+//    console.log("Notification received: ", notification);
+// }
 
-onOpened(openResult) {
- console.log('Message: ', openResult.notification.payload.body);
- console.log('Data: ', openResult.notification.payload.additionalData);
- console.log('isActive: ', openResult.notification.isAppInFocus);
- console.log('openResult: ', openResult);
-}
- onIds(device) {
-
- 
-self.props.refreshPlayerId(self.props.user_id,device['userId'])
-}
+// onOpened(openResult) {
+//  console.log('Message: ', openResult.notification.payload.body);
+//  console.log('Data: ', openResult.notification.payload.additionalData);
+//  console.log('isActive: ', openResult.notification.isAppInFocus);
+//  console.log('openResult: ', openResult);
+// }
+//  onIds(device) {
+// self.props.refreshPlayerId(self.props.user_id,device['userId'])
+// }
   componentDidMount() {
   
   
@@ -98,10 +96,9 @@ self.props.refreshPlayerId(self.props.user_id,device['userId'])
   
     
     
-    this.watchId = navigator.geolocation.watchPosition(
+    this.watchId = navigator.geolocation.getCurrentPosition(
     (position) => {
       console.log(position)
-     
       this.props.setCoordnates(position.coords.latitude,position.coords.longitude)
     },
     (error) => self.setState({ error: error.message }),

@@ -28,8 +28,8 @@ class LoginScreen extends Component {
 
         <ImageBackground style={styles.loginBackground} source={Images.loginBackground} resizeMode={"cover"}>
 
-          <Animatable.View animation="fadeInLeftBig" iterationCount={1} direction="alternate" style={styles.main}>
-            <Animatable.Image source={Images.loginLogo} style={styles.loginLogo} animation="bounceIn" iterationCount={4} direction="alternate" resizeMode={"cover"} />
+          <View  style={styles.main}>
+            <Image source={Images.loginLogo} style={styles.loginLogo}  resizeMode={"cover"} />
             {/* <Image source={Images.loginLogo} style={styles.loginLogo} /> */}
             <View style={styles.input}>
               <LoginInsertPhone />
@@ -50,7 +50,7 @@ class LoginScreen extends Component {
                 <Image source={Images.SaudiFlag} style={styles.flagStyle} />
               </TouchableOpacity>
             </View>
-          </Animatable.View>
+          </View>
         </ImageBackground>
       </View>;
   }

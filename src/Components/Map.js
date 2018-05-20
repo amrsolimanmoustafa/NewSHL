@@ -17,7 +17,7 @@ import SideMapButtons from "./SideMapButtons"
 import MainButtons from "./MainButtons"
 import OtlobMain from "./OtlobMain"
 import OtlobNow from "./OtlobNow"
-import {reverseCoordinatesToAdress,setCoordnates} from "../actions/CommonServicesActions/commonServicesActions"
+import {reverseCoordinatesToAdress,setCoordnates,setDriverCoordnates} from "../actions/CommonServicesActions/commonServicesActions"
 import { withNavigation } from "react-navigation";
 import { connect } from 'react-redux'
 import {setHomeComponent} from "../actions/UpdateComponentsStateAction/updateComponentsStateAction"
@@ -33,11 +33,14 @@ import * as firebase from "firebase";
 // import * as GeoFire from "geofire";
 GeoFire = require('geofire');
 import MapViewDirections from 'react-native-maps-directions';
+import OneSignal from 'react-native-onesignal'; // Import package from node modules
 
 const GOOGLE_MAPS_APIKEY = 'AIzaSyAMVAuZSku-7gAMuWMFEj1kdjNtP2TLFOg';
+const self=[];
+
 class Map extends Component {
  //1: <OtlobMain/> 
-  state= { destination :{latitude:31.1064717, longitude:29.8279375},lat:0,lng:0,currentComponent:2,showMainButtons:true,page:0,mapState:'standard',servicesSliderState:true}
+  state= { lat:0,lng:0,currentComponent:2,showMainButtons:true,page:0,mapState:'standard',servicesSliderState:true}
   //  destination = {latitude:31.1064717, longitude:29.8279375};
 
   origin = {latitude:31.2064717, longitude:29.9279375};
@@ -61,12 +64,60 @@ class Map extends Component {
 
   }
 
+///////////////////////
+notificationHandler(self){
+  // try{
+  OneSignal.init('a3551d54-e1bc-4f12-874c-7f6cb7982f95',  {kOSSettingsKeyAutoPrompt : true});
+ OneSignal.addEventListener('received', self.onReceived);
+ OneSignal.addEventListener('opened', self.onOpened);
+ OneSignal.addEventListener('ids', self.onIds);
+ console.log('Device info: ',self.props);
 
+ OneSignal.configure({
+  onIdsAvailable: (device) =>{
+      console.log('UserId = ', device.userId);
+      console.log('PushToken = ', device.pushToken);
+        alert(toString(device.userId))
+  },
+onNotificationReceived: function(notification) {
+  console.log('MESSAGE RECEIVED: ', notification["notification"]["notificationID"]);
+},
+onNotificationOpened: function(openResult) {
+    console.log('MESSAGE: ', openResult["notification"]["payload"]["body"]);
+    console.log('DATA: ', openResult["notification"]["payload"]["additionalData"]);
+    console.log('ISACTIVE: ', openResult["notification"]["isAppInFocus"]);
+ 
+}
+});
+}
+componentWillUnmount() {
+  OneSignal.removeEventListener('received', this.onReceived);
+  OneSignal.removeEventListener('opened', this.onOpened);
+  OneSignal.removeEventListener('ids', this.onIds);
+  navigator.geolocation.clearWatch(this.watchId);
+
+}
+
+onReceived(notification) {
+  console.log("Notification received: ", notification);
+}
+
+onOpened(openResult) {
+console.log('Message: ', openResult.notification.payload.body);
+console.log('Data: ', openResult.notification.payload.additionalData);
+console.log('isActive: ', openResult.notification.isAppInFocus);
+console.log('openResult: ', openResult);
+}
+onIds(device) {
+self.props.refreshPlayerId(self.props.user_id,device['userId'])
+}
+//////////////////////
  componentWillMount() {
+  self=this
 
   this.props.setHomeComponent(1)
 
-  console.log('lat ',this.props.common)
+  // console.log('lat ',this.props.common)
 //should be reversed in order to get services  
   this.props.reverseCoordinatesToAdress(this.props.common.lat,this.props.common.lng)
 
@@ -75,8 +126,8 @@ class Map extends Component {
   //tracking listner staplesh here
 this.trackOrder('78',this)
 // this.props.reverseCoordinatesToAdress()
-var self =this
-console.log('lat ',this.props.common)
+
+// console.log('lat ',this.props.common)
  
   }
 trackOrder(order_id,self){
@@ -88,11 +139,14 @@ trackOrder(order_id,self){
 var geoFire = new GeoFire(firebaseRef);
   geoFire.get(order_id).then((location)=> {
     if (location === null) {
-self.setState({distination:{latitude:location[0],longitude:location[1]}})
-      console.log("Provided key is not in GeoFire");
+// self.setState({destinationLatitude:location[0],destinationLongitude:location[1]})
+self.props.setDriverCoordnates(location[0],location[1])
+      // console.log("Provided key is not in GeoFire",self.props.common.driverLat);
     }
     else {
-      console.log("Provided key has a location of " + location);
+      self.props.setDriverCoordnates(location[0],location[1])
+
+      // console.log("Provided key is not in GeoFire",self.props.common.driverLat);
 
 
     }
@@ -127,7 +181,7 @@ this.props.setHomeComponent(2)
     }
   }
   components=()=>  {
-    console.log('comp no . ::',this.props.compState.__CurrentComponent)
+    // console.log('comp no . ::',this.props.compState.__CurrentComponent)
     switch (this.props.compState.__CurrentComponent){
       case 1:
         return (<OtlobMain/>)
@@ -143,6 +197,7 @@ this.props.setHomeComponent(2)
     const {
       service,selectedServices,services,createorder
     } =  this.props
+  
     const base = new Base()
     // console.log('lat ',this.props.common.lat)
     return <View style={{ flex: 1, position: "relative", zIndex: 0 }}>
@@ -151,9 +206,11 @@ this.props.setHomeComponent(2)
         </View>
 
         <MapView
-        onMarkerDragEnd={(marker)=>{
-console.log(marker)
-        }}
+//         onMarkerDragEnd={(marker)=>{
+// console.log(marker)
+
+//         }}
+        
 //         onRegionChange={()=>{
 //           // console.log('r')
 //           this.setState({servicesSliderState:false})
@@ -164,13 +221,13 @@ if(this.state.servicesSliderState==true){
   this.setState({servicesSliderState:false})
 }else{ this.setState({servicesSliderState:true})}
 }}
-        onRegionChangeComplete={()=>{
-          console.log('r2')
-         return this.setState({servicesSliderState:true})
-// if(this.state.servicesSliderState==true){
-  // this.setState({servicesSliderState:false})
-// }else{ this.setState({servicesSliderState:true})}
-        }}
+//         onRegionChangeComplete={()=>{
+//           console.log('r2')
+//         //  return this.setState({servicesSliderState:true})
+// // if(this.state.servicesSliderState==true){
+//   // this.setState({servicesSliderState:false})
+// // }else{ this.setState({servicesSliderState:true})}
+//         }}
         mapType={this.state.mapState}
         style={{ flex: 1, borderRadius: 10, borderWidth: 2, zIndex: 0, borderColor: "#fff" }}
          region={{
@@ -181,22 +238,33 @@ if(this.state.servicesSliderState==true){
         }} 
         //  followsUserLocation={false} 
          >
-          <MapView.Marker.Animated  draggable
+          <MapView.Marker.Animated
+            draggable
                     coordinate={
                       new MapView.AnimatedRegion({
                         latitude:this.props.common.lat? this.props.common.lat : 6.2672295570373535,
                         longitude:this.props.common.lng?this.props.common.lng : 31.229478498675235
                       })
                     }
+                    onDragStart={()=>{
+                      this.setState({servicesSliderState:false})
+
+                    }}
+                    onDragEnd={(e) =>{
+                    this.props.setCoordnates(e.nativeEvent.coordinate.latitude,e.nativeEvent.coordinate.longitude)
+                    this.setState({servicesSliderState:true})
+                    }}
                 />
-                  <MapViewDirections
-    origin={ {latitude:this.props.common.lat,longitude:this.props.common.lng}}
-      destination={this.state.destination}
+                {this.props.common.driverLat?
+                    <MapViewDirections
+    origin={{latitude:this.props.common.lat,longitude:this.props.common.lng}}
+      destination={{latitude:this.props.common.driverLat, longitude:this.props.common.driverLng}}
+
     apikey={GOOGLE_MAPS_APIKEY}
     strokeWidth={3}
     strokeColor="hotpink"
-  />
-       </MapView>
+  />:null}
+       </MapView> 
         {this.props.compState.__CurrentComponent == 2 ? <OtlobNow  /> : <View style={{ width: 0, height: 0 }} />}
 
         {/* Right side buttons */}
@@ -244,7 +312,7 @@ if(this.state.mapState=="satellite"){
                           selectedService
                         ]["sub_services_id"]
                     });
-                    console.log(this.props);
+                    // console.log(this.props);
                     this.setState({ showMainButtons: true });
 
                     ////////////////////////////
@@ -367,6 +435,6 @@ const mapStateToProps = state => {
     getServices,
     setHomeComponent,
     selectedServices,
-    reverseCoordinatesToAdress,setCoordnates,
+    reverseCoordinatesToAdress,setCoordnates,setDriverCoordnates,
     createorder
   }) (withNavigation(Map))
