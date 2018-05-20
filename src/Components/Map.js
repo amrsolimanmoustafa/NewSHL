@@ -29,12 +29,27 @@ import OrderService from '../service_api/OrderService'
 import GooglePlacesInput from "./GooglePlacesInput";
 const {width,height} = Dimensions.get('window')
 // var { RNLocation: Location } = require('NativeModules');
+import * as firebase from "firebase";
+// import * as GeoFire from "geofire";
+GeoFire = require('geofire');
+import MapViewDirections from 'react-native-maps-directions';
 
+const GOOGLE_MAPS_APIKEY = 'AIzaSyAMVAuZSku-7gAMuWMFEj1kdjNtP2TLFOg';
 class Map extends Component {
  //1: <OtlobMain/> 
-  state= {lat:0,lng:0,currentComponent:2,showMainButtons:true,page:0}
+  state= { destination :{latitude:31.1064717, longitude:29.8279375},lat:0,lng:0,currentComponent:2,showMainButtons:true,page:0,mapState:'standard',servicesSliderState:true}
+  //  destination = {latitude:31.1064717, longitude:29.8279375};
+
+  origin = {latitude:31.2064717, longitude:29.9279375};
 
   constructor(props) {
+    console.clear
+    // console.log(this.state.origin)
+    // firebase.database().ref('orders').child('-LCi1Znmu8sDQ96pKVX3').on('').then(res=>{
+      // console.log(res)
+    // }).catch(e=>{
+// consol.log(e)
+    // })
     super(props);
     this.state = {
       showMainButtons:true
@@ -50,13 +65,41 @@ class Map extends Component {
  componentWillMount() {
 
   this.props.setHomeComponent(1)
+
+  console.log('lat ',this.props.common)
+//should be reversed in order to get services  
+  this.props.reverseCoordinatesToAdress(this.props.common.lat,this.props.common.lng)
+
   this.props.getServices('Mohammed Farid')
 
+  //tracking listner staplesh here
+this.trackOrder('78',this)
+// this.props.reverseCoordinatesToAdress()
 var self =this
-console.log('lat ',this.props.common.lat)
+console.log('lat ',this.props.common)
  
   }
+trackOrder(order_id,self){
+  var firebaseRef = firebase.database().ref('orders');
+  // try{
+    firebaseRef.child(order_id).on('value',(e)=>{
 
+   
+var geoFire = new GeoFire(firebaseRef);
+  geoFire.get(order_id).then((location)=> {
+    if (location === null) {
+self.setState({distination:{latitude:location[0],longitude:location[1]}})
+      console.log("Provided key is not in GeoFire");
+    }
+    else {
+      console.log("Provided key has a location of " + location);
+
+
+    }
+  }, (error)=> {
+    console.log("Error: " + error);
+  }); })
+}
   
   
   orderButtons_View(){
@@ -101,16 +144,43 @@ this.props.setHomeComponent(2)
       service,selectedServices,services,createorder
     } =  this.props
     const base = new Base()
-    console.log('lat ',this.props.common.lat)
+    // console.log('lat ',this.props.common.lat)
     return <View style={{ flex: 1, position: "relative", zIndex: 0 }}>
         <View style={{ width: "100%",position:'absolute',zIndex:3}}>
           <GooglePlacesInput  />
         </View>
 
-        <MapView style={{ flex: 1, borderRadius: 10, borderWidth: 2, zIndex: 0, borderColor: "#fff" }}
-         region={{  latitude:this.props.common.lat? this.props.common.lat : 6.2672295570373535,
-          longitude:this.props.common.lng?this.props.common.lng : 31.229478498675235, latitudeDelta: 0.0922, longitudeDelta: 0.0421 }} 
-         followsUserLocation={true} >
+        <MapView
+        onMarkerDragEnd={(marker)=>{
+console.log(marker)
+        }}
+//         onRegionChange={()=>{
+//           // console.log('r')
+//           this.setState({servicesSliderState:false})
+// break
+//         }}
+onPress={()=>{
+if(this.state.servicesSliderState==true){
+  this.setState({servicesSliderState:false})
+}else{ this.setState({servicesSliderState:true})}
+}}
+        onRegionChangeComplete={()=>{
+          console.log('r2')
+         return this.setState({servicesSliderState:true})
+// if(this.state.servicesSliderState==true){
+  // this.setState({servicesSliderState:false})
+// }else{ this.setState({servicesSliderState:true})}
+        }}
+        mapType={this.state.mapState}
+        style={{ flex: 1, borderRadius: 10, borderWidth: 2, zIndex: 0, borderColor: "#fff" }}
+         region={{
+             latitude:this.props.common.lat? this.props.common.lat : 6.2672295570373535,
+          longitude:this.props.common.lng?this.props.common.lng : 31.229478498675235
+          , latitudeDelta: 0.0922
+          , longitudeDelta: 0.0421 
+        }} 
+        //  followsUserLocation={false} 
+         >
           <MapView.Marker.Animated  draggable
                     coordinate={
                       new MapView.AnimatedRegion({
@@ -119,15 +189,31 @@ this.props.setHomeComponent(2)
                       })
                     }
                 />
+                  <MapViewDirections
+    origin={ {latitude:this.props.common.lat,longitude:this.props.common.lng}}
+      destination={this.state.destination}
+    apikey={GOOGLE_MAPS_APIKEY}
+    strokeWidth={3}
+    strokeColor="hotpink"
+  />
        </MapView>
         {this.props.compState.__CurrentComponent == 2 ? <OtlobNow  /> : <View style={{ width: 0, height: 0 }} />}
 
         {/* Right side buttons */}
         <View style={{ position: "absolute", right: 16, top: 105 }}>
-          <TouchableOpacity onPress={() => {}} style={styles.touchable}>
+          <TouchableOpacity onPress={() =>{}} style={styles.touchable}>
             <Image source={Images.pinIcon} style={styles.image} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => {}} style={[styles.touchable, { marginTop: 16 }]}>
+          <TouchableOpacity onPress={() => {
+if(this.state.mapState=="satellite"){
+  this.setState({mapState:"standard"})
+
+}else{
+  this.setState({mapState:"satellite"})
+
+}
+
+          }} style={[styles.touchable, { marginTop: 16 }]}>
             <Image source={Images.sataliteIcon} style={styles.image} />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {}} style={[styles.touchable, { marginTop: 16 }]}>
@@ -138,7 +224,8 @@ this.props.setHomeComponent(2)
           </TouchableOpacity>
         </View>
 
-        {service.length > 0 && this.props.compState.__CurrentComponent == 1 ? <View style={{ position: "absolute", left: 0, bottom: 10, right: 0 }}>
+        {service.length > 0 && this.props.compState.__CurrentComponent == 1 && this.state.servicesSliderState==true? 
+        <View style={{ position: "absolute", left: 0, bottom: 10, right: 0 }}>
             {/* Sub services */}
             {this.state.page ? <View style={{ height: 110,marginTop:10, padding: 10, backgroundColor: "rgba(255,255,255,0.8)"}}>
                 <CarouselPager ref={ref => (this.carousel = ref)} initialPage={0} pageStyle={{ height: 110, alignItems: "center", justifyContent: "center" }} onPageChange={selectedService => {

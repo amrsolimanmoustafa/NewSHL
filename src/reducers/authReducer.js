@@ -1,4 +1,4 @@
-import {FETCH_POSTS,LOGIN} from '../actions/types'
+import {FETCH_POSTS,LOGIN,REFRESH_PLAYER_ID} from '../actions/types'
 const initialState={
     user:[],
     user_phone:'',
@@ -9,6 +9,8 @@ export default function(state=initialState,action){
         case LOGIN:
         return {...state,
           user:action.payload,user_phone:action.payload.data.phone,user_id:action.payload.data.user_id}
+        //   case REFRESH_PLAYER_ID:
+        //   return{...state,}
         default:
         return state;
     }

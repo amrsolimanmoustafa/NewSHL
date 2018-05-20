@@ -13,7 +13,10 @@ import Map from '../Components/Map';
 import { withNavigation } from "react-navigation";
 import {reverseCoordinatesToAdress,setCoordnates} from "../actions/CommonServicesActions/commonServicesActions"
 import OneSignal from 'react-native-onesignal'; // Import package from node modules
+import {refreshPlayerId} from "../../src/actions/authAction"
 
+
+const self=[];
 class HomeScreen extends Component  {
   constructor(props) {
     super(props);
@@ -28,10 +31,12 @@ class HomeScreen extends Component  {
       // console.log(e)
     // }
    this.watchPosition()
-  
+  self=this
    OneSignal.addEventListener('received', this.onReceived);
    OneSignal.addEventListener('opened', this.onOpened);
    OneSignal.addEventListener('ids', this.onIds);
+   console.log('Device info: ',this.props);
+
    OneSignal.configure({
     onIdsAvailable: (device) =>{
         console.log('UserId = ', device.userId);
@@ -78,11 +83,10 @@ onOpened(openResult) {
  console.log('isActive: ', openResult.notification.isAppInFocus);
  console.log('openResult: ', openResult);
 }
+ onIds(device) {
 
-onIds(device) {
-  // alert(device)
-  
-console.log('Device info: ', device);
+ 
+self.props.refreshPlayerId(self.props.user_id,device['userId'])
 }
   componentDidMount() {
   
@@ -108,7 +112,6 @@ console.log('Device info: ', device);
   //   navigator.geolocation.clearWatch(this.watchId);
   // }
 renderMap=()=>{
-// this.renderMap().then(mapa=> { })
   
   return ( <View style={styles.Map}>
     <Map/>
@@ -131,11 +134,13 @@ renderMap=()=>{
 const mapStateToProps = state => {
   return {
     common:state.common,
+    user_id:state.auth.user_id
 
    }
   }
 const mapDispatchToProps = (dispatch) => {
   return {
+
   }
 }
-export default connect(mapStateToProps, { reverseCoordinatesToAdress,setCoordnates }) (withNavigation(HomeScreen))
+export default connect(mapStateToProps, { refreshPlayerId,reverseCoordinatesToAdress,setCoordnates }) (withNavigation(HomeScreen))
