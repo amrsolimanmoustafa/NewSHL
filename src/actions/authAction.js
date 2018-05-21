@@ -5,6 +5,7 @@ import { withNavigation } from "react-navigation";
 import Toast from "react-native-simple-toast";
 
 export const refreshPlayerId=(user_id,token_id)=>dispatch=>{
+  console.log('token uploaded',user_id,token_id)
 
  var base_url =new Base()
 var  REFRESH_TOKEN="http://" + base_url.baseUrl + "updateusertoken/"+user_id

@@ -32,6 +32,8 @@ const {width,height} = Dimensions.get('window')
 import * as firebase from "firebase";
 // import * as GeoFire from "geofire";
 GeoFire = require('geofire');
+import {refreshPlayerId} from "../../src/actions/authAction"
+
 import MapViewDirections from 'react-native-maps-directions';
 import OneSignal from 'react-native-onesignal'; // Import package from node modules
 
@@ -57,38 +59,15 @@ class Map extends Component {
     this.state = {
       showMainButtons:true
     }
- 
   }
-  componentWillUnmount() {
-    navigator.geolocation.clearWatch(this.watchId);
-
-  }
-
+  
 ///////////////////////
 notificationHandler(self){
   // try{
   OneSignal.init('a3551d54-e1bc-4f12-874c-7f6cb7982f95',  {kOSSettingsKeyAutoPrompt : true});
- OneSignal.addEventListener('received', self.onReceived);
- OneSignal.addEventListener('opened', self.onOpened);
- OneSignal.addEventListener('ids', self.onIds);
- console.log('Device info: ',self.props);
-
- OneSignal.configure({
-  onIdsAvailable: (device) =>{
-      console.log('UserId = ', device.userId);
-      console.log('PushToken = ', device.pushToken);
-        alert(toString(device.userId))
-  },
-onNotificationReceived: function(notification) {
-  console.log('MESSAGE RECEIVED: ', notification["notification"]["notificationID"]);
-},
-onNotificationOpened: function(openResult) {
-    console.log('MESSAGE: ', openResult["notification"]["payload"]["body"]);
-    console.log('DATA: ', openResult["notification"]["payload"]["additionalData"]);
-    console.log('ISACTIVE: ', openResult["notification"]["isAppInFocus"]);
- 
-}
-});
+  OneSignal.addEventListener('received', this.onReceived);
+  OneSignal.addEventListener('opened', this.onOpened);
+  OneSignal.addEventListener('ids', this.onIds);
 }
 componentWillUnmount() {
   OneSignal.removeEventListener('received', this.onReceived);
@@ -108,13 +87,16 @@ console.log('Data: ', openResult.notification.payload.additionalData);
 console.log('isActive: ', openResult.notification.isAppInFocus);
 console.log('openResult: ', openResult);
 }
+
 onIds(device) {
 self.props.refreshPlayerId(self.props.user_id,device['userId'])
 }
 //////////////////////
  componentWillMount() {
   self=this
+  this.notificationHandler(this)
 
+  this.notificationHandler(self)
   this.props.setHomeComponent(1)
 
   // console.log('lat ',this.props.common)
@@ -123,16 +105,16 @@ self.props.refreshPlayerId(self.props.user_id,device['userId'])
 
   this.props.getServices('Mohammed Farid')
 
-  //tracking listner staplesh here
-this.trackOrder('78',this)
+
 // this.props.reverseCoordinatesToAdress()
 
 // console.log('lat ',this.props.common)
  
   }
 trackOrder(order_id,self){
+  try{
+
   var firebaseRef = firebase.database().ref('orders');
-  // try{
     firebaseRef.child(order_id).on('value',(e)=>{
 
    
@@ -153,6 +135,8 @@ self.props.setDriverCoordnates(location[0],location[1])
   }, (error)=> {
     console.log("Error: " + error);
   }); })
+
+  }catch(e){}
 }
   
   
@@ -436,5 +420,5 @@ const mapStateToProps = state => {
     setHomeComponent,
     selectedServices,
     reverseCoordinatesToAdress,setCoordnates,setDriverCoordnates,
-    createorder
+    createorder,refreshPlayerId
   }) (withNavigation(Map))
