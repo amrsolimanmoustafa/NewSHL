@@ -62,13 +62,13 @@ class Map extends Component {
   }
   
 ///////////////////////
-notificationHandler(self){
-  // try{
-  OneSignal.init('a3551d54-e1bc-4f12-874c-7f6cb7982f95',  {kOSSettingsKeyAutoPrompt : true});
-  OneSignal.addEventListener('received', this.onReceived);
-  OneSignal.addEventListener('opened', this.onOpened);
-  OneSignal.addEventListener('ids', this.onIds);
-}
+// notificationHandler(self){
+//   // try{
+//   OneSignal.init('a3551d54-e1bc-4f12-874c-7f6cb7982f95',  {kOSSettingsKeyAutoPrompt : true});
+//   OneSignal.addEventListener('received', this.onReceived);
+//   OneSignal.addEventListener('opened', this.onOpened);
+//   OneSignal.addEventListener('ids', this.onIds);
+// }
 componentWillUnmount() {
   OneSignal.removeEventListener('received', this.onReceived);
   OneSignal.removeEventListener('opened', this.onOpened);
@@ -89,17 +89,19 @@ console.log('openResult: ', openResult);
 }
 
 onIds(device) {
+  console.log('kkkkkkkkk',self.props)
 self.props.refreshPlayerId(self.props.user_id,device['userId'])
 }
 //////////////////////
  componentWillMount() {
   self=this
-  this.notificationHandler(this)
-
-  this.notificationHandler(self)
+  // this.notificationHandler(this)
+  OneSignal.init('a3551d54-e1bc-4f12-874c-7f6cb7982f95',  {kOSSettingsKeyAutoPrompt : true});
+  OneSignal.addEventListener('received', this.onReceived);
+  OneSignal.addEventListener('opened', this.onOpened);
+  OneSignal.addEventListener('ids', this.onIds);
   this.props.setHomeComponent(1)
 
-  // console.log('lat ',this.props.common)
 //should be reversed in order to get services  
   this.props.reverseCoordinatesToAdress(this.props.common.lat,this.props.common.lng)
 
@@ -411,7 +413,9 @@ const mapStateToProps = state => {
     service: state.makeOrder.service ,
     common: state.common,
     compState:state.compState,
-    makeOrder:state.makeOrder
+    makeOrder:state.makeOrder,
+    user_id:state.auth.user_id
+
   }
 }
  export default connect(mapStateToProps,

@@ -25,19 +25,44 @@ class HomeScreen extends Component  {
   }
   
   componentWillMount(){
-    self=this
-
     // try{
-    OneSignal.init('a3551d54-e1bc-4f12-874c-7f6cb7982f95',  {kOSSettingsKeyAutoPrompt : true});
+    OneSignal.init();
     // }catch(e){
       // console.log(e)
     // }
-
-    this.watchPosition()
+   this.watchPosition()
+  self=this
    OneSignal.addEventListener('received', this.onReceived);
    OneSignal.addEventListener('opened', this.onOpened);
    OneSignal.addEventListener('ids', this.onIds);
-  //  console.log('Device info: ',this.props);
+   console.log('Device info: ',this.props);
+
+   OneSignal.configure({
+    onIdsAvailable: (device) =>{
+        console.log('UserId = ', device.userId);
+        console.log('PushToken = ', device.pushToken);
+        // device.pushToken.map(e=>{
+          alert(toString(device.userId))
+
+        // })
+    },
+  onNotificationReceived: function(notification) {
+    console.log('MESSAGE RECEIVED: ', notification["notification"]["notificationID"]);
+  },
+  onNotificationOpened: function(openResult) {
+      console.log('MESSAGE: ', openResult["notification"]["payload"]["body"]);
+      console.log('DATA: ', openResult["notification"]["payload"]["additionalData"]);
+      console.log('ISACTIVE: ', openResult["notification"]["isAppInFocus"]);
+      // Do whatever you want with the objects here
+      // _navigator.to('main.post', data.title, { // If applicable
+      //  article: {
+      //    title: openResult["notification"]["payload"]["body"],
+      //    link: openResult["notification"]["payload"]["launchURL"],
+      //    action: data.openResult["notification"]["action"]["actionSelected"]
+      //  }
+      // });
+  }
+});
 }
 
 componentWillUnmount() {
