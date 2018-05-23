@@ -33,10 +33,12 @@ import * as firebase from "firebase";
 // import * as GeoFire from "geofire";
 GeoFire = require('geofire');
 import {refreshPlayerId} from "../../src/actions/authAction"
+import { Toast } from "native-base";
 
 import MapViewDirections from 'react-native-maps-directions';
 import OneSignal from 'react-native-onesignal'; // Import package from node modules
 import { Calendar, CalendarList } from 'react-native-calendars';
+import { Alert } from './C:/Users/HeshamSalama/AppData/Local/Microsoft/TypeScript/2.6/node_modules/@types/react-native';
 
 const self=[];
 
@@ -223,6 +225,9 @@ if(this.state.servicesSliderState==true){
   onDayLongPress={(day) => {
     this.props.orderLater(day.dateString)
     this.setState({calenderShow:false})
+    // Toast.show('');
+alert("سوف يتم تذكيرك في "+day.dateString)
+
     console.log('selected day',day)
 }}
   // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
@@ -232,7 +237,6 @@ if(this.state.servicesSliderState==true){
 
   // Do not show days of other months in month page. Default = false
   hideExtraDays={true}
-  blurRadius={1}
   firstDay={1}
  
   showWeekNumbers={true}

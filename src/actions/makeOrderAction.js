@@ -54,12 +54,12 @@ export const selectedServices=(selectedServices)=>dispatch=>{
   })
 }
 export const orderLater=(scheduling_orders)=>dispatch=>{
-  const ORDER_LATER_URL="http://" + base_url.baseUrl + "orderschedul/orderid"
+  const ORDER_LATER_URL="http://" + base_url.baseUrl + "orderschedul"
   try {
     console.log(ORDER_LATER_URL,{scheduling_orders:scheduling_orders})
     //"2018-10-22" format
           axios
-            .put(ORDER_LATER_URL,{scheduling_orders:scheduling_orders})
+            .post(ORDER_LATER_URL,{scheduling_orders:scheduling_orders})
             .then((res) =>{
               console.log(res)
             }).catch(function(error) {
