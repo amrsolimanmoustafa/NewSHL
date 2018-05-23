@@ -7,7 +7,9 @@ import {
   Image,  Platform,
   StyleSheet,  DeviceEventEmitter,
   NativeEventEmitter,
-  Dimensions
+  Dimensions,
+  FlatList,
+  ImageBackground
 } from 'react-native'
 import MapView from 'react-native-maps';
 import CarouselPager from 'react-native-carousel-pager';
@@ -22,8 +24,10 @@ import { withNavigation } from "react-navigation";
 import { connect } from 'react-redux'
 import {setHomeComponent} from "../actions/UpdateComponentsStateAction/updateComponentsStateAction"
 import {getServices,selectedServices,createorder} from "../actions/makeOrderAction"
+import SmallButton from '../Components/SmallButton'
 import Base from '../Base'
 import LinearGradientForMap from "./LinearGradientForMap"
+import LinearGradient from 'react-native-linear-gradient';
 import style from './Styles/MainButtonsStyle'
 import OrderService from '../service_api/OrderService'
 import GooglePlacesInput from "./GooglePlacesInput";
@@ -36,6 +40,7 @@ import {refreshPlayerId} from "../../src/actions/authAction"
 
 import MapViewDirections from 'react-native-maps-directions';
 import OneSignal from 'react-native-onesignal'; // Import package from node modules
+import Carousel from 'react-native-snap-carousel';
 
 const GOOGLE_MAPS_APIKEY = 'AIzaSyAMVAuZSku-7gAMuWMFEj1kdjNtP2TLFOg';
 const self=[];
@@ -179,6 +184,12 @@ this.props.setHomeComponent(2)
     }
   }
 
+  _renderItem ({item, index}) {
+    return (
+      <Image style={{ width: 80, height: 80, marginHorizontal: 20 }} source={ require('../assets/Assets/Group_1634.png') } />
+    );
+  }
+
   render () {
     const {
       service,selectedServices,services,createorder
@@ -278,116 +289,30 @@ if(this.state.mapState=="satellite"){
           </TouchableOpacity>
         </View>
 
-        {service.length > 0 && this.props.compState.__CurrentComponent == 1 && this.state.servicesSliderState==true? 
-        <View style={{ position: "absolute", left: 0, bottom: 10, right: 0 }}>
-            {/* Sub services */}
-            {this.state.page ? <View style={{ height: 110,marginTop:10, padding: 10, backgroundColor: "rgba(255,255,255,0.8)"}}>
-                <CarouselPager ref={ref => (this.carousel = ref)} initialPage={0} pageStyle={{ height: 110, alignItems: "center", justifyContent: "center" }} onPageChange={selectedService => {
-               
-                    selectedServices([
-                      services[this.state.page].sup_serivces_data[
-                        selectedService
-                      ],
-                      services[this.state.page]
-                    ]);
-                 
-                    createorder({
-                      services_id: services[this.state.page]["services_id"],
-                      sub_services_id:
-                        services[this.state.page].sup_serivces_data[
-                          selectedService
-                        ]["sub_services_id"]
-                    });
-                    // console.log(this.props);
-                    this.setState({ showMainButtons: true });
+          {/* <FlatList
+            horizontal={ true }
+            style={{ width: '100%', backgroundColor: 'pink', height: 150, position: 'absolute', bottom: 0,  }}
+            data={[{key: 'aaaaaaaaaaaaaa'},{key: 'aaaaaaaaaaaaaa'},{key: 'aaaaaaaaaaaaaa'},]}
+            renderItem={({item}) => (
+              <Image style={{ width: 80, height: 80, marginHorizontal: 20 }} source={ require('../assets/Assets/Group_1634.png') } />
+            )}
+          /> */}
+          {/* <Carousel
+              ref={(c) => { this._carousel = c; }}
+              data={[{key: 'aaaaaaaaaaaaaa'},{key: 'aaaaaaaaaaaaaa'},{key: 'aaaaaaaaaaaaaa'},]}
+              renderItem={this._renderItem}
+              sliderWidth={200}
+              itemWidth={50}
+            /> */}
+        
+        <SmallButton 
+          name='محمد أحمد مصطفي ' 
+          carType='Mercedes 2018' 
+          mints={8} 
+          phoneNumber='012345678'
+          profileImage='http://www.status77.in/wp-content/uploads/2015/07/14533584_1117069508383461_6955991993080086528_n.jpg' />
+        
 
-                    ////////////////////////////
-                  }}>
-                  {service[parseInt(this.state.page)].sup_serivces_data.map(
-                    subService => (
-                      <TouchableOpacity
-                        key={subService.services_id}
-                        style={{
-                          height: 110,                            
-                          marginTop: 20,
-                          justifyContent: "center",
-                          alignItems: "center"
-                        }}
-                      >
-                        <Image
-                          source={{ uri: base.icon_url + subService.icone }}
-                          style={{
-                            width: 70,
-                            height: 70,
-                            borderRadius: 35,
-                            resizeMode: "contain"
-                          }}
-                        />
-                        <Text
-                          style={{
-                            marginTop: 5,
-                            fontSize: 12,
-                            color: "rgb(30,123,177)"
-                          }}
-                        >
-                          {subService.services_name_ar}
-                        </Text>
-                      </TouchableOpacity>
-                    )
-                  )}
-                </CarouselPager>
-              </View> : <View style={{ width: 0, height: 0 }} />}
-            {/* Main services */}
-            <View style={{ height: 130, padding: 10, backgroundColor: "rgba(255,255,255,0.8)", justifyContent: "center" }}>
-              <CarouselPager ref={ref => (this.carousel = ref)} initialPage={0} pageStyle={{height: 130, alignItems: "center", justifyContent: "center" }} onPageChange={page => {
-                  {
-                    selectedServices([
-                      services[page].sup_serivces_data[0],
-                      services[page]
-                    ]);
-                  }
-
-                  createorder({
-                    services_id: services[page]["services_id"],
-                    sub_services_id:
-                      services[page].sup_serivces_data[0]["sub_services_id"]
-                  });
-
-                  this.setState({ page: page.toString() });
-                }}>
-                {service.map(mainService => (
-                  <TouchableOpacity
-                    key={mainService.services_id}
-                    style={{marginBottom:40,
-                      height: 130,
-                      justifyContent: "center",
-                      alignItems: "center"
-                    }}
-                  >
-                    <Image
-                      source={{ uri: base.icon_url + mainService.icone }}
-                      style={{
-                        width: 70,
-                        height: 70,
-                        borderRadius: 35,
-                        resizeMode: "contain"
-                      }}
-                    />
-                    <Text
-                      style={{
-                        marginTop: 5,
-                        fontSize: 12,
-                        color: "rgb(30,123,177)"
-                      }}
-                    >
-                      {mainService.services_name_ar}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
-              </CarouselPager>
-            </View>
-            {this.orderButtons_View()}
-          </View> : <View style={{ width: 0, height: 0 }} />}
       </View>;
   }
 
