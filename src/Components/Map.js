@@ -23,7 +23,7 @@ import {reverseCoordinatesToAdress,setCoordnates,setDriverCoordnates} from "../a
 import { withNavigation } from "react-navigation";
 import { connect } from 'react-redux'
 import {setHomeComponent} from "../actions/UpdateComponentsStateAction/updateComponentsStateAction"
-import {getServices,selectedServices,createorder} from "../actions/makeOrderAction"
+import {getServices,selectedServices,createorder, orderLater} from "../actions/makeOrderAction"
 import SmallButton from '../Components/SmallButton'
 import Base from '../Base'
 import LinearGradientForMap from "./LinearGradientForMap"
@@ -42,72 +42,57 @@ import MapViewDirections from 'react-native-maps-directions';
 import OneSignal from 'react-native-onesignal'; // Import package from node modules
 import Carousel from 'react-native-snap-carousel';
 
-const GOOGLE_MAPS_APIKEY = 'AIzaSyAMVAuZSku-7gAMuWMFEj1kdjNtP2TLFOg';
 const self=[];
 
 class Map extends Component {
- //1: <OtlobMain/> 
-  state= { lat:0,lng:0,currentComponent:2,showMainButtons:true,page:0,mapState:'standard',servicesSliderState:true}
-  //  destination = {latitude:31.1064717, longitude:29.8279375};
+  state= { lat:0,lng:0,currentComponent:2,showMainButtons:true,page:0,mapState:'standard',servicesSliderState:true,calenderShow:false}
 
   origin = {latitude:31.2064717, longitude:29.9279375};
 
   constructor(props) {
-    console.clear
-    // console.log(this.state.origin)
-    // firebase.database().ref('orders').child('-LCi1Znmu8sDQ96pKVX3').on('').then(res=>{
-      // console.log(res)
-    // }).catch(e=>{
-// consol.log(e)
-    // })
     super(props);
     this.state = {
       showMainButtons:true
     }
   }
   
-///////////////////////
-// notificationHandler(self){
-//   // try{
-//   OneSignal.init('a3551d54-e1bc-4f12-874c-7f6cb7982f95',  {kOSSettingsKeyAutoPrompt : true});
-//   OneSignal.addEventListener('received', this.onReceived);
-//   OneSignal.addEventListener('opened', this.onOpened);
-//   OneSignal.addEventListener('ids', this.onIds);
-// }
 componentWillUnmount() {
   OneSignal.removeEventListener('received', this.onReceived);
   OneSignal.removeEventListener('opened', this.onOpened);
   OneSignal.removeEventListener('ids', this.onIds);
-  navigator.geolocation.clearWatch(this.watchId);
+}
+
+onReceived=(notification) =>{
+  console.log("Notification received: ",notification.payload.additionalData.data[2].order_id);
+  this.trackOrder(notification.payload.additionalData.data[2].order_id,self)
 
 }
 
-onReceived(notification) {
-  console.log("Notification received: ", notification);
-}
-
-onOpened(openResult) {
+onOpened=(openResult)=> {
 console.log('Message: ', openResult.notification.payload.body);
 console.log('Data: ', openResult.notification.payload.additionalData);
 console.log('isActive: ', openResult.notification.isAppInFocus);
 console.log('openResult: ', openResult);
+
 }
 
-onIds(device) {
-  console.log('kkkkkkkkk',self.props)
+onIds=(device)=> {
+console.log('Device info: ', device);
 self.props.refreshPlayerId(self.props.user_id,device['userId'])
+
 }
+
 //////////////////////
  componentWillMount() {
   self=this
-  // this.notificationHandler(this)
+  
   OneSignal.init('a3551d54-e1bc-4f12-874c-7f6cb7982f95',  {kOSSettingsKeyAutoPrompt : true});
-  OneSignal.addEventListener('received', this.onReceived);
+  OneSignal.addEventListener('received', self.onReceived);
   OneSignal.addEventListener('opened', this.onOpened);
   OneSignal.addEventListener('ids', this.onIds);
   this.props.setHomeComponent(1)
+  OneSignal.configure()
 
-//should be reversed in order to get services  
   this.props.reverseCoordinatesToAdress(this.props.common.lat,this.props.common.lng)
 
   this.props.getServices('Mohammed Farid')
@@ -119,6 +104,7 @@ self.props.refreshPlayerId(self.props.user_id,device['userId'])
  
   }
 trackOrder(order_id,self){
+  this.props.setHomeComponent(1)
   try{
 
   var firebaseRef = firebase.database().ref('orders');
@@ -128,14 +114,12 @@ trackOrder(order_id,self){
 var geoFire = new GeoFire(firebaseRef);
   geoFire.get(order_id).then((location)=> {
     if (location === null) {
-// self.setState({destinationLatitude:location[0],destinationLongitude:location[1]})
-self.props.setDriverCoordnates(location[0],location[1])
-      // console.log("Provided key is not in GeoFire",self.props.common.driverLat);
+
     }
     else {
       self.props.setDriverCoordnates(location[0],location[1])
 
-      // console.log("Provided key is not in GeoFire",self.props.common.driverLat);
+      console.log("Provided key is not in GeoFire",self.props.common.driverLat);
 
 
     }
@@ -154,7 +138,9 @@ self.props.setDriverCoordnates(location[0],location[1])
         
           <View style={{ backgroundColor: 'rgba(255,255,255,0.8)',justifyContent:"center",flexDirection:"row",position:"relative",zIndex:0,flex:1}}>
       <View style={style.opacityView}>
-        <TouchableOpacity style={style.opacityWight}>
+        <TouchableOpacity onPress={()=>{
+this.setState({calenderShow:true})   
+     }} style={style.opacityWight}>
           <Text style={style.opacityWightText}>
             اطلب لاحقاً
           </Text>
@@ -171,18 +157,7 @@ this.props.setHomeComponent(2)
       )
     }
   }
-  components=()=>  {
-    // console.log('comp no . ::',this.props.compState.__CurrentComponent)
-    switch (this.props.compState.__CurrentComponent){
-      case 1:
-        return (<OtlobMain/>)
-      case 2:
-        return (<OtlobNow/>)
-      case 3:
-        return ( <FavoritePlaces/>)
-      default: return
-    }
-  }
+
 
   _renderItem ({item, index}) {
     return (
@@ -196,35 +171,19 @@ this.props.setHomeComponent(2)
     } =  this.props
   
     const base = new Base()
-    // console.log('lat ',this.props.common.lat)
     return <View style={{ flex: 1, position: "relative", zIndex: 0 }}>
         <View style={{ width: "100%",position:'absolute',zIndex:3}}>
           <GooglePlacesInput  />
         </View>
 
         <MapView
-//         onMarkerDragEnd={(marker)=>{
-// console.log(marker)
 
-//         }}
-        
-//         onRegionChange={()=>{
-//           // console.log('r')
-//           this.setState({servicesSliderState:false})
-// break
-//         }}
 onPress={()=>{
 if(this.state.servicesSliderState==true){
   this.setState({servicesSliderState:false})
 }else{ this.setState({servicesSliderState:true})}
 }}
-//         onRegionChangeComplete={()=>{
-//           console.log('r2')
-//         //  return this.setState({servicesSliderState:true})
-// // if(this.state.servicesSliderState==true){
-//   // this.setState({servicesSliderState:false})
-// // }else{ this.setState({servicesSliderState:true})}
-//         }}
+
         mapType={this.state.mapState}
         style={{ flex: 1, borderRadius: 10, borderWidth: 2, zIndex: 0, borderColor: "#fff" }}
          region={{
@@ -233,10 +192,9 @@ if(this.state.servicesSliderState==true){
           , latitudeDelta: 0.0922
           , longitudeDelta: 0.0421 
         }} 
-        //  followsUserLocation={false} 
          >
           <MapView.Marker.Animated
-            draggable
+            draggable={true}
                     coordinate={
                       new MapView.AnimatedRegion({
                         latitude:this.props.common.lat? this.props.common.lat : 6.2672295570373535,
@@ -252,18 +210,80 @@ if(this.state.servicesSliderState==true){
                     this.setState({servicesSliderState:true})
                     }}
                 />
-                {this.props.common.driverLat?
-                    <MapViewDirections
-    origin={{latitude:this.props.common.lat,longitude:this.props.common.lng}}
-      destination={{latitude:this.props.common.driverLat, longitude:this.props.common.driverLng}}
-
-    apikey={GOOGLE_MAPS_APIKEY}
-    strokeWidth={3}
-    strokeColor="hotpink"
+                {console.log(this.props.common.driverLat)}
+                {this.props.common.driverLat!=''?
+                    <MapView.Marker.Animated
+                    // image={}
+                    coordinate={
+                      new MapView.AnimatedRegion({
+                        latitude:this.props.common.driverLat? this.props.common.lat : 0,
+                        longitude:this.props.common.driverLng?this.props.common.lng : 0
+                      })
+                    }
+    
   />:null}
        </MapView> 
-        {this.props.compState.__CurrentComponent == 2 ? <OtlobNow  /> : <View style={{ width: 0, height: 0 }} />}
+        {this.props.compState.__CurrentComponent === 2 ? <OtlobNow  /> : <View style={{ width: 0, height: 0 }} />}
+        {this.state.calenderShow==true?<Calendar
 
+  onDayPress={(day) => {
+    this.setState({calenderShow:false})
+    console.log('selected day', day)}}
+  // Handler which gets executed on day long press. Default = undefined
+  onDayLongPress={(day) => {
+    this.props.orderLater(day.dateString)
+    this.setState({calenderShow:false})
+    console.log('selected day',day)
+}}
+  // Month format in calendar title. Formatting values: http://arshaw.com/xdate/#Formatting
+  monthFormat={'yyyy MM'}
+  // Handler which gets executed when visible month changes in calendar. Default = undefined
+  onMonthChange={(month) => {console.log('month changed', month)}}
+
+  // Do not show days of other months in month page. Default = false
+  hideExtraDays={true}
+  blurRadius={1}
+  firstDay={1}
+ 
+  showWeekNumbers={true}
+  markingType={'custom'}
+  style={{
+    position:'absolute',
+    zIndex:4,
+
+    backgroundColor:'rgba(255,255,255,0.8)',
+    height: 320,alignItems:'center',top:0,justifyContent:'center'
+  }}
+  theme={{
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    calendarBackground: 'rgba(255,255,255,0.8)',
+    textSectionTitleColor: '#b6c1cd',
+    selectedDayBackgroundColor: '#00adf5',
+    selectedDayTextColor: '#ffffff',
+    todayTextColor: '#00adf5',
+    dayTextColor: '#2d4150',
+    textDisabledColor: '#d9e1e8',
+    dotColor: '#00adf5',
+    selectedDotColor: '#ffffff',
+    arrowColor: 'orange',
+    monthTextColor: 'blue',
+    textDayFontFamily: 'monospace',
+    textMonthFontFamily: 'monospace',
+    textDayHeaderFontFamily: 'monospace',
+    textMonthFontWeight: 'bold',
+    textDayFontSize: 16,
+    textMonthFontSize: 16,
+    textDayHeaderFontSize: 16
+  }}
+  // Handler which gets executed when press arrow icon left. It receive a callback can go back month
+  onPressArrowLeft={substractMonth => substractMonth()}
+  // Handler which gets executed when press arrow icon left. It receive a callback can go next month
+  onPressArrowRight={addMonth => addMonth()}
+    // Enable horizontal scrolling, default = false
+    horizontal={true}
+    // Enable paging on horizontal, default = false
+    pagingEnabled={true}
+/>:null}
         {/* Right side buttons */}
         <View style={{ position: "absolute", right: 16, top: 105 }}>
           <TouchableOpacity onPress={() =>{}} style={styles.touchable}>
@@ -281,12 +301,12 @@ if(this.state.mapState=="satellite"){
           }} style={[styles.touchable, { marginTop: 16 }]}>
             <Image source={Images.sataliteIcon} style={styles.image} />
           </TouchableOpacity>
-          <TouchableOpacity onPress={() => {}} style={[styles.touchable, { marginTop: 16 }]}>
+          {/* <TouchableOpacity onPress={() => {}} style={[styles.touchable, { marginTop: 16 }]}>
             <Image source={Images.kabbaIcon} style={styles.image} />
-          </TouchableOpacity>
-          <TouchableOpacity onPress={() => {}} style={[styles.touchable, { marginTop: 16 }]}>
+          </TouchableOpacity> */}
+          {/* <TouchableOpacity onPress={() => {}} style={[styles.touchable, { marginTop: 16 }]}>
             <Image source={Images.locatiOnMapIcon} style={styles.image} />
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
 
           {/* <FlatList
@@ -344,10 +364,8 @@ const mapStateToProps = state => {
   }
 }
  export default connect(mapStateToProps,
-  {
-    getServices,
+  {getServices,
     setHomeComponent,
     selectedServices,
     reverseCoordinatesToAdress,setCoordnates,setDriverCoordnates,
-    createorder,refreshPlayerId
-  }) (withNavigation(Map))
+    createorder,refreshPlayerId,orderLater}) (withNavigation(Map))

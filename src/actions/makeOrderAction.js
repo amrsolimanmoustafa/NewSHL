@@ -1,6 +1,7 @@
 import {  GETSERVESIES ,GETSELECTED_SERVICES,ORDER_OBJ} from "../actions/types";
 import Base from "../Base"
 import axios from 'axios';
+import { Toast } from "native-base";
 
 
 var VARS={'zone':''}
@@ -51,4 +52,20 @@ export const selectedServices=(selectedServices)=>dispatch=>{
     type:GETSELECTED_SERVICES,
     payload:selectedServices
   })
+}
+export const orderLater=(scheduling_orders)=>dispatch=>{
+  const ORDER_LATER_URL="http://" + base_url.baseUrl + "orderschedul/orderid"
+  try {
+    console.log(ORDER_LATER_URL,{scheduling_orders:scheduling_orders})
+    //"2018-10-22" format
+          axios
+            .put(ORDER_LATER_URL,{scheduling_orders:scheduling_orders})
+            .then((res) =>{
+              console.log(res)
+            }).catch(function(error) {
+              console.log(error);
+            });
+        } catch (error) {
+          console.error(error);
+        }
 }
