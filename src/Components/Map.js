@@ -21,7 +21,7 @@ import {reverseCoordinatesToAdress,setCoordnates,setDriverCoordnates} from "../a
 import { withNavigation } from "react-navigation";
 import { connect } from 'react-redux'
 import {setHomeComponent} from "../actions/UpdateComponentsStateAction/updateComponentsStateAction"
-import {getServices,selectedServices,createorder} from "../actions/makeOrderAction"
+import {getServices,selectedServices,createorder,orderLater} from "../actions/makeOrderAction"
 import Base from '../Base'
 import LinearGradientForMap from "./LinearGradientForMap"
 import style from './Styles/MainButtonsStyle'
@@ -36,7 +36,7 @@ import {refreshPlayerId} from "../../src/actions/authAction"
 
 import MapViewDirections from 'react-native-maps-directions';
 import OneSignal from 'react-native-onesignal'; // Import package from node modules
-import { Calendar, CalendarList, Agenda } from 'react-native-calendars';
+import { Calendar, CalendarList } from 'react-native-calendars';
 
 const self=[];
 
@@ -221,6 +221,7 @@ if(this.state.servicesSliderState==true){
     console.log('selected day', day)}}
   // Handler which gets executed on day long press. Default = undefined
   onDayLongPress={(day) => {
+    this.props.orderLater(day.dateString)
     this.setState({calenderShow:false})
     console.log('selected day',day)
 }}
@@ -443,4 +444,4 @@ const mapStateToProps = state => {
     setHomeComponent,
     selectedServices,
     reverseCoordinatesToAdress,setCoordnates,setDriverCoordnates,
-    createorder,refreshPlayerId}) (withNavigation(Map))
+    createorder,refreshPlayerId,orderLater}) (withNavigation(Map))
