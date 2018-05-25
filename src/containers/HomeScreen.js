@@ -132,7 +132,7 @@ componentWillUnmount() {
 // }
   
   componentDidMount(){
-    this.cancelPopupDialog.show()
+    this.endPopupDialog.show()
   }
 
   watchPosition(){
@@ -210,6 +210,56 @@ componentWillUnmount() {
                 </Text>
               </TouchableOpacity>
             ))}
+          </View>
+          <TouchableOpacity
+            onPress={()=> this.cancelOrder()}
+            style={{width: 180,height: 40,borderRadius: 20,marginTop: 18,alignSelf: 'center'}}
+          >
+            <ImageBackground
+              source={require('../assets/images/Gradient_WideBackground_image.png')}
+              style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}
+            >
+              <Text style={{color: '#ffffff',fontSize: 13,fontFamily: 'NeoSansArabic'}}>
+                {'Approve'}
+              </Text>
+            </ImageBackground>
+          </TouchableOpacity>
+        </View>
+      </PopupDialog>
+      <PopupDialog
+        ref={(popupDialog) => { this.endPopupDialog = popupDialog; }}
+        width={220}
+        height={320}
+        haveTitleBar={false}
+      >
+        <View style={{flex: 1,backgroundColor: '#FFFFFF',borderRadius: 9,padding: 10}}>
+          <Text style={{fontFamily: 'NeoSansArabic',fontSize: 16,color: '#707070',textAlign: 'center'}}>
+            Rate Order
+          </Text>
+          <View style={{alignItems: 'center'}}>
+            <Image
+              source={require('../assets/images/Driver-image.png')}
+              style={{width: 90,height: 90,resizeMode: 'cover',borderRadius: 4}}
+            />
+            <Text style={{fontFamily: 'NeoSansArabic',fontSize: 14,color: '#707070',textAlign: 'center'}}>
+              محمد احمد مصطفي
+            </Text>
+            <StarRating
+              disabled={false}
+              emptyStar={'ios-star-outline'}
+              fullStar={'ios-star'}
+              halfStar={'ios-star-half'}
+              iconSet={'Ionicons'}
+              maxStars={5}
+              rating={this.state.starCount}
+              selectedStar={(rating) => this.onStarRatingPress(rating)}
+              fullStarColor={'#1D7AB3'}
+            />
+          </View>
+          <View style={{marginTop: 10}}>
+            <TextInput
+              style={{height: 60,borderWidth: 1,borderColor: '#000000',borderRadius: 4}}
+            />
           </View>
           <TouchableOpacity
             onPress={()=> this.cancelOrder()}
