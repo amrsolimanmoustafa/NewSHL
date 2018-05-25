@@ -37,7 +37,7 @@ import * as firebase from "firebase";
 // import * as GeoFire from "geofire";
 GeoFire = require('geofire');
 import {refreshPlayerId} from "../../src/actions/authAction"
-
+import FavoritePlaces from "./FavoritePlaces"
 import OneSignal from 'react-native-onesignal'; // Import package from node modules
 import Carousel from 'react-native-snap-carousel';
 import {Calendar} from 'react-native-calendars'
@@ -294,7 +294,9 @@ if(this.state.servicesSliderState==true){
 />:null}
         {/* Right side buttons */}
         <View style={{ position: "absolute", right: 16, top: 105 }}>
-          <TouchableOpacity onPress={() =>{}} style={styles.touchable}>
+          <TouchableOpacity onPress={() =>{
+            return <FavoritePlaces/>
+          }} style={styles.touchable}>
             <Image source={Images.pinIcon} style={styles.image} />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {
