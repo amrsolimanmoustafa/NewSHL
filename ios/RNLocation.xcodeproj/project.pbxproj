@@ -5,11 +5,29 @@
 	};
 	objectVersion = 46;
 	objects = {
+
 /* Begin PBXBuildFile section */
 		13BE3DEE1AC21097009241FE /* RNLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BE3DED1AC21097009241FE /* RNLocation.m */; };
 		19E9D66D89944F0082A54791 /* libRNFIRMessaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 54A4A0173BFA423483298162 /* libRNFIRMessaging.a */; };
 		608DC4B6179A4EABB640D707 /* libRCTOneSignal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 08F5D67E63D844028F2474BA /* libRCTOneSignal.a */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		D1CE816C20B84B01000508DB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EE993DBD542842B49D3F3D6B /* RCTOneSignal.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3245CDED1BFEE35C00EABF68;
+			remoteInfo = RCTOneSignal;
+		};
+		D1CE817320B84B21000508DB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C65905E56AC4672A299994C /* RNLocation.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RNLocation;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
 		58B511D91A9E6C8500147676 /* CopyFiles */ = {
@@ -24,13 +42,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		08F5D67E63D844028F2474BA /* libRCTOneSignal.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTOneSignal.a; sourceTree = "<group>"; };
 		134814201AA4EA6300B7C361 /* libRNLocation.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRNLocation.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		13BE3DEC1AC21097009241FE /* RNLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RNLocation.h; sourceTree = "<group>"; };
 		13BE3DED1AC21097009241FE /* RNLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNLocation.m; sourceTree = "<group>"; };
-		9D86DF48D91F4631962F78FB /* RNFIRMessaging.xcodeproj */ = {isa = PBXFileReference; name = "RNFIRMessaging.xcodeproj"; path = "../node_modules/react-native-fcm/ios/RNFIRMessaging.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		54A4A0173BFA423483298162 /* libRNFIRMessaging.a */ = {isa = PBXFileReference; name = "libRNFIRMessaging.a"; path = "libRNFIRMessaging.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
-		EE993DBD542842B49D3F3D6B /* RCTOneSignal.xcodeproj */ = {isa = PBXFileReference; name = "RCTOneSignal.xcodeproj"; path = "../node_modules/react-native-onesignal/ios/RCTOneSignal.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
-		08F5D67E63D844028F2474BA /* libRCTOneSignal.a */ = {isa = PBXFileReference; name = "libRCTOneSignal.a"; path = "libRCTOneSignal.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		3C65905E56AC4672A299994C /* RNLocation.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNLocation.xcodeproj; path = "../node_modules/react-native-location/RNLocation.xcodeproj"; sourceTree = "<group>"; };
+		54A4A0173BFA423483298162 /* libRNFIRMessaging.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFIRMessaging.a; sourceTree = "<group>"; };
+		9D86DF48D91F4631962F78FB /* RNFIRMessaging.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFIRMessaging.xcodeproj; path = "../node_modules/react-native-fcm/ios/RNFIRMessaging.xcodeproj"; sourceTree = "<group>"; };
+		EE993DBD542842B49D3F3D6B /* RCTOneSignal.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTOneSignal.xcodeproj; path = "../node_modules/react-native-onesignal/ios/RCTOneSignal.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +73,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		26E60E8D0B3542A8B3A7C6E9 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				9D86DF48D91F4631962F78FB /* RNFIRMessaging.xcodeproj */,
+				EE993DBD542842B49D3F3D6B /* RCTOneSignal.xcodeproj */,
+				3C65905E56AC4672A299994C /* RNLocation.xcodeproj */,
+			);
+			name = Libraries;
+			sourceTree = "<group>";
+		};
 		58B511D21A9E6C8500147676 = {
 			isa = PBXGroup;
 			children = (
@@ -61,17 +90,33 @@
 				13BE3DED1AC21097009241FE /* RNLocation.m */,
 				134814211AA4EA7D00B7C361 /* Products */,
 				26E60E8D0B3542A8B3A7C6E9 /* Libraries */,
+				D1CE813E20B84678000508DB /* Recovered References */,
 			);
 			sourceTree = "<group>";
 		};
-		26E60E8D0B3542A8B3A7C6E9 /* Libraries */ = {
+		D1CE813E20B84678000508DB /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
-				9D86DF48D91F4631962F78FB /* RNFIRMessaging.xcodeproj */,
-				EE993DBD542842B49D3F3D6B /* RCTOneSignal.xcodeproj */,
+				54A4A0173BFA423483298162 /* libRNFIRMessaging.a */,
+				08F5D67E63D844028F2474BA /* libRCTOneSignal.a */,
 			);
-			name = Libraries;
-			path = "";
+			name = "Recovered References";
+			sourceTree = "<group>";
+		};
+		D1CE816920B84B01000508DB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D1CE816D20B84B01000508DB /* libRCTOneSignal.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		D1CE816F20B84B21000508DB /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D1CE817420B84B21000508DB /* libRNLocation.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -118,12 +163,39 @@
 			mainGroup = 58B511D21A9E6C8500147676;
 			productRefGroup = 58B511D21A9E6C8500147676;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = D1CE816920B84B01000508DB /* Products */;
+					ProjectRef = EE993DBD542842B49D3F3D6B /* RCTOneSignal.xcodeproj */;
+				},
+				{
+					ProductGroup = D1CE816F20B84B21000508DB /* Products */;
+					ProjectRef = 3C65905E56AC4672A299994C /* RNLocation.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				58B511DA1A9E6C8500147676 /* RNLocation */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		D1CE816D20B84B01000508DB /* libRCTOneSignal.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTOneSignal.a;
+			remoteRef = D1CE816C20B84B01000508DB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		D1CE817420B84B21000508DB /* libRNLocation.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRNLocation.a;
+			remoteRef = D1CE817320B84B21000508DB /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXSourcesBuildPhase section */
 		58B511D71A9E6C8500147676 /* Sources */ = {
@@ -220,8 +292,8 @@
 					"$(SRCROOT)/../../React/**",
 					"$(SRCROOT)/node_modules/react-native/React/**",
 					"$(SRCROOT)/../react-native/React/**",
-					"$(SRCROOT)\..\node_modules\react-native-fcm\ios",
-					"$(SRCROOT)\..\node_modules\react-native-onesignal\ios/**",
+					"$(SRCROOT)..\node_modules\neact-native-fcmios",
+					"$(SRCROOT)..\node_modules\neact-native-onesignalios/**",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -244,8 +316,8 @@
 					"$(SRCROOT)/../../React/**",
 					"$(SRCROOT)/node_modules/react-native/React/**",
 					"$(SRCROOT)/../react-native/React/**",
-					"$(SRCROOT)\..\node_modules\react-native-fcm\ios",
-					"$(SRCROOT)\..\node_modules\react-native-onesignal\ios/**",
+					"$(SRCROOT)..\node_modules\neact-native-fcmios",
+					"$(SRCROOT)..\node_modules\neact-native-onesignalios/**",
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",

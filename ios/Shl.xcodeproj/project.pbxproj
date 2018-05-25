@@ -14,8 +14,6 @@
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		03964A36E58B40F180CDF18F /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1AE67DB5250A4E0BA3D21963 /* FontAwesome.ttf */; };
 		03B191CCF8E8413CBF967004 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 0CD9163A3BC74B189A811407 /* Ionicons.ttf */; };
-		0463971620A4748D004E625C /* libRNLocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 04701BCD20A4716F003A4927 /* libRNLocation.a */; };
-		04701BC720A470F8003A4927 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04701B9D20A470F7003A4927 /* CoreLocation.framework */; };
 		0D97B31A0ADB40898286582D /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 126C9A2AB02E4CC0939F6FF7 /* Octicons.ttf */; };
 		133E29F31AD74F7200F7D852 /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
 		139105C61AF99C1200B5F7CC /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
@@ -36,6 +34,7 @@
 		A42338E18FA241ADB7C50014 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1F104B3B6F9F41C18BF945F3 /* EvilIcons.ttf */; };
 		ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */ = {isa = PBXBuildFile; fileRef = ADBDB9271DFEBF0700ED6528 /* libRCTBlob.a */; };
 		CF0610882F1A4BBEB5D6ECD1 /* libBVLinearGradient.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E855758A55944AA4BF3453FB /* libBVLinearGradient.a */; };
+		D1CE817B20B84BAE000508DB /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 04701B9D20A470F7003A4927 /* CoreLocation.framework */; };
 		D1F7F8F720971557006A8A4F /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = D1F7F8F620971550006A8A4F /* libAirMaps.a */; };
 		D66FD77DCE8C4E7B9A62BB1B /* Roboto.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 60486709C6C94AC599816148 /* Roboto.ttf */; };
 		DAA46EFAE2C74B819ADA87A6 /* Roboto_medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DD5A1EC75BCB4805AF9B4000 /* Roboto_medium.ttf */; };
@@ -395,8 +394,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				04701BC720A470F8003A4927 /* CoreLocation.framework in Frameworks */,
-				0463971620A4748D004E625C /* libRNLocation.a in Frameworks */,
+				D1CE817B20B84BAE000508DB /* CoreLocation.framework in Frameworks */,
 				ADBDB9381DFEBF1600ED6528 /* libRCTBlob.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -548,7 +546,6 @@
 		2D16E6871FA4F8E400B85C8A /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				04701BC820A47167003A4927 /* RNLocation.xcodeproj */,
 				04701B9D20A470F7003A4927 /* CoreLocation.framework */,
 				2D16E6891FA4F8E400B85C8A /* libReact.a */,
 				DCD7021F7763A5D28E6FCCCF /* libPods-Shl.a */,
@@ -596,6 +593,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				04701BC820A47167003A4927 /* RNLocation.xcodeproj */,
 				D1F7F8F120971550006A8A4F /* AirMaps.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -735,7 +733,7 @@
 				TargetAttributes = {
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = QNXSA88A9R;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
 						SystemCapabilities = {
 							com.apple.Push = {
 								enabled = 1;
@@ -1215,8 +1213,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Shl/Shl.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = QNXSA88A9R;
@@ -1235,8 +1233,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = shlClient.com;
 				PRODUCT_NAME = Shl;
-				PROVISIONING_PROFILE = "62cb7bac-e507-44fd-8a8c-a861517a967c";
-				PROVISIONING_PROFILE_SPECIFIER = shlClient;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -1247,8 +1245,8 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Shl/Shl.entitlements;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = QNXSA88A9R;
 				HEADER_SEARCH_PATHS = (
@@ -1266,8 +1264,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = shlClient.com;
 				PRODUCT_NAME = Shl;
-				PROVISIONING_PROFILE = "62cb7bac-e507-44fd-8a8c-a861517a967c";
-				PROVISIONING_PROFILE_SPECIFIER = shlClient;
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
