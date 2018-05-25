@@ -38,14 +38,13 @@ import * as firebase from "firebase";
 GeoFire = require('geofire');
 import {refreshPlayerId} from "../../src/actions/authAction"
 
-import MapViewDirections from 'react-native-maps-directions';
 import OneSignal from 'react-native-onesignal'; // Import package from node modules
 import Carousel from 'react-native-snap-carousel';
-
+import {Calendar} from 'react-native-calendars'
 const self=[];
 
 class Map extends Component {
-  state= { lat:0,lng:0,currentComponent:2,showMainButtons:true,page:0,mapState:'standard',servicesSliderState:true,calenderShow:false}
+  state= { lat:0,lng:0,currentComponent:2,showMainButtons:true,page:0,provider_info:[],mapState:'standard',servicesSliderState:true,calenderShow:false}
 
   origin = {latitude:31.2064717, longitude:29.9279375};
 
@@ -64,7 +63,10 @@ componentWillUnmount() {
 
 onReceived=(notification) =>{
   console.log("Notification received: ",notification.payload.additionalData.data[2].order_id);
+  if(notification.payload.additionalData.data[1].type=='order_accepted'){
+    this.setState({provider_info:notification.payload.additionalData.data[0]})
   this.trackOrder(notification.payload.additionalData.data[2].order_id,self)
+}
 
 }
 
@@ -80,16 +82,22 @@ onIds=(device)=> {
 console.log('Device info: ', device);
 self.props.refreshPlayerId(self.props.user_id,device['userId'])
 
+OneSignal.addEventListener('received', self.onReceived);
+OneSignal.addEventListener('opened', self.onOpened);
+
 }
 
 //////////////////////
  componentWillMount() {
   self=this
-  
-  OneSignal.init('a3551d54-e1bc-4f12-874c-7f6cb7982f95',  {kOSSettingsKeyAutoPrompt : true});
+  OneSignal.setLogLevel(6, 0)
   OneSignal.addEventListener('received', self.onReceived);
   OneSignal.addEventListener('opened', this.onOpened);
   OneSignal.addEventListener('ids', this.onIds);
+  OneSignal.init('a3551d54-e1bc-4f12-874c-7f6cb7982f95',  {kOSSettingsKeyAutoPrompt : true});
+
+  // OneSignal.registerForPushNotifications()
+  // OneSignal.setSubscription(true)
   this.props.setHomeComponent(1)
   OneSignal.configure()
 
@@ -309,9 +317,10 @@ if(this.state.mapState=="satellite"){
           </TouchableOpacity> */}
         </View>
 
-{service.length > 0 && this.props.compState.__CurrentComponent == 1 && this.state.servicesSliderState==true? 
+{service.length > 0 && this.props.compState.__CurrentComponent == 1 && this.props.common.driverLat=='' && this.state.servicesSliderState==true? 
   <View style={{ position: "absolute", left: 0, bottom: 10, right: 0 }}>
       {/* Sub services */}
+
       {this.state.page ? <View style={{ height: 110,marginTop:10, padding: 10, backgroundColor: "rgba(255,255,255,0.8)"}}>
           <CarouselPager ref={ref => (this.carousel = ref)} initialPage={0} pageStyle={{ height: 110, alignItems: "center", justifyContent: "center" }} onPageChange={selectedService => {
          
@@ -420,12 +429,13 @@ if(this.state.mapState=="satellite"){
       {this.orderButtons_View()}
     </View> : <View style={{ width: 0, height: 0 }} />}
         
-        {/* <ProviderInfo 
+        {this.props.common.driverLat!=''?<ProviderInfo 
+        info={this.state.provider_info}
           name='محمد أحمد مصطفي ' 
           carType='Mercedes 2018' 
           mints={8} 
           phoneNumber='012345678'
-          profileImage='http://www.status77.in/wp-content/uploads/2015/07/14533584_1117069508383461_6955991993080086528_n.jpg' /> */}
+          profileImage='http://www.status77.in/wp-content/uploads/2015/07/14533584_1117069508383461_6955991993080086528_n.jpg' />:null}
         
 
       </View>;
