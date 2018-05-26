@@ -177,7 +177,7 @@ this.props.setHomeComponent(2)
     if(this.state.currentMainCategory == 2)
       return (
         <View style={{ flex: .3, justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 80, right: 0, left: 0, overflow: 'hidden' }} >
-            <ImageBackground source={ require('../assets/Assets/Rectangle_144.png') } style={{ position: 'absolute', bottom: 80, flex: 1, flexDirection: 'row', flexWrap: 'wrap', }}  >
+            <View style={{ position: 'absolute', bottom: 80, flex: 1, flexDirection: 'row', flexWrap: 'wrap', }}  >
               <Carousel
                   firstItem={1}
                   inactiveSlideScale={.4}
@@ -187,7 +187,7 @@ this.props.setHomeComponent(2)
                   sliderWidth={width}
                   itemWidth={width/3}
                   />
-              </ImageBackground>
+              </View>
           </View>
       );
     else
@@ -342,7 +342,7 @@ if(this.state.mapState=="satellite"){
 
           { this.RenderSubCategories() }
           <View style={{ flex: .3, justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 0, right: 0, left: 0, overflow: 'hidden' }} >
-            <ImageBackground source={ require('../assets/Assets/Rectangle_144.png') } style={{ position: 'absolute', bottom: 60, flex: 1, flexDirection: 'row', flexWrap: 'wrap', right: 0, left: 0 }}  >
+            <View style={{ position: 'absolute', bottom: 60, flex: 1, flexDirection: 'row', flexWrap: 'wrap', right: 0, left: 0 }}  >
               <Carousel
                   firstItem={1}
                   onSnapToItem={currentMainCategory => this.setState({ currentMainCategory })}
@@ -353,7 +353,7 @@ if(this.state.mapState=="satellite"){
                   sliderWidth={width}
                   itemWidth={width/3}
                   />
-              </ImageBackground>
+              </View>
               {this.orderButtons_View()}
           </View>
         
