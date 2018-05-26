@@ -168,30 +168,79 @@ this.props.setHomeComponent(2)
   }
 
 
+
   _renderItem ({item, index}) {
-    return (
-      <Image style={{ width: 80, height: 80, marginHorizontal: 20 }} source={ require('../assets/Assets/Group_1634.png') } />
-    );
+    var base=new Base
+ return (item
+      // <Image style={{ width: 80, height: 80, marginHorizontal: 20 }}
+      //  source={ require('../assets/Assets/Group_1634.png') } />
+);
+  }
+  
+  _renderSubItem ({item, index}) {
+    var base=new Base
+ return (item
+      // <Image style={{ width: 80, height: 80, marginHorizontal: 20 }}
+      //  source={ require('../assets/Assets/Group_1634.png') } />
+);
   }
   RenderSubCategories() {
-    if(this.state.currentMainCategory == 2)
+    var base=new Base
+console.log(parseInt(self.state.page))
+    // if(parseInt(self.state.page)){
       return (
         <View style={{ flex: .3, justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 80, right: 0, left: 0, overflow: 'hidden' }} >
             <ImageBackground source={ require('../assets/Assets/Rectangle_144.png') } style={{ position: 'absolute', bottom: 80, flex: 1, flexDirection: 'row', flexWrap: 'wrap', }}  >
               <Carousel
-                  firstItem={1}
+                  firstItem={0}
                   inactiveSlideScale={.4}
                   slideStyle={{  }}
-                  data={[{key: 'aaaaaaaaaaaaaa'},{key: 'aaaaaaaaaaaaaa'},{key: 'aaaaaaaaaaaaaa'},]}
-                  renderItem={this._renderItem}
+                  data={
+                    /////////
+                    self.props.service[parseInt(self.state.page)].sup_serivces_data.map(
+                      subService => (
+                        <TouchableOpacity
+                          key={subService.services_id}
+                          style={{
+                            height: 110,                            
+                            marginTop: 20,
+                            justifyContent: "center",
+                            alignItems: "center"
+                          }}
+                        >
+                          <Image
+                            source={{ uri: base.icon_url + subService.icone }}
+                            style={{
+                              width: 70,
+                              height: 70,
+                              borderRadius: 35,
+                              resizeMode: "contain"
+                            }}
+                          />
+                          <Text
+                            style={{
+                              marginTop: 5,
+                              fontSize: 12,
+                              color: "rgb(30,123,177)"
+                            }}
+                          >
+                            {subService.services_name_ar}
+                          </Text>
+                        </TouchableOpacity>
+                      )
+                    )
+                    ////////////
+                  }
+                  renderItem={self._renderSubItem}
                   sliderWidth={width}
                   itemWidth={width/3}
                   />
               </ImageBackground>
           </View>
       );
-    else
-      return null
+    // }
+    // else{
+      // return <View/>}
   }
 
   render () {
@@ -339,24 +388,78 @@ if(this.state.mapState=="satellite"){
             <Image source={Images.locatiOnMapIcon} style={styles.image} />
           </TouchableOpacity> */}
         </View>
+        {service.length > 0 && this.props.compState.__CurrentComponent == 1 && this.props.common.driverLat=='' && this.state.servicesSliderState==true?
 
-          { this.RenderSubCategories() }
+  <View style={{ position: "absolute", left: 0, bottom: 10, right: 0 }}>
+
+          {parseInt(self.state.page)>=0 ? this.RenderSubCategories() :null}
           <View style={{ flex: .3, justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 0, right: 0, left: 0, overflow: 'hidden' }} >
             <ImageBackground source={ require('../assets/Assets/Rectangle_144.png') } style={{ position: 'absolute', bottom: 60, flex: 1, flexDirection: 'row', flexWrap: 'wrap', right: 0, left: 0 }}  >
               <Carousel
-                  firstItem={1}
-                  onSnapToItem={currentMainCategory => this.setState({ currentMainCategory })}
+                  firstItem={0}
+                  onSnapToItem={
+                    // currentMainCategory => this.setState({ currentMainCategory })
+                    page => {
+                      {
+                        selectedServices([
+                          services[page].sup_serivces_data[0],
+                          services[page]
+                        ]);
+                      }
+          
+                      createorder({
+                        services_id: services[page]["services_id"],
+                        sub_services_id:
+                          services[page].sup_serivces_data[0]["sub_services_id"]
+                      });
+          console.log(page.toString())
+                      this.setState({ page: page.toString() });
+                    }
+                  }
                   inactiveSlideScale={.4}
                   slideStyle={{  }}
-                  data={[{key: 'aaaaaaaaaaaaaa'},{key: 'aaaaaaaaaaaaaa'},{key: 'aaaaaaaaaaaaaa'},]}
+                  data={
+
+                  ////////////
+                  self.props.service.map(mainService => 
+
+                    <TouchableOpacity
+                      key={mainService.services_id}
+                      style={{marginBottom:40,
+                        height: 130,
+                        justifyContent: "center",
+                        alignItems: "center"
+                      }}
+                    >
+                      <Image
+                        source={{ uri: base.icon_url + mainService.icone }}
+                        style={{
+                          width: 70,
+                          height: 70,
+                          borderRadius: 35,
+                          resizeMode: "contain"
+                        }}
+                      />
+                      <Text
+                        style={{
+                          marginTop: 5,
+                          fontSize: 12,
+                          color: "rgb(30,123,177)"
+                        }}
+                      >
+                        {mainService.services_name_ar}
+                      </Text>
+                    </TouchableOpacity>
+                  )}
+                  ////////////
                   renderItem={this._renderItem}
                   sliderWidth={width}
                   itemWidth={width/3}
                   />
               </ImageBackground>
               {this.orderButtons_View()}
-          </View>
-        
+          </View></View>
+        : <View style={{ width: 0, height: 0 }} />}
         {this.props.common.driverLat!=''?<ProviderInfo 
         info={this.state.provider_info}
           name='محمد أحمد مصطفي ' 
