@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, KeyboardAvoidingView,ImageBackground } from 'react-native'
+import { View, Text, KeyboardAvoidingView,ImageBackground, TouchableWithoutFeedback } from 'react-native'
 import { connect } from 'react-redux'
 import {Images} from '../Themes';
 // Add Actions - replace 'Your' with whatever your reducer is called :)
@@ -9,6 +9,7 @@ import {Images} from '../Themes';
 import styles from './Styles/HomeScreenStyle'
 import Header from "../Components/Header"
 import Map from '../Components/Map';
+import * as Animatable from 'react-native-animatable';
 
 import { withNavigation } from "react-navigation";
 import {reverseCoordinatesToAdress,setCoordnates} from "../actions/CommonServicesActions/commonServicesActions"
@@ -125,15 +126,21 @@ renderMap=()=>{
     <Map/>
 
   </View>)}
+  handleViewRef = ref => this.view = ref;
+  
+  bounce = () => {
+    this.view.slideOutRight(500).then(endState => console.log(endState.finished ? 'bounce finished' : 'bounce cancelled'));
+
+  }
   render() {
     return (
       <View style={styles.container}>
-       <ImageBackground style={styles.loginBackground} source={Images.loginBackground} resizeMode={'cover'}>
-        <Header/>
-        <View style={{flex: 1,padding: 12}}>
-          <Map/>
-        </View>
-       </ImageBackground>
+        <ImageBackground style={styles.loginBackground} source={Images.loginBackground} resizeMode={'cover'}>
+          <Header navigation={this.props.navigation}  />
+          <View style={{flex: 1,padding: 12}}>
+            <Map/>
+          </View>
+        </ImageBackground>
       </View>
     );
   }

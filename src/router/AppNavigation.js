@@ -1,4 +1,6 @@
-import { StackNavigator } from 'react-navigation'
+import React from 'react'
+import { Dimensions } from 'react-native'
+import { StackNavigator, DrawerNavigator } from 'react-navigation'
 import HomeScreen from '../containers/HomeScreen'
 import VerifyPhoneScreen from '../containers/VerifyPhoneScreen'
 import LoginScreen from '../containers/LoginScreen'
@@ -23,4 +25,88 @@ const PrimaryNav = StackNavigator({
   }
 })
 
-export default PrimaryNav
+const MainDrawer = DrawerNavigator(
+  {
+    PrimaryNav,
+  },
+  {
+    initialRouteName: 'PrimaryNav',
+    drawerPosition: 'left',
+    drawerOpenRoute: 'LeftSideMenu',
+    drawerCloseRoute: 'LeftSideMenuClose',
+    drawerToggleRoute: 'LeftSideMenuToggle',
+  },
+);
+
+const RootRoute = DrawerNavigator(
+  {
+    MainDrawer: {
+      screen: MainDrawer,
+    },
+  },
+  {
+    navigationOptions: {
+    },
+    drawerPosition: 'right',
+    drawerOpenRoute: 'RightSideMenu',
+    drawerCloseRoute: 'RightSideMenuClose',
+    drawerToggleRoute: 'RightSideMenuToggle',
+  },
+);
+
+
+const RightDrawerNavigator = DrawerNavigator({
+	
+	// Note: Keys must not have spaces
+	// "MyAccount" is good, but "My Account" is not accepted
+	// Why? See: /constants/Languages.js
+	Home: {
+		screen: ({ navigation }) => <HomeScreen navigation={navigation} />,
+		navigationOptions: {
+			// drawerIcon: ({ tintColor }) => (
+			// 	<Ionicons name='ios-home-outline' color={mainColor} size={28} tintColor={tintColor} />
+			// ),
+		}
+  },
+  test: {
+		screen: ({ navigation }) => <HomeScreen navigation={navigation} />,
+		navigationOptions: {
+			// drawerIcon: ({ tintColor }) => (
+			// 	<Ionicons name='ios-home-outline' color={mainColor} size={28} tintColor={tintColor} />
+			// ),
+		}
+  },
+  testtt: {
+		screen: ({ navigation }) => <HomeScreen navigation={navigation} />,
+		navigationOptions: {
+			// drawerIcon: ({ tintColor }) => (
+			// 	<Ionicons name='ios-home-outline' color={mainColor} size={28} tintColor={tintColor} />
+			// ),
+		}
+  },
+  testtttt: {
+		screen: ({ navigation }) => <HomeScreen navigation={navigation} />,
+		navigationOptions: {
+			// drawerIcon: ({ tintColor }) => (
+			// 	<Ionicons name='ios-home-outline' color={mainColor} size={28} tintColor={tintColor} />
+			// ),
+		}
+  },
+
+
+}, {
+    drawerPosition: 'right',
+    drawerOpenRoute: 'RightSideMenu',
+    drawerCloseRoute: 'RightSideMenuClose',
+		// contentComponent: CustomDrawerContentComponent,
+		contentOptions: {
+			labelStyle: { color: 'black', fontWeight: 'normal' },
+			activeTintColor: 'red',
+			iconContainerStyle: {
+				opacity: 1,
+				marginRight: 0,
+			}
+		}
+});
+
+export default RootRoute
