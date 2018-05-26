@@ -22,8 +22,6 @@ import {
 import {refreshPlayerId} from "../../src/actions/authAction"
 import PopupDialog from 'react-native-popup-dialog';
 import StarRating from 'react-native-star-rating';
-import Icon from 'react-native-vector-icons/FontAwesome';
-
 const self=[];
 
 const cancelResonesList = [
@@ -164,7 +162,6 @@ componentWillUnmount() {
         <ImageBackground style={styles.loginBackground} source={Images.loginBackground} resizeMode={'cover'}>
           <Header navigation={this.props.navigation}  />
           <View style={{flex: 1,padding: 12}}>
-          <Icon name="rocket" size={50} color="#900" />
             <Map/>
           </View>
         </ImageBackground>
