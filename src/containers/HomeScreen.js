@@ -22,7 +22,6 @@ import {
 import {refreshPlayerId} from "../../src/actions/authAction"
 import PopupDialog from 'react-native-popup-dialog';
 import StarRating from 'react-native-star-rating';
-
 const self=[];
 
 const cancelResonesList = [

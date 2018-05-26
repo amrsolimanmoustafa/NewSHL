@@ -190,7 +190,7 @@ console.log(parseInt(self.state.page))
     // if(parseInt(self.state.page)){
       return (
         <View style={{ flex: .3, justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 80, right: 0, left: 0, overflow: 'hidden' }} >
-            <ImageBackground source={ require('../assets/Assets/Rectangle_144.png') } style={{ position: 'absolute', bottom: 80, flex: 1, flexDirection: 'row', flexWrap: 'wrap', }}  >
+            <View style={{ position: 'absolute', bottom: 80, flex: 1, flexDirection: 'row', flexWrap: 'wrap', }}  >
               <Carousel
                   firstItem={0}
                   inactiveSlideScale={.4}
@@ -235,7 +235,7 @@ console.log(parseInt(self.state.page))
                   sliderWidth={width}
                   itemWidth={width/3}
                   />
-              </ImageBackground>
+              </View>
           </View>
       );
     // }
@@ -394,7 +394,7 @@ if(this.state.mapState=="satellite"){
 
           {parseInt(self.state.page)>=0 ? this.RenderSubCategories() :null}
           <View style={{ flex: .3, justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 0, right: 0, left: 0, overflow: 'hidden' }} >
-            <ImageBackground source={ require('../assets/Assets/Rectangle_144.png') } style={{ position: 'absolute', bottom: 60, flex: 1, flexDirection: 'row', flexWrap: 'wrap', right: 0, left: 0 }}  >
+            <View style={{ position: 'absolute', bottom: 60, flex: 1, flexDirection: 'row', flexWrap: 'wrap', right: 0, left: 0 }}  >
               <Carousel
                   firstItem={0}
                   onSnapToItem={
@@ -456,7 +456,7 @@ if(this.state.mapState=="satellite"){
                   sliderWidth={width}
                   itemWidth={width/3}
                   />
-              </ImageBackground>
+              </View>
               {this.orderButtons_View()}
           </View></View>
         : <View style={{ width: 0, height: 0 }} />}
