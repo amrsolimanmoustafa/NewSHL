@@ -23,7 +23,7 @@ import {reverseCoordinatesToAdress,setCoordnates,setDriverCoordnates} from "../a
 import { withNavigation } from "react-navigation";
 import { connect } from 'react-redux'
 import {setHomeComponent} from "../actions/UpdateComponentsStateAction/updateComponentsStateAction"
-import {getServices,selectedServices,createorder, orderLater} from "../actions/makeOrderAction"
+import {getServices,selectedServices,createorder, orderLater,providerInfo,setOrderID} from "../actions/makeOrderAction"
 import ProviderInfo from '../Components/ProviderInfo'
 import Base from '../Base'
 import LinearGradientForMap from "./LinearGradientForMap"
@@ -32,9 +32,7 @@ import style from './Styles/MainButtonsStyle'
 import OrderService from '../service_api/OrderService'
 import GooglePlacesInput from "./GooglePlacesInput";
 const {width,height} = Dimensions.get('window')
-// var { RNLocation: Location } = require('NativeModules');
 import * as firebase from "firebase";
-// import * as GeoFire from "geofire";
 GeoFire = require('geofire');
 import {refreshPlayerId} from "../../src/actions/authAction"
 import FavoritePlaces from "./FavoritePlaces"
@@ -63,17 +61,31 @@ componentWillUnmount() {
 }
 
 onReceived=(notification) =>{
-  console.log("Notification received: ",notification.payload.additionalData.data[2].order_id);
+  console.log("Notification received: ",notification.payload);
+
   if(notification.payload.additionalData.data[1].type=='order_accepted'){
     this.setState({provider_info:notification.payload.additionalData.data[0]})
-  this.trackOrder(notification.payload.additionalData.data[2].order_id,self)
+    self.props.providerInfo(notification.payload.additionalData.data[0])
+
+    this.trackOrder(notification.payload.additionalData.data[2].order_id,self)
+
+  self.props.setOrderID(notification.payload.additionalData.data[2].order_id)
+
+}else if(notification.payload.additionalData.data[1].type=='order_finish'){
+  console.log("Notification order ended succesfuly: ",notification.payload);
+
 }
 
 }
 
 onOpened=(openResult)=> {
+  if( openResult.notification.payload.additionalData.data[1].type=='order_finish'){
+    // console.log("Notification order ended succesfuly: ",notification.payload);
+    self.props.popup.show()
+
+  }
 console.log('Message: ', openResult.notification.payload.body);
-console.log('Data: ', openResult.notification.payload.additionalData);
+console.log('Data: ', openResult.notification.payload.additionalData.data[1].type=='order_finish');
 console.log('isActive: ', openResult.notification.isAppInFocus);
 console.log('openResult: ', openResult);
 
@@ -97,21 +109,20 @@ OneSignal.addEventListener('opened', self.onOpened);
   OneSignal.addEventListener('ids', this.onIds);
   OneSignal.init('a3551d54-e1bc-4f12-874c-7f6cb7982f95',  {kOSSettingsKeyAutoPrompt : true});
 
-  // OneSignal.registerForPushNotifications()
-  // OneSignal.setSubscription(true)
+
   this.props.setHomeComponent(1)
   OneSignal.configure()
 
-  this.props.reverseCoordinatesToAdress(this.props.common.lat,this.props.common.lng)
+  // this.props.reverseCoordinatesToAdress(this.props.common.lat,this.props.common.lng)
 
-  this.props.getServices('Mohammed Farid')
-
+  // this.props.getServices('Mohammed Farid')
 
 // this.props.reverseCoordinatesToAdress()
 
 // console.log('lat ',this.props.common)
  
   }
+ 
 trackOrder(order_id,self){
   this.props.setHomeComponent(1)
   try{
@@ -190,6 +201,7 @@ console.log(parseInt(self.state.page))
     // if(parseInt(self.state.page)){
       return (
         <View style={{ flex: .3, justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 80, right: 0, left: 0, overflow: 'hidden' }} >
+            {/* {console.log('address',self.props.common.adress)} */}
             <View style={{ position: 'absolute', bottom: 80, flex: 1, flexDirection: 'row', flexWrap: 'wrap', }}  >
               <Carousel
                   firstItem={0}
@@ -462,11 +474,12 @@ if(this.state.mapState=="satellite"){
         : <View style={{ width: 0, height: 0 }} />}
         {this.props.common.driverLat!=''?<ProviderInfo 
         info={this.state.provider_info}
-          name='محمد أحمد مصطفي ' 
-          carType='Mercedes 2018' 
-          mints={8} 
-          phoneNumber='012345678'
-          profileImage='http://www.status77.in/wp-content/uploads/2015/07/14533584_1117069508383461_6955991993080086528_n.jpg' />:null}
+          // name='محمد أحمد مصطفي ' 
+          // carType='Mercedes 2018' 
+          // mints={8} 
+          // phoneNumber='012345678'
+          // profileImage='http://www.status77.in/wp-content/uploads/2015/07/14533584_1117069508383461_6955991993080086528_n.jpg' 
+          />:null}
         
 
       </View>;
@@ -502,6 +515,6 @@ const mapStateToProps = state => {
  export default connect(mapStateToProps,
   {getServices,
     setHomeComponent,
-    selectedServices,
+    selectedServices,providerInfo,setOrderID,
     reverseCoordinatesToAdress,setCoordnates,setDriverCoordnates,
     createorder,refreshPlayerId,orderLater}) (withNavigation(Map))

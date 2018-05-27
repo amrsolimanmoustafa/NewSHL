@@ -5,14 +5,20 @@ import axios from 'axios';
 export const reverseCoordinatesToAdress=(lat,lng)=>dispatch=>{
 
  var base_url =new Base()
+ console.log('reverseCoordinatesToAdress',{lat,lng});
+
 var  GOOGLEGEOLOCATION_URL="https://maps.googleapis.com/maps/api/geocode/json" 
 var APIKEY='AIzaSyBSSYckZ59ZW5MBPlGmPDvZu5Rzh9snPaQ'
-    try {
+if(lat!="") 
+try {
 axios.get(GOOGLEGEOLOCATION_URL+'?latlng=' + lat + ','
   + lng + '&location_type=APPROXIMATE&result_type=locality&'
   +
   'key='+APIKEY+'&language=en&region=EN"')
   .then((response) =>{
+
+    console.log('reverseCoordinatesToAdress',response);
+
     dispatch({
     type:REVERSE_GEOLOCATION,
     payload:response.data.results[0]

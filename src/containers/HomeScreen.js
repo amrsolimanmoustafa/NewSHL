@@ -18,28 +18,29 @@ import {
   reverseCoordinatesToAdress,
   setCoordnates
 } from "../actions/CommonServicesActions/commonServicesActions"
-// import OneSignal from 'react-native-onesignal'; // Import package from node modules
 import {refreshPlayerId} from "../../src/actions/authAction"
 import PopupDialog from 'react-native-popup-dialog';
 import StarRating from 'react-native-star-rating';
+import {rateProvider,getServices} from './../actions/makeOrderAction'
+import Base from '../Base';
 const self=[];
 
 const cancelResonesList = [
   {
-      "cancel_order_reasons_id": 1,
-      "cancel_order_reasons_ar": "لا أحد فى الموقع",
-      "cancel_order_reasons_en": "No one in the site",
-      "cancel_order_reasons_ur": "اس سائٹ میں کوئی بھی نہیں",
-      "created_at": null,
-      "updated_at": null
+      // "cancel_order_reasons_id": 1,
+      // "cancel_order_reasons_ar": "لا أحد فى الموقع",
+      // "cancel_order_reasons_en": "No one in the site",
+      // "cancel_order_reasons_ur": "اس سائٹ میں کوئی بھی نہیں",
+      // "created_at": null,
+      // "updated_at": null
   },
   {
-      "cancel_order_reasons_id": 2,
-      "cancel_order_reasons_ar": "العميل يرفض الدفع",
-      "cancel_order_reasons_en": "Customer refuses to pay",
-      "cancel_order_reasons_ur": "کسٹمر ادا کرنے سے انکار",
-      "created_at": null,
-      "updated_at": null
+      // "cancel_order_reasons_id": 2,
+      // "cancel_order_reasons_ar": "العميل يرفض الدفع",
+      // "cancel_order_reasons_en": "Customer refuses to pay",
+      // "cancel_order_reasons_ur": "کسٹمر ادا کرنے سے انکار",
+      // "created_at": null,
+      // "updated_at": null
   },
 ]
 
@@ -47,124 +48,181 @@ class HomeScreen extends Component  {
   constructor(props) {
     super(props);
     this.state = {
-      starCount: 1
+      starCount: 1,popupCommentText:''
     }
   }
   
   componentWillMount(){
-    // try{
-      // OneSignal.init('a3551d54-e1bc-4f12-874c-7f6cb7982f95');
-      // }catch(e){
-    // }
     this.watchPosition()
     self=this
-    //OneSignal.addEventListener('received', self.onReceived);
-    //OneSignal.addEventListener('opened', self.onOpened);
-    //OneSignal.addEventListener('ids', self.onIds);
-
-    //OneSignal.configure({
-    //   onIdsAvailable: (device) =>{
-    //       console.log('UserId = ', device.userId);
-    //       console.log('PushToken = ', device.pushToken);
-    //       // device.pushToken.map(e=>{
-    //         alert(toString(device.userId))
-
-    //       // })
-    //   },
-    // onNotificationReceived: function(notification) {
-    //   console.log('MESSAGE RECEIVED: ', notification["notification"]["notificationID"]);
-    // },
-    // onNotificationOpened: function(openResult) {
-    //     console.log('MESSAGE: ', openResult["notification"]["payload"]["body"]);
-    //     console.log('DATA: ', openResult["notification"]["payload"]["additionalData"]);
-    //     console.log('ISACTIVE: ', openResult["notification"]["isAppInFocus"]);
-    //     // Do whatever you want with the objects here
-    //     // _navigator.to('main.post', data.title, { // If applicable
-    //     //  article: {
-    //     //    title: openResult["notification"]["payload"]["body"],
-    //     //    link: openResult["notification"]["payload"]["launchURL"],
-    //     //    action: data.openResult["notification"]["action"]["actionSelected"]
-    //     //  }
-    //     // });
-    // }
-  // });
+ console.log(this.props)
 }
 
 
 
-// onReceived(notification) {
-//    console.log("Notification received: ", notification);
-// }
-
-// onOpened(openResult) {
-//  console.log('Message: ', openResult.notification.payload.body);
-//  console.log('Data: ', openResult.notification.payload.additionalData);
-//  console.log('isActive: ', openResult.notification.isAppInFocus);
-//  console.log('openResult: ', openResult);
-// }
-//  onIds(device) {
-
- 
-// self.props.refreshPlayerId(self.props.user_id,device['userId'])
-// }
 componentWillUnmount() {
-  //  OneSignal.removeEventListener('received', this.onReceived);
-  //  OneSignal.removeEventListener('opened', this.onOpened);
-  //  OneSignal.removeEventListener('ids', this.onIds);
    navigator.geolocation.clearWatch(this.watchId);
 }
 
-// onReceived(notification) {
-//    console.log("Notification received: ", notification);
-// }
 
-// onOpened(openResult) {
-//  console.log('Message: ', openResult.notification.payload.body);
-//  console.log('Data: ', openResult.notification.payload.additionalData);
-//  console.log('isActive: ', openResult.notification.isAppInFocus);
-//  console.log('openResult: ', openResult);
-// }
-//  onIds(device) {
-//   console.log('ttttttttttttttttttt',self.props)
-
-// self.props.refreshPlayerId(self.props.user_id,device['userId'])
-// }
-  
   componentDidMount(){
-    // this.endPopupDialog.show()
+    // this.cancelPopupDialog.show()
   }
 
-  watchPosition(){
+  async watchPosition(){
     var self=this
     //subscribe for location when changed    
     this.watchId = navigator.geolocation.getCurrentPosition(
       (position) => {
         console.log(position)
         this.props.setCoordnates(position.coords.latitude,position.coords.longitude)
+        this.props.reverseCoordinatesToAdress(position.coords.latitude,position.coords.longitude)
+                    // console.log('address',self.props.common)
+                    // this.props.getServices('Mohammed Farid')
+
       },
       (error) => self.setState({ error: error.message }),
       { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000, distanceFilter: 100 },
     );
   }
 
-  renderMap(){
-    return( 
-      <View style={styles.Map}>
-        <Map/>
-      </View>
-    )
-  }
 
-  
-  render() {
-    return (
+  submitRate=()=>{
+    console.log(self.props)
+self.props.rateProvider({'rate':self.state.starCount,'clint_rate_order_text':self.state.popupCommentText},self.props.makeOrder.order_id)
+self.cancelPopupDialog.dismiss()
+}
+  render(){
+    const base=new Base
+
+    return(
       <View style={styles.container}>
-        <ImageBackground style={styles.loginBackground} source={Images.loginBackground} resizeMode={'cover'}>
-          <Header navigation={this.props.navigation}  />
-          <View style={{flex: 1,padding: 12}}>
-            <Map/>
+       <ImageBackground style={styles.loginBackground} source={Images.loginBackground} resizeMode={'cover'}>
+        <Header/>
+        <View style={{flex: 1,padding: 12}}>
+          <Map popup={this.cancelPopupDialog}/>
+        </View>
+        {console.log('address',self.props.common.adress)}
+       {self.props.common.adress==""? this.props.getServices(self.props.common.adress):nulls} 
+       </ImageBackground>
+       <PopupDialog
+        ref={(popupDialog) => { this.cancelPopupDialog = popupDialog; }}
+        width={220}
+        height={420}
+        haveTitleBar={false}
+      >
+        <View style={{flex: 1,backgroundColor: '#FFFFFF',borderRadius: 9,padding: 10}}>
+          {/* <Text style={{fontFamily: 'NeoSansArabic',fontSize: 16,color: '#707070',textAlign: 'center'}}>
+          </Text> */}
+          <View style={{alignItems: 'center'}}>
+            <Image
+            source={{ uri:this.props.makeOrder.provider!=[]?base.icon_url+this.props.makeOrder.provider.personal_pic:''}}
+              // source={require(base.icon_url+this.props.makeOrder.provider.personal_pic)}
+              style={{marginTop:5,width: 90,height: 90,resizeMode: 'cover',borderRadius: 4}}
+            />
+            <Text style={{fontFamily: 'NeoSansArabic',fontSize: 14,color: '#707070',textAlign: 'center'}}>
+{this.props.makeOrder.provider!=[]?this.props.makeOrder.provider.users['user_name']:''}            </Text>
+            <StarRating
+              disabled={false}
+              emptyStar={'ios-star-outline'}
+              fullStar={'ios-star'}
+              halfStar={'ios-star-half'}
+              iconSet={'Ionicons'}
+              maxStars={5}
+              rating={this.state.starCount}
+              selectedStar={(rating) => this.onStarRatingPress(rating)}
+              fullStarColor={'#1D7AB3'}
+            />
           </View>
-        </ImageBackground>
+          {/* <View style={{marginTop: 10}}>
+            {cancelResonesList.map((item,index)=>(
+              <TouchableOpacity
+                key={index}
+                onPress={()=> this.setState({selectedReason: item})}
+                style={{flexDirection: 'row',alignItems: 'center',paddingVertical: 10}}
+              >
+                <View style={{width: 20,height: 20,borderWidth: 1,borderColor: '#3C403F',borderRadius: 10,justifyContent: 'center',alignItems: 'center'}}>
+                  <View style={{width: 10,height: 10,backgroundColor: this.state.selectedReason == item? '#3C403F' : 'transparent',borderRadius: 5}}/>
+                </View>
+                <Text style={{marginLeft: 10,fontFamily: 'NeoSansArabic',fontSize: 12,color: '#1D7AB3',textAlign: 'left'}}>
+                  {item.cancel_order_reasons_en}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </View> */}
+          <View style={{marginTop: 10}}>
+            <TextInput
+            onChangeText={text=>{
+              this.setState({popupCommentText:text})
+            }}
+              style={{height: 60,borderWidth: 1,borderColor: '#000000',borderRadius: 4}}
+            />
+          </View>
+          <TouchableOpacity
+            onPress={()=> this.submitRate()}
+            style={{width: 180,height: 40,borderRadius: 20,marginTop: 18,alignSelf: 'center'}}
+          >
+            <ImageBackground
+              source={require('../assets/images/Gradient_WideBackground_image.png')}
+              style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}
+            >
+              <Text style={{color: '#ffffff',fontSize: 13,fontFamily: 'NeoSansArabic'}}>
+                {'Approve'}
+              </Text>
+            </ImageBackground>
+          </TouchableOpacity>
+        </View>
+      </PopupDialog>
+      {/* <PopupDialog
+        ref={(popupDialog) => { this.endPopupDialog = popupDialog; }}
+        width={220}
+        height={320}
+        haveTitleBar={false}
+      >
+        <View style={{flex: 1,backgroundColor: '#FFFFFF',borderRadius: 9,padding: 10}}>
+          <Text style={{fontFamily: 'NeoSansArabic',fontSize: 16,color: '#707070',textAlign: 'center'}}>
+            Rate Order
+          </Text>
+          <View style={{alignItems: 'center'}}>
+            <Image
+              source={require('../assets/images/Driver-image.png')}
+              style={{width: 90,height: 90,resizeMode: 'cover',borderRadius: 4}}
+            />
+            <Text style={{fontFamily: 'NeoSansArabic',fontSize: 14,color: '#707070',textAlign: 'center'}}>
+              محمد احمد مصطفي
+            </Text>
+            <StarRating
+              disabled={false}
+              emptyStar={'ios-star-outline'}
+              fullStar={'ios-star'}
+              halfStar={'ios-star-half'}
+              iconSet={'Ionicons'}
+              maxStars={5}
+              rating={this.state.starCount}
+              selectedStar={(rating) => this.onStarRatingPress(rating)}
+              fullStarColor={'#1D7AB3'}
+            />
+          </View>
+          <View style={{marginTop: 10}}>
+            <TextInput
+              style={{height: 60,borderWidth: 1,borderColor: '#000000',borderRadius: 4}}
+            />
+          </View>
+          <TouchableOpacity
+            onPress={()=> this.cancelOrder()}
+            style={{width: 180,height: 40,borderRadius: 20,marginTop: 18,alignSelf: 'center'}}
+          >
+            <ImageBackground
+              source={require('../assets/images/Gradient_WideBackground_image.png')}
+              style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}
+            >
+              <Text style={{color: '#ffffff',fontSize: 13,fontFamily: 'NeoSansArabic'}}>
+                {'Approve'}
+              </Text>
+            </ImageBackground>
+          </TouchableOpacity>
+        </View>
+      </PopupDialog> */}
       </View>
     );
   }
@@ -179,7 +237,8 @@ componentWillUnmount() {
 const mapStateToProps = state => {
   return {
     common:state.common,
-    user_id:state.auth.user_id
+    user_id:state.auth.user_id,
+    makeOrder:state.makeOrder,
   }
 }
 
@@ -189,4 +248,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, { refreshPlayerId,reverseCoordinatesToAdress,setCoordnates }) (withNavigation(HomeScreen))
+export default connect(mapStateToProps, { getServices,rateProvider,refreshPlayerId,reverseCoordinatesToAdress,setCoordnates }) (withNavigation(HomeScreen))
