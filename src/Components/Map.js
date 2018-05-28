@@ -33,10 +33,11 @@ const {width,height} = Dimensions.get('window')
 import * as firebase from "firebase";
 let GeoFire = require('geofire');
 import {refreshPlayerId} from "../../src/actions/authAction"
-//import OneSignal from 'react-native-onesignal';
+import OneSignal from 'react-native-onesignal';
 import Carousel from 'react-native-snap-carousel';
 import {Calendar} from 'react-native-calendars'
 let self;
+import style from './Styles/MainButtonsStyle'
 
 class Map extends Component {
   state= { lat:0,lng:0,currentComponent:2,showMainButtons:true,page:0,provider_info:[],mapState:'standard',servicesSliderState:true,calenderShow:false}

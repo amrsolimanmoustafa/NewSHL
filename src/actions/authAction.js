@@ -3,6 +3,7 @@ import Base from "../Base"
 import axios from 'axios';
 import { withNavigation } from "react-navigation";
 import Toast from "react-native-simple-toast";
+import { AsyncStorage } from 'react-native'
 
 export const refreshPlayerId=(user_id,token_id)=>dispatch=>{
   console.log('token uploaded',user_id,token_id)
@@ -27,7 +28,7 @@ console.log('token uploaded',res)
     
     }
 }
-export const loginUser=(user,context)=>dispatch=>{
+ export const loginUser=(user,context)=>dispatch=>{
 
   var base_url =new Base()
  var  LOGIN_URL="http://" + base_url.baseUrl + "login"
@@ -41,7 +42,16 @@ export const loginUser=(user,context)=>dispatch=>{
                VerifyPhoneScreen: "VerifyPhoneScreen"
              });
              context.props.navigation.navigate("VerifyPhoneScreen", user);
- 
+            //  try {
+             ()=>AsyncStorage.setItem('user','dddddddddddd').then(e=>{
+                console.log('stored ............',e)
+               })
+               
+            // } catch (error) {
+            //   // Error saving data
+            //   console.log(error)
+
+            // }
        dispatch({
      type:LOGIN,
      payload:user

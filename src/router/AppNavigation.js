@@ -73,7 +73,7 @@ const PrimaryNav = StackNavigator({
   // Default config for all screens
   //headerMode: 'none',
   headerBackTitle: null,
-  initialRouteName: 'HomeScreen',
+  initialRouteName: 'SplashScreen',
   navigationOptions: {
     headerStyle: {
       backgroundColor: 'transparent'

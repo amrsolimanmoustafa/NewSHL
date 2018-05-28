@@ -4,7 +4,7 @@ import {
   Text,
   KeyboardAvoidingView,
   ImageBackground,
-  TextInput,
+  TextInput,AsyncStorage,
   TouchableOpacity,
   Image
 } from 'react-native'
@@ -55,9 +55,11 @@ class HomeScreen extends Component  {
     }
   }
   
-  componentWillMount(){
+  async componentWillMount(){
     self=this
-
+    await AsyncStorage.getItem('user').then((u)=>{
+      console.log('stored user ',u)
+    });
     this.watchPosition()
 
  console.log(this.props)
