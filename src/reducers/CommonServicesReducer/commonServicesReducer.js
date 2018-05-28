@@ -12,7 +12,7 @@ export default function(state=initialState,action){
         case REVERSE_GEOLOCATION:
         console.log('REVERSE_GEOLOCATION dispached : ',action)
         return {...state,
-        adress:action.payload.address_components[0]['long_name']}
+        adress:action.payload}
         case SETCOORDINATES:
         console.log('SETCOORDINATES dispached : ',action)
 
