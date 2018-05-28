@@ -10,7 +10,7 @@ import {
   NativeEventEmitter,
   Dimensions,
   FlatList,
-  ImageBackground
+  ImageBackground,
 } from 'react-native'
 import MapView from 'react-native-maps';
 import CarouselPager from 'react-native-carousel-pager';
@@ -22,7 +22,7 @@ import {reverseCoordinatesToAdress,setCoordnates,setDriverCoordnates} from "../a
 import { withNavigation } from "react-navigation";
 import { connect } from 'react-redux'
 import {setHomeComponent} from "../actions/UpdateComponentsStateAction/updateComponentsStateAction"
-import {getServices,selectedServices,createorder, orderLater} from "../actions/makeOrderAction"
+import {getServices,selectedServices,createorder, orderLater,providerInfo,setOrderID} from "../actions/makeOrderAction"
 import ProviderInfo from '../Components/ProviderInfo'
 import Base from '../Base'
 import LinearGradientForMap from "./LinearGradientForMap"
@@ -30,7 +30,6 @@ import LinearGradient from 'react-native-linear-gradient';
 import OrderService from '../service_api/OrderService'
 import GooglePlacesInput from "./GooglePlacesInput";
 const {width,height} = Dimensions.get('window')
-// var { RNLocation: Location } = require('NativeModules');
 import * as firebase from "firebase";
 let GeoFire = require('geofire');
 import {refreshPlayerId} from "../../src/actions/authAction"
@@ -45,54 +44,62 @@ class Map extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      currentMainCategory: null,
       showMainButtons:true
     }
   }
-  
+
   componentWillMount() {
     self=this
-    //OneSignal.setLogLevel(6, 0)
-    //OneSignal.addEventListener('received', self.onReceived);
-    //OneSignal.addEventListener('opened', this.onOpened);
-    //OneSignal.addEventListener('ids', this.onIds);
-    //OneSignal.init('a3551d54-e1bc-4f12-874c-7f6cb7982f95',  {kOSSettingsKeyAutoPrompt : true});
-    // OneSignal.registerForPushNotifications()
-    // OneSignal.setSubscription(true)
+    OneSignal.setLogLevel(6, 0)
+    OneSignal.addEventListener('received', self.onReceived);
+    OneSignal.addEventListener('opened', this.onOpened);
+    OneSignal.addEventListener('ids', this.onIds);
+    OneSignal.init('a3551d54-e1bc-4f12-874c-7f6cb7982f95',  {kOSSettingsKeyAutoPrompt : true});
     this.props.setHomeComponent(1)
-    //OneSignal.configure()
-    this.props.reverseCoordinatesToAdress(this.props.common.lat,this.props.common.lng)
-    this.props.getServices('Mohammed Farid')
+    OneSignal.configure()
+    // this.props.reverseCoordinatesToAdress(this.props.common.lat,this.props.common.lng)
+    // this.props.getServices('Mohammed Farid')
     // this.props.reverseCoordinatesToAdress()
+    // console.log('lat ',this.props.common)
+  }
+  
+  componentWillUnmount(){
+    OneSignal.removeEventListener('received', this.onReceived);
+    OneSignal.removeEventListener('opened', this.onOpened);
+    OneSignal.removeEventListener('ids', this.onIds);
   }
 
-  componentWillUnmount() {
-    //OneSignal.removeEventListener('received', this.onReceived);
-    //OneSignal.removeEventListener('opened', this.onOpened);
-    //OneSignal.removeEventListener('ids', this.onIds);
-  }
-
-  onReceived=(notification) =>{
-    console.log("Notification received: ",notification.payload.additionalData.data[2].order_id);
+  onReceived=(notification)=> {
+    console.log("Notification received: ",notification.payload);
     if(notification.payload.additionalData.data[1].type=='order_accepted'){
       this.setState({provider_info:notification.payload.additionalData.data[0]})
+      self.props.providerInfo(notification.payload.additionalData.data[0])
       this.trackOrder(notification.payload.additionalData.data[2].order_id,self)
+      self.props.setOrderID(notification.payload.additionalData.data[2].order_id)
+    }else if(notification.payload.additionalData.data[1].type=='order_finish'){
+      console.log("Notification order ended succesfuly: ",notification.payload);
     }
   }
 
   onOpened=(openResult)=> {
     console.log('Message: ', openResult.notification.payload.body);
-    console.log('Data: ', openResult.notification.payload.additionalData);
+    console.log('Data: ', openResult.notification.payload.additionalData.data[1].type=='order_finish');
     console.log('isActive: ', openResult.notification.isAppInFocus);
     console.log('openResult: ', openResult);
+    if( openResult.notification.payload.additionalData.data[1].type=='order_finish'){
+      // console.log("Notification order ended succesfuly: ",notification.payload);
+      self.props.popup.show()
+    }
   }
 
   onIds=(device)=> {
     console.log('Device info: ', device);
     self.props.refreshPlayerId(self.props.user_id,device['userId'])
-    //OneSignal.addEventListener('received', self.onReceived);
-    //OneSignal.addEventListener('opened', self.onOpened);
+    OneSignal.addEventListener('received', self.onReceived);
+    OneSignal.addEventListener('opened', self.onOpened);
   }
-  
+ 
   trackOrder(order_id,self){
     this.props.setHomeComponent(1)
     try{
@@ -117,10 +124,12 @@ class Map extends Component {
   orderButtons_View(){
     if(true){
       return (
-        <View style={{ backgroundColor: 'rgba(255,255,255,0.8)',justifyContent:"center",flexDirection:"row",position:"relative",zIndex:0,flex:1}}>
+        <View style={{ justifyContent:"center",flexDirection:"row",position:"relative",zIndex:0,flex:1}}>
           <View style={style.opacityView}>
             <TouchableOpacity
-              onPress={()=> this.setState({calenderShow:true})}
+              onPress={()=> {
+                this.setState({calenderShow:true})   
+              }}
               style={style.opacityWight}
             >
               <Text style={style.opacityWightText}>
@@ -144,12 +153,75 @@ class Map extends Component {
   }
 
   _renderItem ({item, index}) {
-    return(
-      <Image
-        style={{ width: 80, height: 80, marginHorizontal: 20 }}
-        source={ require('../assets/Assets/Group_1634.png')}
-      />
+    var base=new Base
+    return (item
+      // <Image style={{ width: 80, height: 80, marginHorizontal: 20 }}
+      //  source={ require('../assets/Assets/Group_1634.png') } />
     );
+  }
+  
+  _renderSubItem ({item, index}) {
+    var base=new Base
+    return (item
+      // <Image style={{ width: 80, height: 80, marginHorizontal: 20 }}
+      //  source={ require('../assets/Assets/Group_1634.png') } />
+    );
+  }
+
+  RenderSubCategories() {
+    var base=new Base
+    console.log(parseInt(self.state.page))
+    // if(parseInt(self.state.page)){
+    return (
+      <View style={{ flex: .3, justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 80, right: 0, left: 0, overflow: 'hidden' }} >
+          {/* {console.log('address',self.props.common.adress)} */}
+          <View style={{ position: 'absolute', bottom: 80, flex: 1, flexDirection: 'row', flexWrap: 'wrap', }}  >
+            <Carousel
+              firstItem={0}
+              inactiveSlideScale={.4}
+              slideStyle={{  }}
+              data={
+                self.props.service[parseInt(self.state.page)].sup_serivces_data.map(subService => (
+                  <TouchableOpacity
+                    key={subService.services_id}
+                    style={{
+                      height: 110,                            
+                      marginTop: 20,
+                      justifyContent: "center",
+                      alignItems: "center"
+                    }}
+                  >
+                    <Image
+                      source={{ uri: base.icon_url + subService.icone }}
+                      style={{
+                        width: 70,
+                        height: 70,
+                        borderRadius: 35,
+                        resizeMode: "contain"
+                      }}
+                    />
+                    <Text
+                      style={{
+                        marginTop: 5,
+                        fontSize: 12,
+                        color: "rgb(30,123,177)"
+                      }}
+                    >
+                      {subService.services_name_ar}
+                    </Text>
+                  </TouchableOpacity>
+                ))
+              }
+              renderItem={self._renderSubItem}
+              sliderWidth={width}
+              itemWidth={width/3}
+            />
+          </View>
+      </View>
+    )
+    // }
+    // else{
+      // return <View/>}
   }
 
   render () {
@@ -307,45 +379,42 @@ class Map extends Component {
             <Image source={Images.locatiOnMapIcon} style={styles.image} />
           </TouchableOpacity> */}
         </View>
-        {service.length > 0 && this.props.compState.__CurrentComponent == 1 && this.props.common.driverLat=='' && this.state.servicesSliderState==true? 
+        {service.length > 0 && this.props.compState.__CurrentComponent == 1 && this.props.common.driverLat=='' && this.state.servicesSliderState==true?
           <View style={{ position: "absolute", left: 0, bottom: 10, right: 0 }}>
-            {/* Sub services */}
-            {this.state.page ?
-              <View style={{ height: 110,marginTop:10, padding: 10, backgroundColor: "rgba(255,255,255,0.8)"}}>
-                <CarouselPager
-                  ref={ref => (this.carousel = ref)}
-                  initialPage={0}
-                  pageStyle={{ height: 110, alignItems: "center", justifyContent: "center" }}
-                  onPageChange={selectedService => {
-                    selectedServices([
-                      services[this.state.page].sup_serivces_data[
-                        selectedService
-                      ],
-                      services[this.state.page]
-                    ]);
-                    createorder({
-                      services_id: services[this.state.page]["services_id"],
-                      sub_services_id:
-                        services[this.state.page].sup_serivces_data[
-                          selectedService
-                        ]["sub_services_id"]
-                    });
-                    this.setState({ showMainButtons: true });
-                  }}
-                >
-                  {service[parseInt(this.state.page)].sup_serivces_data.map(
-                    subService => (
+            {parseInt(self.state.page)>=0 ? this.RenderSubCategories() :null}
+            <View style={{ flex: .3, justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 0, right: 0, left: 0, overflow: 'hidden' }} >
+              <View style={{ position: 'absolute', bottom: 60, flex: 1, flexDirection: 'row', flexWrap: 'wrap', right: 0, left: 0 }}  >
+                <Carousel
+                  firstItem={0}
+                  onSnapToItem={
+                    // currentMainCategory => this.setState({ currentMainCategory })
+                    page => {
+                      selectedServices([
+                        services[page].sup_serivces_data[0],
+                        services[page]
+                      ]);
+                      createorder({
+                        services_id: services[page]["services_id"],
+                        sub_services_id: services[page].sup_serivces_data[0]["sub_services_id"]
+                      });
+                      console.log(page.toString())
+                      this.setState({ page: page.toString() })
+                    }
+                  }
+                  inactiveSlideScale={.4}
+                  slideStyle={{  }}
+                  data={
+                    self.props.service.map(mainService => (
                       <TouchableOpacity
-                        key={subService.services_id}
-                        style={{
-                          height: 110,                            
-                          marginTop: 20,
+                        key={mainService.services_id}
+                        style={{marginBottom:40,
+                          height: 130,
                           justifyContent: "center",
                           alignItems: "center"
                         }}
                       >
                         <Image
-                          source={{ uri: base.icon_url + subService.icone }}
+                          source={{ uri: base.icon_url + mainService.icone }}
                           style={{
                             width: 70,
                             height: 70,
@@ -360,79 +429,30 @@ class Map extends Component {
                             color: "rgb(30,123,177)"
                           }}
                         >
-                          {subService.services_name_ar}
+                          {mainService.services_name_ar}
                         </Text>
                       </TouchableOpacity>
-                    )
-                  )}
-                </CarouselPager>
+                    ))
+                  }
+                  renderItem={this._renderItem}
+                  sliderWidth={width}
+                  itemWidth={width/3}
+                />
               </View>
-              :
-              <View style={{ width: 0, height: 0 }} />
-            }
-            {/* Main services */}
-            <View style={{ height: 130, padding: 10, backgroundColor: "rgba(255,255,255,0.8)", justifyContent: "center" }}>
-              <CarouselPager
-                ref={ref => (this.carousel = ref)}
-                initialPage={0}
-                pageStyle={{height: 130, alignItems: "center", justifyContent: "center", }}
-                onPageChange={page => {
-                  selectedServices([
-                    services[page].sup_serivces_data[0],
-                    services[page]
-                  ]);
-                  createorder({
-                    services_id: services[page]["services_id"],
-                    sub_services_id:
-                      services[page].sup_serivces_data[0]["sub_services_id"]
-                  });
-                  this.setState({ page: page.toString() });
-                }}
-              >
-                {service.map(mainService => (
-                  <TouchableOpacity
-                    key={mainService.services_id}
-                    style={{marginBottom:40,
-                      height: 130,
-                      justifyContent: "center",
-                      alignItems: "center"
-                    }}
-                  >
-                    <Image
-                      source={{ uri: base.icon_url + mainService.icone }}
-                      style={{
-                        width: 70,
-                        height: 70,
-                        borderRadius: 35,
-                        resizeMode: "contain"
-                      }}
-                    />
-                    <Text
-                      style={{
-                        marginTop: 5,
-                        fontSize: 12,
-                        color: "rgb(30,123,177)"
-                      }}
-                    >
-                      {mainService.services_name_ar}
-                    </Text>
-                  </TouchableOpacity>
-                ))}
-              </CarouselPager>
+              {this.orderButtons_View()}
             </View>
-            {this.orderButtons_View()}
           </View>
           :
           <View style={{ width: 0, height: 0 }} />
         }
         {this.props.common.driverLat!=''?
-          <ProviderInfo 
+          <ProviderInfo
             info={this.state.provider_info}
-            name='محمد أحمد مصطفي ' 
-            carType='Mercedes 2018' 
-            mints={8} 
-            phoneNumber='012345678'
-            profileImage='http://www.status77.in/wp-content/uploads/2015/07/14533584_1117069508383461_6955991993080086528_n.jpg'
+            // name='محمد أحمد مصطفي ' 
+            // carType='Mercedes 2018' 
+            // mints={8} 
+            // phoneNumber='012345678'
+            // profileImage='http://www.status77.in/wp-content/uploads/2015/07/14533584_1117069508383461_6955991993080086528_n.jpg' 
           />
           :
           <View style={{ width: 0, height: 0 }} />
@@ -472,7 +492,7 @@ export default connect(mapStateToProps,
   {
     getServices,
     setHomeComponent,
-    selectedServices,
+    selectedServices,providerInfo,setOrderID,
     reverseCoordinatesToAdress,setCoordnates,setDriverCoordnates,
     createorder,refreshPlayerId,orderLater
   }

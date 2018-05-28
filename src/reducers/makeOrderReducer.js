@@ -1,9 +1,9 @@
-import {GETSERVESIES,GETSELECTED_SERVICES,ORDER_OBJ} from '../actions/types'
+import {GETSERVESIES,CANCEL_ORDER,GETSELECTED_SERVICES,ORDER_OBJ,PROVIDER_INFO,RATE_PROVIDER,ORDER_ID} from '../actions/types'
 const initialState={
     services:[],
     service:[],selectedServices:[],
-
-    services_id:'',sub_services_id:'',user_lat:'',user_long:''
+order_id:'',
+    services_id:'',sub_services_id:'',user_lat:'',user_long:'',provider:{users:{'user_name':''}}
 }
 
 export default function(state=initialState,action){
@@ -21,7 +21,18 @@ return {...state
     ,user_lat:action.payload.user_lat?action.payload.user_lat:state.user_lat
     ,user_long:action.payload.user_long?action.payload.user_long:state.user_long
 }
+case PROVIDER_INFO:
+return {...state,provider:action.payload}
+case RATE_PROVIDER: 
+
+return{...state}
+case ORDER_ID:
+return {...state,order_id:action.payload}
+case CANCEL_ORDER:
+return{...state}
+
         default:
         return state;
     }
+   
 };

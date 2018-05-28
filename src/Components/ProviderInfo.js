@@ -4,8 +4,10 @@ import { View, Text,TouchableOpacity, ImageBackground, Image, Alert } from 'reac
 import Communications from 'react-native-communications';
 import { connect } from 'react-redux'
 import {reverseCoordinatesToAdress,setCoordnates,setDriverCoordnates} from "../actions/CommonServicesActions/commonServicesActions"
+import {cancelOrder}from "../actions/makeOrderAction"
 import { withNavigation } from "react-navigation";
 import Base from '../Base'
+import {setHomeComponent} from "../actions/UpdateComponentsStateAction/updateComponentsStateAction"
 
 class ProviderInfo extends Component {
     cancleOrder = () => {
@@ -13,7 +15,11 @@ class ProviderInfo extends Component {
             'تأكيد الغاء الطلب',
             'لا يمكن إعادة هذا الإجراء',
             [
-                {text: 'تأكيد', onPress: () => console.log('OK Pressed')},
+                {text: 'تأكيد', onPress: () =>{
+                  this.props.cancelOrder(this.props.makeOrder.order_id)
+                  this.props.setHomeComponent(1)
+
+                }},
                 {text: 'إلغاء', onPress: () => console.log('Cancle Pressed')},
             ]
         )
@@ -55,11 +61,11 @@ const mapStateToProps = state => {
     // service: state.makeOrder.service ,
     common: state.common,
     // compState:state.compState,
-    // makeOrder:state.makeOrder,
+    makeOrder:state.makeOrder,
     // user_id:state.auth.user_id
 
   }
 }
 export default connect(mapStateToProps,
   {
-   setDriverCoordnates}) (withNavigation(ProviderInfo))
+   setDriverCoordnates,cancelOrder,setHomeComponent}) (withNavigation(ProviderInfo))
