@@ -40,7 +40,7 @@ let self;
 import style from './Styles/MainButtonsStyle'
 
 class Map extends Component {
-  state= { lat:0,lng:0,currentComponent:2,showMainButtons:true,page:0,provider_info:[],mapState:'standard',servicesSliderState:true,calenderShow:false}
+  state= { order_id:'',lat:0,lng:0,currentComponent:2,showMainButtons:true,page:0,provider_info:[],mapState:'standard',servicesSliderState:true,calenderShow:false}
   origin = {latitude:31.2064717, longitude:29.9279375};
   constructor(props) {
     super(props);
@@ -51,7 +51,7 @@ class Map extends Component {
   }
 
   componentWillMount() {
-    this.props.favlocationlist(this.props.user_id)
+    // this.props.favlocationlist(this.props.user_id)
 
     self=this
     OneSignal.setLogLevel(6, 0)
@@ -80,8 +80,21 @@ class Map extends Component {
       self.props.providerInfo(notification.payload.additionalData.data[0])
       this.trackOrder(notification.payload.additionalData.data[2].order_id,self)
       self.props.setOrderID(notification.payload.additionalData.data[2].order_id)
+      self.setState({order_id:notification.payload.additionalData.data[2].order_id})
     }else if(notification.payload.additionalData.data[1].type=='order_finish'){
       console.log("Notification order ended succesfuly: ",notification.payload);
+      // self.props.setHomeComponent(0)
+      var firebaseRef = firebase.database().ref('orders');
+      firebaseRef.child(this.state.order_id).off()
+      self.props.setDriverCoordnates('','')
+
+    }else if(notification.payload.additionalData.data[1].type=='order_cancel'){
+      console.log("Notification order ended succesfuly: ",notification.payload);
+      // self.props.setHomeComponent(0)
+      var firebaseRef = firebase.database().ref('orders');
+      firebaseRef.child(this.state.order_id).off()
+      self.props.setDriverCoordnates('','')
+
     }
   }
 
@@ -109,6 +122,12 @@ class Map extends Component {
       var firebaseRef = firebase.database().ref('orders');
       firebaseRef.child(order_id).on('value',(e)=>{
         var geoFire = new GeoFire(firebaseRef);
+        var geoQuery = geoFire.query({
+          center: [10.38, 2.41],
+          radius: 10.5
+        });
+        
+        var radius = geoQuery.radius();  // radius === 10.5
         geoFire.get(order_id).then((location)=> {
           if (location === null) {
 
@@ -257,15 +276,19 @@ class Map extends Component {
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
+          
         >
-          <MapView.Marker.Animated
-            draggable={true}
-            coordinate={
-              new MapView.AnimatedRegion({
+          <MapView.Marker
+                      pinColor={"rgba(153, 137, 0,0.5)"}
+
+                        // image={ require("../assets/Assets/Group-1353.bmp")}
+                        draggable={true}
+            coordinate={{
+              // new MapView.AnimatedRegion({
                 latitude:this.props.common.lat? this.props.common.lat : 6.2672295570373535,
                 longitude:this.props.common.lng?this.props.common.lng : 31.229478498675235
-              })
-            }
+              // })
+            }}
             onDragStart={()=>{
               this.setState({servicesSliderState:false})
             }}
@@ -276,13 +299,15 @@ class Map extends Component {
           />
           {this.props.common.driverLat!=''?
             <MapView.Marker.Animated
-              // image={}
-              coordinate={
-                new MapView.AnimatedRegion({
-                  latitude:this.props.common.driverLat? this.props.common.lat : 0,
-                  longitude:this.props.common.driverLng?this.props.common.lng : 0
-                })
-              }
+            opacity={0.6}
+            pinColor={"rgb(65, 118, 57)"}
+              // image={"../assets/icons/faq-icon.png"}
+              coordinate={{
+                // new MapView.AnimatedRegion({
+                  latitude:this.props.common.driverLat? this.props.common.driverLat : 0,
+                  longitude:this.props.common.driverLng?this.props.common.driverLng : 0
+                // })
+              }}
             />
             :
             <View style={{ width: 0, height: 0 }} />

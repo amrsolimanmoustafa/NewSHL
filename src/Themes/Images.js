@@ -8,6 +8,8 @@ const images = {
   igniteClear: require('../assets/ignite-logo-transparent.png'),
   tileBg: require('../assets/tile_bg.png'),
   background: require('../assets/BG.png'),
+  // drivrMarker: require('../assets/Group 1353.png'),
+
   buttonBackground: require('../assets/button-bg.png'),
   api: require('../assets/icons/icon-api-testing.png'),
   components: require('../assets/icons/icon-components.png'),

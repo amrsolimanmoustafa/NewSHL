@@ -9,6 +9,7 @@ import { Icon } from 'native-base';
 import { connect } from 'react-redux'
 import { withNavigation } from "react-navigation";
 import {favlocationlist} from "../actions/makeOrderAction"
+import {setCoordnates} from "../actions/CommonServicesActions/commonServicesActions"
 
 const RESPONSE = [
   {"NAME":"المنزل","STREET":"225 Bills Place","RowSelected":true},
@@ -24,7 +25,7 @@ const RESPONSE = [
  
   }
 componentWillMount(){
-  // this.props.favlocationlist(this.props.user_id)
+  this.props.favlocationlist(this.props.user_id)
   console.log(this.props) 
 }
   render () {
@@ -38,12 +39,16 @@ componentWillMount(){
           <Text style={styles.SubHeading}>
             تتيح الصفحة اضافة العناوين المفضلة لاستخدامها بالخدمات
           </Text>
-         {console.log(this.props.makeOrder.favlocationlist.data.length)} 
           <View style={styles.FavoritePlacesListStyle}>
-            {this.props.makeOrder.favlocationlist.data.length>0?this.props.makeOrder.favlocationlist.data.map((item,index)=>(
+            {this.props.makeOrder.favlocationlist.data?this.props.makeOrder.favlocationlist.data.map((item,index)=>(
               <TouchableOpacity
                 key={index}
-                onPress={()=> this.setState({selectedPlace: item})}
+                onPress={()=> {
+                  console.log(item)
+                  this.props.setCoordnates(item.lat,item.long)
+                  this.setState({selectedPlace: item})
+                  navigation.navigate('HomeScreen')
+              }}
                 style={{flexDirection: 'row',alignItems: 'center',paddingVertical: 10}}
               >
                 <View style={{width: 20,height: 20,borderWidth: 1,borderColor: '#3C403F',borderRadius: 10,justifyContent: 'center',alignItems: 'center'}}>
@@ -76,7 +81,7 @@ const mapStateToProps = state => {
   return {
     // services: state.makeOrder.services.data,
     // service: state.makeOrder.service ,
-    // common: state.common,
+    common: state.common,
     // compState:state.compState,
     makeOrder:state.makeOrder,
     user_id:state.auth.user_id
@@ -86,6 +91,6 @@ const mapStateToProps = state => {
 
 export default connect(mapStateToProps,
   {
-  favlocationlist
+  favlocationlist,setCoordnates
   }
 ) (withNavigation(FavoritePlaces))

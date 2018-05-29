@@ -13,18 +13,18 @@ const {width,height} = Dimensions.get('window')
 import {addToFavLocs }from '../actions/makeOrderAction'
 import { connect } from 'react-redux'
 import { withNavigation } from "react-navigation";
-import {favlocationlist} from "../actions/makeOrderAction"
+import {reverseCoordinatesToAdress,setCoordnates} from "../actions/CommonServicesActions/commonServicesActions"
+import {NavigationActions} from 'react-navigation';                
+
  class AddFavoritePlace extends Component {
+state={lat:'',lng:'',area:'',label:''
+}
   constructor(props) {
     super(props);
     this.state = {
 lat:'',lng:'',area:'',label:''
     }
-    // {"user_id":"1",
-    //   "label":"المنزل",
-    //   "area":"area",
-    //   "long":"27.2454",
-    //   "lat":"39.15454" }
+   
     
   }
 
@@ -52,20 +52,27 @@ lat:'',lng:'',area:'',label:''
         dragble 
           style={{ flex: 1, borderRadius: 10, borderWidth: 2, borderColor: "#fff" }}
           initialRegion={{
-            latitude:this.state.lat? this.state.lat : 6.2672295570373535,
-            longitude:this.state.long? this.state.long : 31.229478498675235,
+            latitude:this.props.common.lat? this.props.common.lat : 6.2672295570373535,
+            longitude:this.props.common.lng?this.props.common.lng : 31.229478498675235,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
           onPress={(e)=> this.onMapPress(e.nativeEvent.coordinate)}
         >
-          <MapView.Marker
+          <MapView.Marker draggable={true}
             coordinate={
               new MapView.AnimatedRegion({
-                latitude:this.state.marker? this.state.marker.latitude : 6.2672295570373535,
-                longitude:this.state.marker? this.state.marker.longitude : 31.229478498675235
+                latitude:this.props.common.lat? this.props.common.lat : 6.2672295570373535,
+                longitude:this.props.common.lng?this.props.common.lng : 31.229478498675235
               })
             }
+       
+            onDragEnd={(e) =>{
+              this.props.setCoordnates(e.nativeEvent.coordinate.latitude,e.nativeEvent.coordinate.longitude)
+       this.props.reverseCoordinatesToAdress(e.nativeEvent.coordinate.latitude,e.nativeEvent.coordinate.longitude)
+       this.props.setCoordnates(e.nativeEvent.coordinate.latitude,e.nativeEvent.coordinate.longitude)
+       this.setState({lat:e.nativeEvent.coordinate.latitude,long:e.nativeEvent.coordinate.longitude})
+            }}
           />
         </MapView>
         <View style={{position: 'absolute',bottom: 0,left: 0,right: 0,padding: 16}}>
@@ -74,7 +81,7 @@ lat:'',lng:'',area:'',label:''
               underlineColorAndroid={'transparent'}
               placeholder={'Place name'}
               placeholderTextColor={'#A2A0A0'}
-              onChangeText={(value)=> this.setState({placeName: value})}
+              onChangeText={(value)=> this.setState({label: value})}
             />
             <TouchableOpacity
               onPress={()=> this.submit()}
@@ -106,15 +113,29 @@ lat:'',lng:'',area:'',label:''
   submit(){
     const placeName = this.state.placeName,
           coordinate = this.state.marker
-
-  }
+console.log(this.state)
+console.log(this.props.common)
+let addLocToFav_obj={"user_id":this.props.user_id,"label":this.state.label,"area":this.props.common.adress,"lat":this.state.lat,"long":this.state.long}
+this.props.addToFavLocs(addLocToFav_obj)
+const resetAction = NavigationActions.reset({
+  index: 0,
+  actions: [
+    NavigationActions.navigate({ routeName: 'HomeScreen'})
+  ] })
+this.props.navigation.dispatch(resetAction);
+// {"user_id":"1",
+//   "label":"المنزل",
+//   "area":"area",
+//   "long":"27.2454",
+//   "lat":"39.15454" }
+}
 }
 
 const mapStateToProps = state => {
   return {
     // services: state.makeOrder.services.data,
     // service: state.makeOrder.service ,
-    // common: state.common,
+    common: state.common,
     // compState:state.compState,
     makeOrder:state.makeOrder,
     user_id:state.auth.user_id
@@ -123,7 +144,6 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps,
-  {
-  favlocationlist
+  {reverseCoordinatesToAdress,setCoordnates,addToFavLocs
   }
 ) (withNavigation(AddFavoritePlace))

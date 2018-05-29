@@ -164,7 +164,7 @@ export const favlocationlist=(user_id)=>dispatch=>{
  
  export const addToFavLocs=(locObj)=>dispatch=>{
   const ADD_FAV_LOC_URL="http://" + base_url.baseUrl +'storefavlocation'
-   console.log(GET_FAV_LOCS_URL)
+   console.log(ADD_FAV_LOC_URL)
    try {
             
                    axios
