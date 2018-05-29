@@ -1,4 +1,4 @@
-import {  GETSERVESIES ,GETSELECTED_SERVICES,ORDER_OBJ,PROVIDER_INFO,RATE_PROVIDER,ORDER_ID,CANCEL_ORDER} from "../actions/types";
+import {  GETSERVESIES,ADD_FAV_LOC ,GET_FAV_LOCS,GETSELECTED_SERVICES,ORDER_OBJ,PROVIDER_INFO,RATE_PROVIDER,ORDER_ID,CANCEL_ORDER} from "../actions/types";
 import Base from "../Base"
 import axios from 'axios';
 import { Toast } from "native-base";
@@ -139,6 +139,56 @@ export const cancelOrder=(order_id)=>dispatch=>{
                   console.error(error);
                 }
 }
+export const favlocationlist=(user_id)=>dispatch=>{
+  const GET_FAV_LOCS_URL="http://" + base_url.baseUrl +'favlocationlist'+"/"+user_id
+   console.log(GET_FAV_LOCS_URL)
+   try {
+            
+                   axios
+                     .get(GET_FAV_LOCS_URL)
+                     .then((res) =>{
+                       console.log(res)
+   
+                      
+                       dispatch({
+                         type:GET_FAV_LOCS,
+                         payload:res
+                       }) 
+                     }).catch(function(error) {
+                       console.log(error);
+                     });
+                 } catch (error) {
+                   console.error(error);
+                 }
+ }
+ 
+ export const addToFavLocs=(locObj)=>dispatch=>{
+  const ADD_FAV_LOC_URL="http://" + base_url.baseUrl +'storefavlocation'
+   console.log(GET_FAV_LOCS_URL)
+   try {
+            
+                   axios
+                     .post(ADD_FAV_LOC_URL,locObj)
+                     .then((res) =>{
+                       console.log(res)
+   
+                      
+                       dispatch({
+                         type:ADD_FAV_LOC_URL,
+                         payload:res
+                       }) 
+                     }).catch(function(error) {
+                       console.log(error);
+                     });
+                 } catch (error) {
+                   console.error(error);
+                 }
+ }
+
+
+
+
+
 // export const getLowRateReason=()=>dispatch=>{
 //   const RATE_PROVIDER_URL="http://" + base_url.baseUrl +'getclintcancelreasone?lang=1'
 

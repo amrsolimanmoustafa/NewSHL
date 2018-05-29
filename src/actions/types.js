@@ -16,4 +16,6 @@ export const RATE_PROVIDER="RATE_PROVIDER"
 
 export const ORDER_ID="ORDER_ID"
 export const CANCEL_ORDER="CANCEL_ORDER"
+export const GET_FAV_LOCS="GET_FAV_LOCS"
+export const ADD_FAV_LOC="ADD_FAV_LOC"
 

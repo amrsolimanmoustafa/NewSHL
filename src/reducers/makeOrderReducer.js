@@ -1,9 +1,15 @@
-import {GETSERVESIES,CANCEL_ORDER,GETSELECTED_SERVICES,ORDER_OBJ,PROVIDER_INFO,RATE_PROVIDER,ORDER_ID} from '../actions/types'
+import {GETSERVESIES,GET_FAV_LOCS,ADD_FAV_LOC,CANCEL_ORDER,GETSELECTED_SERVICES,ORDER_OBJ,PROVIDER_INFO,RATE_PROVIDER,ORDER_ID} from '../actions/types'
+import { favlocationlist } from '../actions/makeOrderAction';
 const initialState={
     services:[],
     service:[],selectedServices:[],
 order_id:'',
-    services_id:'',sub_services_id:'',user_lat:'',user_long:'',provider:{users:{'user_name':''}}
+    services_id:'',
+    sub_services_id:''
+    ,user_lat:'',user_long:'',
+    provider:{users:{'user_name':''}}
+    ,favlocationlist
+
 }
 
 export default function(state=initialState,action){
@@ -30,7 +36,8 @@ case ORDER_ID:
 return {...state,order_id:action.payload}
 case CANCEL_ORDER:
 return{...state}
-
+case GET_FAV_LOCS:
+return {...state,favlocationlist:action.payload}
         default:
         return state;
     }

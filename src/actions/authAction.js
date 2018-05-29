@@ -34,18 +34,21 @@ export const loginUser=(user,context)=>{
     try {
       axios
         .post(LOGIN_URL, user)
-        .then(async(user)=> {
+        .then((user)=> {
           if (user && user.phone !="") {
             context.setState({
               loading: false,
               VerifyPhoneScreen: "VerifyPhoneScreen"
             });
             context.props.navigation.navigate("VerifyPhoneScreen", user);
-            await AsyncStorage.setItem('user','dddddddddddd')
-            dispatch({
-              type:LOGIN,
-              payload:user
-            })
+             AsyncStorage.setItem('user',user).then((d)=>
+            {
+           })
+          
+           dispatch({
+            type:LOGIN,
+            payload:user
+          })
           } else {
             context.setState({ loading: false });
           }

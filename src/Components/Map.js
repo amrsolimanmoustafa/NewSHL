@@ -22,7 +22,7 @@ import {reverseCoordinatesToAdress,setCoordnates,setDriverCoordnates} from "../a
 import { withNavigation } from "react-navigation";
 import { connect } from 'react-redux'
 import {setHomeComponent} from "../actions/UpdateComponentsStateAction/updateComponentsStateAction"
-import {getServices,selectedServices,createorder, orderLater,providerInfo,setOrderID} from "../actions/makeOrderAction"
+import {getServices,selectedServices,favlocationlist,createorder, orderLater,providerInfo,setOrderID} from "../actions/makeOrderAction"
 import ProviderInfo from '../Components/ProviderInfo'
 import Base from '../Base'
 import LinearGradientForMap from "./LinearGradientForMap"
@@ -51,6 +51,8 @@ class Map extends Component {
   }
 
   componentWillMount() {
+    this.props.favlocationlist(this.props.user_id)
+
     self=this
     OneSignal.setLogLevel(6, 0)
     OneSignal.addEventListener('received', self.onReceived);
@@ -493,7 +495,7 @@ export default connect(mapStateToProps,
   {
     getServices,
     setHomeComponent,
-    selectedServices,providerInfo,setOrderID,
+    selectedServices,providerInfo,setOrderID,favlocationlist,
     reverseCoordinatesToAdress,setCoordnates,setDriverCoordnates,
     createorder,refreshPlayerId,orderLater
   }

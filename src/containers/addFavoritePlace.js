@@ -10,16 +10,26 @@ import {
 import MapView from 'react-native-maps';
 import LinearGradient from "react-native-linear-gradient"
 const {width,height} = Dimensions.get('window')
-
-export default class AddFavoritePlace extends Component {
+import {addToFavLocs }from '../actions/makeOrderAction'
+import { connect } from 'react-redux'
+import { withNavigation } from "react-navigation";
+import {favlocationlist} from "../actions/makeOrderAction"
+ class AddFavoritePlace extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+lat:'',lng:'',area:'',label:''
     }
+    // {"user_id":"1",
+    //   "label":"المنزل",
+    //   "area":"area",
+    //   "long":"27.2454",
+    //   "lat":"39.15454" }
+    
   }
 
   componentWillMount(){
+    var self=this
     navigator.geolocation.getCurrentPosition(
       (position) => {
         console.log(position)
@@ -27,6 +37,8 @@ export default class AddFavoritePlace extends Component {
           lat: position.coords.latitude,
           long: position.coords.longitude
         })
+        self.setState({lat: position.coords.latitude,
+          long: position.coords.longitude})
       },
       (error) => self.setState({ error: error.message }),
       { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000, distanceFilter: 100 },
@@ -97,3 +109,21 @@ export default class AddFavoritePlace extends Component {
 
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    // services: state.makeOrder.services.data,
+    // service: state.makeOrder.service ,
+    // common: state.common,
+    // compState:state.compState,
+    makeOrder:state.makeOrder,
+    user_id:state.auth.user_id
+
+  }
+}
+
+export default connect(mapStateToProps,
+  {
+  favlocationlist
+  }
+) (withNavigation(AddFavoritePlace))
