@@ -4,7 +4,7 @@ export default StyleSheet.create({
   container: {
     margin:"1%",
     width:"100%",
-    height:"30%",
+    height:"50%",
     alignItems:"center"
   },
   container2: {
@@ -17,7 +17,7 @@ export default StyleSheet.create({
     marginTop:"12%",
     borderRadius: 80,
     width:"70%",
-    height:"100%",
+    height:"30%",
 
     
   },

@@ -25,7 +25,6 @@ export default StyleSheet.create({
     borderRadius:10,
     borderWidth: 1,
     borderColor: '#fff',
-    marginTop:"10%",
     height:"45%",
     alignItems:"center",
     marginLeft:"5%",
@@ -39,6 +38,7 @@ export default StyleSheet.create({
     shadowRadius: 2,
     elevation: 5,
     padding:0,
+    
   },
   languages:{
     flexDirection:"row",

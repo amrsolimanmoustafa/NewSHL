@@ -2,14 +2,16 @@ import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   container: {
+    position:"absolute",
+zIndex:1,
     flex: 1,
     backgroundColor:"white",
     borderRadius:10,
     alignItems:"center",
     width:"100%",
     height:"100%",
-    padding:5
-
+    padding:5,
+flexDirection:"column"
 
   },
   heading:{
@@ -85,11 +87,13 @@ export default StyleSheet.create({
     marginBottom:"0%"
   },
   opacity: {
-    
+    zIndex:2,
+bottom:0,
+  // position:"absolute",
     marginTop:"2%",
     borderRadius: 80,
     width:"90%",
-    height:"30%",
+    height:"150%",
     
   },
 

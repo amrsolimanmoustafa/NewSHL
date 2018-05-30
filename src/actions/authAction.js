@@ -1,4 +1,4 @@
-import { FETCH_POSTS, LOGIN } from "../actions/types";
+import { FETCH_POSTS, LOGIN,ACTIVATION_STATE } from "../actions/types";
 import Base from "../Base"
 import axios from 'axios';
 import { withNavigation } from "react-navigation";
@@ -27,8 +27,9 @@ export const refreshPlayerId=(user_id,token_id)=>dispatch=>{
   }
 }
 
-export const loginUser=(user,context)=>{
-  return(dispatch) => {
+export const loginUser=(user,context)=>dispatch=>
+{
+  // return(dispatch) => {
     var base_url =new Base()
     var LOGIN_URL="http://" + base_url.baseUrl + "login"
     try {
@@ -64,4 +65,45 @@ export const loginUser=(user,context)=>{
       console.error(error);
     }
   }
-}
+// }
+
+
+
+export const VerificationCodeActivation=(v_object,context)=>dispatch=>{
+  // return(dispatch) => {
+    var base_url =new Base()
+    var ACTIVATION_CODE_URL="http://" + base_url.baseUrl + "activate"
+    try {
+      axios
+        .post(ACTIVATION_CODE_URL, v_object)
+        .then((state)=> {
+          // if (user && user.phone !="") {
+          //   context.setState({
+          //     loading: false,
+          //     VerifyPhoneScreen: "VerifyPhoneScreen"
+          //   });
+          //   context.props.navigation.navigate("VerifyPhoneScreen", user);
+          //    AsyncStorage.setItem('user',user).then((d)=>
+          //   {
+          //  })
+          console.log(state)
+           dispatch({
+            type:ACTIVATION_STATE,
+            payload:state
+          })
+          // } else {
+          //   context.setState({ loading: false });
+          // }
+        })
+        .catch(function(error) {
+          // context.setState({ loading: false });
+          // Toast.show("يرجي التاكد من البيانات", Toast.LONG);
+          console.log(error);
+        });
+    }catch (error) {
+      // Toast.show("", Toast.LONG);
+      // context.setState({ loading: false });
+      console.error(error);
+    }
+  }
+// }

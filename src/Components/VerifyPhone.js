@@ -12,14 +12,14 @@ import  LinearGradientButton  from "../Components/LinearGradientButton";
 import { withNavigation } from "react-navigation";
 import { connect } from 'react-redux'
 
-import {loginUser} from "../../src/actions/authAction"
+import {VerificationCodeActivation} from "../../src/actions/authAction"
 
  class VerifyPhone extends Component {
-
 
   constructor (props) {
     super(props)
     console.log(this.props)
+    this.state={v_code:null}
 
   }
   componentDidMount(){
@@ -60,7 +60,9 @@ import {loginUser} from "../../src/actions/authAction"
                              {" "}
                              ادخل الكود{" "}
                            </Label>
-                           <Input style={styles.input} />
+                           <Input style={styles.input} onChangeText={(v_code)=>{
+this.setState({v_code:v_code})
+                            }} />
                          </Item>
                        </View>
                        {/* Radio Button Needs Modfication */}
@@ -76,12 +78,17 @@ import {loginUser} from "../../src/actions/authAction"
                          </Text>
                        </View>
                        {/* Two Linear Gradient */}
-                       <View style={{flex:1,width:"100%",justifyContent:'space-between'}} >
-                         <LinearGradientButton style={{flex:1}}  press={this.goToLoginScreen.bind(this)} navigateScreen="LoginScreen" text="تغيير رقم الجوال" />
+                       <View style={{flex:1,hieght:'40%',width:"100%",justifyContent:'space-between'}} >
+                         <LinearGradientButton style={{flex:1,hieght:'100%'}}  press={this.goToLoginScreen.bind(this)} navigateScreen="LoginScreen" text="تغيير رقم الجوال" />
 </View>
                          <View style={{flex:1,width:"100%",position:'relative',zIndex:-2,justifyContent:'space-between'}} >
 
-                         <LinearGradientButton   press={this.goToHomeScreen.bind(this)} navigateScreen="HomeScreen" text="الدخول" />
+                         <LinearGradientButton   press={()=>{this.state.v_code!=null?
+                           this.props.VerificationCodeActivation({'phone':this.props.user_phone,'v_code':this.state.v_code},this):null
+                          //  this.goToHomeScreen.bind(this)
+                          }
+                           
+                           } navigateScreen="HomeScreen" text="الدخول" />
                        </View>
                      </View>;
                  }
@@ -109,5 +116,5 @@ import {loginUser} from "../../src/actions/authAction"
                   ,user_phone:state.auth.user_phone
                 }
               }
-               export default connect(mapStateToProps, { loginUser }) (withNavigation(VerifyPhone));
+               export default connect(mapStateToProps, { VerificationCodeActivation }) (withNavigation(VerifyPhone));
 
