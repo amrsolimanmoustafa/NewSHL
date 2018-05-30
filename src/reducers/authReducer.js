@@ -9,7 +9,7 @@ export default function(state=initialState,action){
     switch(action.type){
         case LOGIN:
         return {...state,
-          user:action.payload,user_phone:action.payload.data.phone,user_id:action.payload.data.user_id}
+          user: action.payload,user_phone:action.payload.phone,user_id:action.payload.user_id}
         //   case REFRESH_PLAYER_ID:
         //   return{...state,}
         case ACTIVATION_STATE:

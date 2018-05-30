@@ -13,14 +13,18 @@ class VerifyPhoneScreen extends Component {
   render () {
     return (
       <View style={styles.container}>
-                                          {/* ImageBackground */}
-        <ImageBackground style={styles.loginBackground} source={Images.loginBackground} resizeMode={'cover'}>
+        <ImageBackground
+          style={styles.loginBackground}
+          source={Images.loginBackground}
+          resizeMode={'cover'}
+        >
           <View style={styles.main}>
-                                              {/* logo */}
-            <Image source={Images.loginLogo} style={styles.loginLogo}/>
+            <Image
+              source={Images.loginLogo}
+              style={styles.loginLogo}
+            />
             <View style={styles.input}>
-                                 {/* the box containing with elevation inside it a component */}
-            <VerifyPhone />
+              <VerifyPhone />
             </View>
           </View>
         </ImageBackground> 

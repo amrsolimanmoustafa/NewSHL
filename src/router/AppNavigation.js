@@ -44,50 +44,6 @@ const PrimaryNav = StackNavigator({
       header: null
     }
   },
-
-  Rules: {
-    screen: Rules,
-    navigationOptions: {
-      header: null
-    }
-  }, Notifications: {
-    screen: Notifications,
-    navigationOptions: {
-      header: null
-    }
-  },AboutApp: {
-    screen: AboutApp,
-    navigationOptions: {
-      header: null
-    }
-  },OrdersHistory: {
-    screen: OrdersHistory,
-    navigationOptions: {
-      header: null
-    }
-  },Offers: {
-    screen: Offers,
-    navigationOptions: {
-      header: null
-    }
-  },ContactWithAdministration: {
-    screen: ContactWithAdministration,
-    navigationOptions: {
-      header: null
-    }
-  }
-  ,ServicesCost: {
-    screen: ServicesCost,
-    navigationOptions: {
-      header: null
-    }
-  },ShareYourOpinion: {
-    screen: ShareYourOpinion,
-    navigationOptions: {
-      header: null
-    }
-  },
-
   SplashScreen: {
     screen: SplashScreen,
     navigationOptions: {
@@ -100,10 +56,6 @@ const PrimaryNav = StackNavigator({
       header: null
     }
   },
-
-
-
-  
   VerifyPhoneScreen: {
     screen: VerifyPhoneScreen,
     navigationOptions: {
@@ -127,7 +79,55 @@ const PrimaryNav = StackNavigator({
     navigationOptions: {
       title: 'إضافة',
     }
-  }
+  },
+  Rules: {
+    screen: Rules,
+    navigationOptions: {
+      header: null
+    }
+  },
+  Notifications: {
+    screen: Notifications,
+    navigationOptions: {
+      header: null
+    }
+  },
+  AboutApp: {
+    screen: AboutApp,
+    navigationOptions: {
+      header: null
+    }
+  },
+  OrdersHistory: {
+    screen: OrdersHistory,
+    navigationOptions: {
+      header: null
+    }
+  },
+  Offers: {
+    screen: Offers,
+    navigationOptions: {
+      header: null
+    }
+  },
+  ContactWithAdministration: {
+    screen: ContactWithAdministration,
+    navigationOptions: {
+      header: null
+    }
+  },
+  ServicesCost: {
+    screen: ServicesCost,
+    navigationOptions: {
+      header: null
+    }
+  },
+  ShareYourOpinion: {
+    screen: ShareYourOpinion,
+    navigationOptions: {
+      header: null
+    }
+  },
 }, {
   // Default config for all screens
   //headerMode: 'none',

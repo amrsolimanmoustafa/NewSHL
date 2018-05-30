@@ -35,9 +35,12 @@ class LoginScreen extends Component {
               <LoginInsertPhone />
             </View>
             <View style={styles.allLanguages}>
-              <TouchableOpacity onPress={() => {
+              <TouchableOpacity
+                onPress={() => {
                   this.base;
-                }} style={styles.languages}>
+                }}
+                style={styles.languages}
+              >
                 <Text style={styles.flagTextStyle}>اردو</Text>
                 <Image source={Images.IndiaFlag} style={styles.flagStyle} />
               </TouchableOpacity>
@@ -45,7 +48,10 @@ class LoginScreen extends Component {
                 <Text style={styles.flagTextStyle}>English</Text>
                 <Image source={Images.USFlag} style={styles.flagStyle} />
               </TouchableOpacity>
-              <TouchableOpacity onPress={this.goToHomeScreen.bind(this)} navigateScreen="HomeScreen" style={styles.languages}>
+              <TouchableOpacity
+                onPress={this.goToHomeScreen.bind(this)}
+                style={styles.languages}
+              >
                 <Text style={styles.flagTextStyle}>العربية</Text>
                 <Image source={Images.SaudiFlag} style={styles.flagStyle} />
               </TouchableOpacity>
@@ -54,11 +60,10 @@ class LoginScreen extends Component {
         </ImageBackground>
       </View>;
   }
+
   goToHomeScreen() {
     var self=this
-
-  self.props.navigation.navigate("HomeScreen");
-
+    self.props.navigation.navigate("HomeScreen");
   }
 }
 
@@ -72,5 +77,5 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-// export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)
-module.exports = connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
+export default connect(mapStateToProps, mapDispatchToProps)(LoginScreen)
+//module.exports = connect(mapStateToProps, mapDispatchToProps)(LoginScreen);
