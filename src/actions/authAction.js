@@ -86,11 +86,17 @@ export const VerificationCodeActivation=(v_object,context)=>dispatch=>{
           //    AsyncStorage.setItem('user',user).then((d)=>
           //   {
           //  })
-          console.log(state)
-           dispatch({
+
+          console.log(state.state.data)
+          if(state.state.data)
+          context.props.navigation.navigate("HomeScreen");
+
+          dispatch({
             type:ACTIVATION_STATE,
-            payload:state
+            payload:state,
+            context:context
           })
+          
           // } else {
           //   context.setState({ loading: false });
           // }

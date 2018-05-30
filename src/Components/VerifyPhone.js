@@ -19,7 +19,7 @@ import {VerificationCodeActivation} from "../../src/actions/authAction"
   constructor (props) {
     super(props)
     console.log(this.props)
-    this.state={v_code:null}
+    this.state={v_code:null,radioButtonSelected:true}
 
   }
   componentDidMount(){
@@ -67,7 +67,13 @@ this.setState({v_code:v_code})
                        </View>
                        {/* Radio Button Needs Modfication */}
                        <View style={styles.radioButton}>
-                         <Radio selected={true} />
+                         <Radio selected={this.state.radioButtonSelected} onPress={()=>{
+if(this.state.radioButtonSelected){
+this.setState({radioButtonSelected:false})
+}else{
+  this.setState({radioButtonSelected:true})
+}
+                         }} />
                          <Text
                            style={styles.radioButtonTextBlue}
                          >
@@ -78,14 +84,14 @@ this.setState({v_code:v_code})
                          </Text>
                        </View>
                        {/* Two Linear Gradient */}
-                       <View style={{flex:1,hieght:'40%',width:"100%",justifyContent:'space-between'}} >
+                       <View style={{flex:1,width:"100%",justifyContent:'space-between'}} >
                          <LinearGradientButton style={{flex:1,hieght:'100%'}}  press={this.goToLoginScreen.bind(this)} navigateScreen="LoginScreen" text="تغيير رقم الجوال" />
 </View>
                          <View style={{flex:1,width:"100%",position:'relative',zIndex:-2,justifyContent:'space-between'}} >
 
-                         <LinearGradientButton   press={()=>{this.state.v_code!=null?
+                         <LinearGradientButton   press={()=>{this.state.v_code!=null &&this.state.radioButtonSelected?
                            this.props.VerificationCodeActivation({'phone':this.props.user_phone,'v_code':this.state.v_code},this):null
-                          //  this.goToHomeScreen.bind(this)
+                           this.goToHomeScreen.bind(this)
                           }
                            
                            } navigateScreen="HomeScreen" text="الدخول" />
@@ -101,8 +107,8 @@ this.setState({v_code:v_code})
                  }
                        goToHomeScreen() {
                    var self=this
-
-            self.props.navigation.navigate("HomeScreen");
+console.log(self.props.activated_user)
+            // self.props.navigation.navigate("HomeScreen");
 
                  }
                }
@@ -113,7 +119,8 @@ this.setState({v_code:v_code})
                 console.log(v.auth.user_phone)
                 return {
                   user: state.auth.user.data
-                  ,user_phone:state.auth.user_phone
+                  ,user_phone:state.auth.user_phone,
+                  activated_user:state.auth.activated_user
                 }
               }
                export default connect(mapStateToProps, { VerificationCodeActivation }) (withNavigation(VerifyPhone));
