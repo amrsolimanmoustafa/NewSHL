@@ -258,7 +258,7 @@ class Map extends Component {
     return(
       <View style={{ flex: 1, position: "relative", zIndex: 0 }}>
         <View style={{ width: "100%",position:'absolute',zIndex:3}}>
-          <GooglePlacesInput />
+        {this.props.common.driverLat==''&& this.props.compState.__CurrentComponent == 1 ? <GooglePlacesInput />:null}
         </View>
         <MapView
           onPress={()=> {
@@ -293,6 +293,7 @@ class Map extends Component {
               this.setState({servicesSliderState:false})
             }}
             onDragEnd={(e) =>{
+              this.props.watchPosition(e.nativeEvent.coordinate.latitude,e.nativeEvent.coordinate.longitude)
               this.props.setCoordnates(e.nativeEvent.coordinate.latitude,e.nativeEvent.coordinate.longitude)
               this.setState({servicesSliderState:true})
             }}
@@ -326,7 +327,7 @@ class Map extends Component {
             }}
             // Handler which gets executed on day long press. Default = undefined
             onDayLongPress={(day) => {
-              this.props.orderLater(day.dateString)
+              this.props.orderLater(day.dateString,this.props.user_id)
               this.setState({calenderShow:false})
               console.log('selected day',day)
             }}
@@ -381,7 +382,7 @@ class Map extends Component {
           <View style={{ width: 0, height: 0 }} />
         }
         {/* Right side buttons */}
-        <View style={{ position: "absolute", right: 16, top: 105 }}>
+         {this.props.common.driverLat==''&& this.props.compState.__CurrentComponent == 1 ?<View style={{ position: "absolute", right: 16, top: 105 }}>
           <TouchableOpacity
             onPress={()=> navigation.navigate('FavoritePlaces')}
             style={styles.touchable}
@@ -406,12 +407,12 @@ class Map extends Component {
           {/* <TouchableOpacity onPress={() => {}} style={[styles.touchable, { marginTop: 16 }]}>
             <Image source={Images.locatiOnMapIcon} style={styles.image} />
           </TouchableOpacity> */}
-        </View>
+        </View>:null}
         {service.length > 0 && this.props.compState.__CurrentComponent == 1 && this.props.common.driverLat=='' && this.state.servicesSliderState==true?
           <View style={{ position: "absolute", left: 0, bottom: 10, right: 0 }}>
             {parseInt(self.state.page)>=0 ? this.RenderSubCategories() :null}
             <View style={{ flex: .3, justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 0, right: 0, left: 0, overflow: 'hidden' }} >
-              <View style={{ position: 'absolute', bottom: 60, flex: 1, flexDirection: 'row', flexWrap: 'wrap', right: 0, left: 0 }}  >
+              <View style={{ position: 'absolute', bottom: 20, flex: 1, flexDirection: 'row', flexWrap: 'wrap', right: 0, left: 0 }}  >
                 <Carousel
                   firstItem={0}
                   onSnapToItem={

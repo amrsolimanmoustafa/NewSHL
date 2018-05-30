@@ -73,7 +73,31 @@ componentWillUnmount() {
 
 
  
-
+refreshServices(lat,lng){
+  var base_url =new Base()
+  ;
+     
+     var  GOOGLEGEOLOCATION_URL="https://maps.googleapis.com/maps/api/geocode/json" 
+     var APIKEY='AIzaSyBSSYckZ59ZW5MBPlGmPDvZu5Rzh9snPaQ'
+     try {
+     
+     axios.get(GOOGLEGEOLOCATION_URL+'?latlng=' + lat + ','
+       + lng+ 
+       '&key='+APIKEY+'&language=en&region=EN"')
+       .then((response) =>{
+  self.props.getServices(response.data.results[0].address_components[2].long_name)
+  
+     
+      
+     }).catch((error) =>{
+               console.log(error);
+             });
+     
+         } catch (error) {
+           console.error(error);
+         }
+     
+}
     async watchPosition(){
       
 
@@ -128,7 +152,7 @@ self.cancelPopupDialog.dismiss()
        <ImageBackground style={styles.loginBackground} source={Images.loginBackground} resizeMode={'cover'}>
         <Header/>
         <View style={{flex: 1,padding: 12}}>
-          <Map popup={this.cancelPopupDialog}/>
+          <Map popup={this.cancelPopupDialog} watchPosition={this.refreshServices}/>
         </View>
        </ImageBackground>
        <PopupDialog

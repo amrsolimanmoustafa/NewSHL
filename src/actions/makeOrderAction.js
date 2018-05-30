@@ -54,14 +54,15 @@ export const selectedServices=(selectedServices)=>dispatch=>{
     payload:selectedServices
   })
 }
-export const orderLater=(scheduling_orders)=>dispatch=>{
-  const ORDER_LATER_URL="http://" + base_url.baseUrl + "orderschedul/"
+export const orderLater=(scheduling_orders,user_id)=>dispatch=>{
+  const ORDER_LATER_URL="http://" + base_url.baseUrl + "orderschedul"
   try {
-    console.log(ORDER_LATER_URL,{scheduling_orders:scheduling_orders})
+    console.log(ORDER_LATER_URL,{'scheduling_orders':scheduling_orders,'user_id':user_id})
     //"2018-10-22" format
           axios
-            .post(ORDER_LATER_URL,{scheduling_orders:scheduling_orders})
+            .post(ORDER_LATER_URL,{'scheduling_orders':scheduling_orders,'user_id':user_id})
             .then((res) =>{
+              alert(scheduling_orders+' سوف يتم تذكيرك في ')
               console.log(res)
             }).catch(function(error) {
               console.log(error);

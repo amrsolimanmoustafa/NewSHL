@@ -16,6 +16,17 @@ import SplashScreen from '../containers/SplashScreen'
 import LaunchScreen from '../containers/LaunchScreen'
 import FavoritePlaces from '../containers/favoritePlaces'
 import AddFavoritePlace from '../containers/addFavoritePlace'
+// import opinionRow from '../containers/opinionRow'
+import ShareYourOpinion from '../containers/ShareYourOpinion'
+import ServicesCost from '../containers/ServicesCost'
+
+import Rules from '../containers/Rules'
+import ContactWithAdministration from '../containers/ContactWithAdministration'
+import Offers from '../containers/Offers'
+import AboutApp from '../containers/AboutApp'
+import OrdersHistory from '../containers/OrdersHistory'
+import Notifications from '../containers/Notifications'
+
 
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
@@ -33,6 +44,50 @@ const PrimaryNav = StackNavigator({
       header: null
     }
   },
+
+  Rules: {
+    screen: Rules,
+    navigationOptions: {
+      header: null
+    }
+  }, Notifications: {
+    screen: Notifications,
+    navigationOptions: {
+      header: null
+    }
+  },AboutApp: {
+    screen: AboutApp,
+    navigationOptions: {
+      header: null
+    }
+  },OrdersHistory: {
+    screen: OrdersHistory,
+    navigationOptions: {
+      header: null
+    }
+  },Offers: {
+    screen: Offers,
+    navigationOptions: {
+      header: null
+    }
+  },ContactWithAdministration: {
+    screen: ContactWithAdministration,
+    navigationOptions: {
+      header: null
+    }
+  }
+  ,ServicesCost: {
+    screen: ServicesCost,
+    navigationOptions: {
+      header: null
+    }
+  },ShareYourOpinion: {
+    screen: ShareYourOpinion,
+    navigationOptions: {
+      header: null
+    }
+  },
+
   SplashScreen: {
     screen: SplashScreen,
     navigationOptions: {
@@ -45,6 +100,10 @@ const PrimaryNav = StackNavigator({
       header: null
     }
   },
+
+
+
+  
   VerifyPhoneScreen: {
     screen: VerifyPhoneScreen,
     navigationOptions: {
@@ -105,7 +164,7 @@ const MainDrawer = DrawerNavigator(
       }
     },
     Contact: {
-      screen: ({ navigation }) => <HomeScreen navigation={navigation} />,
+      screen: ({ navigation }) => <ContactWithAdministration navigation={navigation} />,
       navigationOptions: {
         drawerLabel: ' التواصل مع الادارة ',
         drawerIcon: ({ tintColor }) => (
@@ -114,7 +173,7 @@ const MainDrawer = DrawerNavigator(
       }
     },
     Terms: {
-      screen: ({ navigation }) => <HomeScreen navigation={navigation} />,
+      screen: ({ navigation }) => <Rules navigation={navigation} />,
       navigationOptions: {
         drawerLabel: ' الشروط و الاحكام ',
         drawerIcon: ({ tintColor }) => (
@@ -123,7 +182,7 @@ const MainDrawer = DrawerNavigator(
       }
     },
     About: {
-      screen: ({ navigation }) => <HomeScreen navigation={navigation} />,
+      screen: ({ navigation }) => <AboutApp navigation={navigation} />,
       navigationOptions: {
         drawerLabel: ' عن التطبيق ',
         drawerIcon: ({ tintColor }) => (
@@ -132,7 +191,7 @@ const MainDrawer = DrawerNavigator(
       }
     },
     Prices: {
-      screen: ({ navigation }) => <HomeScreen navigation={navigation} />,
+      screen: ({ navigation }) => <ServicesCost navigation={navigation} />,
       navigationOptions: {
         drawerLabel: ' اسعار الخدمات ',
         drawerIcon: ({ tintColor }) => (
@@ -150,7 +209,7 @@ const MainDrawer = DrawerNavigator(
       }
     },
     Share: {
-      screen: ({ navigation }) => <HomeScreen navigation={navigation} />,
+      screen: ({ navigation }) => <ShareYourOpinion navigation={navigation} />,
       navigationOptions: {
         drawerLabel: ' شاركنا رأيك ',
         drawerIcon: ({ tintColor }) => (
@@ -159,7 +218,7 @@ const MainDrawer = DrawerNavigator(
       }
     },
     Adds: {
-      screen: ({ navigation }) => <HomeScreen navigation={navigation} />,
+      screen: ({ navigation }) => <Offers navigation={navigation} />,
       navigationOptions: {
         drawerLabel: ' العروض ',
         drawerIcon: ({ tintColor }) => (
@@ -192,7 +251,7 @@ const RootRoute = DrawerNavigator(
       }
     },
     OrdersHistory: {
-      screen: ({ navigation }) => <HomeScreen navigation={navigation} />,
+      screen: ({ navigation }) => <OrdersHistory navigation={navigation} />,
       navigationOptions: {
         drawerLabel: ' تاريخ الطلبات ',
         drawerIcon: ({ tintColor }) => (
@@ -201,7 +260,7 @@ const RootRoute = DrawerNavigator(
       }
     },
     FavPlaces: {
-      screen: ({ navigation }) => <HomeScreen navigation={navigation} />,
+      screen: ({ navigation }) => <FavoritePlaces navigation={navigation} />,
       navigationOptions: {
         drawerLabel: ' الاماكن المفضلة ',
         drawerIcon: ({ tintColor }) => (
@@ -210,7 +269,7 @@ const RootRoute = DrawerNavigator(
       }
     },
     Notifications: {
-      screen: ({ navigation }) => <HomeScreen navigation={navigation} />,
+      screen: ({ navigation }) => <Notifications navigation={navigation} />,
       navigationOptions: {
         drawerLabel: ' التنبيهات ',
         drawerIcon: ({ tintColor }) => (
