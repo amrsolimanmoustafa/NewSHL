@@ -54,11 +54,11 @@ class Map extends Component {
     // this.props.favlocationlist(this.props.user_id)
 
     self=this
-    ////OneSignal.setLogLevel(6, 0)
-    ////OneSignal.addEventListener('received', self.onReceived);
-    ////OneSignal.addEventListener('opened', this.onOpened);
-    ////OneSignal.addEventListener('ids', this.onIds);
-    ////OneSignal.init('a3551d54-e1bc-4f12-874c-7f6cb7982f95',  {kOSSettingsKeyAutoPrompt : true});
+    OneSignal.setLogLevel(6, 0)
+    OneSignal.addEventListener('received', self.onReceived);
+    OneSignal.addEventListener('opened', this.onOpened);
+    OneSignal.addEventListener('ids', this.onIds);
+    OneSignal.init('a3551d54-e1bc-4f12-874c-7f6cb7982f95',  {kOSSettingsKeyAutoPrompt : true});
     this.props.setHomeComponent(1)
     ////OneSignal.configure()
     // this.props.reverseCoordinatesToAdress(this.props.common.lat,this.props.common.lng)

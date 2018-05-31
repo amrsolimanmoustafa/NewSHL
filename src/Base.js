@@ -5,7 +5,7 @@ export default class Base {
                  }
                  baseUrl = 'admin.shl-app.com/api/';
                  icon_url='http://admin.shl-app.com/';
-                 lang = "1";
+                 lang = "ar";
                  baseUrlWithLang() {
                    return baseUrl + lang + "/";
                  }

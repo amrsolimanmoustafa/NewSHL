@@ -21,3 +21,9 @@ export const CANCEL_ORDER="CANCEL_ORDER"
 export const GET_FAV_LOCS="GET_FAV_LOCS"
 export const ADD_FAV_LOC="ADD_FAV_LOC"
 
+
+export const GET_NOTIFICATIONS="GET_NOTIFICATIONS"
+export const GET_COSTS="GET_COSTS"
+export const TERMS="TERMS"
+export const ABOUT_APP="ABOUT_APP"
+

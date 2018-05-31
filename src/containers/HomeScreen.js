@@ -18,7 +18,7 @@ import {
   reverseCoordinatesToAdress,
   setCoordnates
 } from "../actions/CommonServicesActions/commonServicesActions"
-import {refreshPlayerId} from "../../src/actions/authAction"
+// import {refreshPlayerId} from "../../src/actions/authAction"
 import PopupDialog from 'react-native-popup-dialog';
 import StarRating from 'react-native-star-rating';
 import {rateProvider,getServices} from './../actions/makeOrderAction'
@@ -273,7 +273,7 @@ const mapDispatchToProps = (dispatch) => {
 export default connect(mapStateToProps, {
   getServices,
   rateProvider,
-  refreshPlayerId,
+  // refreshPlayerId,
   reverseCoordinatesToAdress,
   setCoordnates
 }) (withNavigation(HomeScreen))
