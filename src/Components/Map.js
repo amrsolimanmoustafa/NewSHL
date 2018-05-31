@@ -10,7 +10,7 @@ import {
   NativeEventEmitter,
   Dimensions,
   FlatList,
-  ImageBackground,
+  ImageBackground,AsyncStorage
 } from 'react-native'
 import MapView from 'react-native-maps';
 import CarouselPager from 'react-native-carousel-pager';
@@ -38,6 +38,7 @@ import Carousel from 'react-native-snap-carousel';
 import {Calendar} from 'react-native-calendars'
 let self;
 import style from './Styles/MainButtonsStyle'
+import {loginUser} from "../../src/actions/authAction"
 
 class Map extends Component {
   state= { order_id:'',lat:0,lng:0,currentComponent:2,showMainButtons:true,page:0,provider_info:[],mapState:'standard',servicesSliderState:true,calenderShow:false}
@@ -50,17 +51,23 @@ class Map extends Component {
     }
   }
 
-  componentWillMount() {
+  async componentWillMount() {
     // this.props.favlocationlist(this.props.user_id)
 
+
     self=this
+    await AsyncStorage.getItem('phone').then((phone)=>{
+      console.log('phone',phone)
+      self.props.loginUser({'phone':phone,'token_id':'',lang:'ar'},'')
+      })
+      
     OneSignal.setLogLevel(6, 0)
     OneSignal.addEventListener('received', self.onReceived);
     OneSignal.addEventListener('opened', this.onOpened);
     OneSignal.addEventListener('ids', this.onIds);
     OneSignal.init('a3551d54-e1bc-4f12-874c-7f6cb7982f95',  {kOSSettingsKeyAutoPrompt : true});
     this.props.setHomeComponent(1)
-    ////OneSignal.configure()
+    OneSignal.configure()
     // this.props.reverseCoordinatesToAdress(this.props.common.lat,this.props.common.lng)
     // this.props.getServices('Mohammed Farid')
     // this.props.reverseCoordinatesToAdress()
@@ -74,28 +81,33 @@ class Map extends Component {
   }
 
   onReceived=(notification)=> {
+    try{
     console.log("Notification received: ",notification.payload);
     if(notification.payload.additionalData.data[1].type=='order_accepted'){
-      this.setState({provider_info:notification.payload.additionalData.data[0]})
+      self.setState({provider_info:notification.payload.additionalData.data[0]})
       self.props.providerInfo(notification.payload.additionalData.data[0])
-      this.trackOrder(notification.payload.additionalData.data[2].order_id,self)
+      self.trackOrder(notification.payload.additionalData.data[2].order_id,self)
       self.props.setOrderID(notification.payload.additionalData.data[2].order_id)
       self.setState({order_id:notification.payload.additionalData.data[2].order_id})
     }else if(notification.payload.additionalData.data[1].type=='order_finish'){
       console.log("Notification order ended succesfuly: ",notification.payload);
       // self.props.setHomeComponent(0)
       var firebaseRef = firebase.database().ref('orders');
-      firebaseRef.child(this.state.order_id).off()
+      firebaseRef.child(self.state.order_id).off()
       self.props.setDriverCoordnates('','')
 
     }else if(notification.payload.additionalData.data[1].type=='order_cancel'){
       console.log("Notification order ended succesfuly: ",notification.payload);
       // self.props.setHomeComponent(0)
       var firebaseRef = firebase.database().ref('orders');
-      firebaseRef.child(this.state.order_id).off()
+      firebaseRef.child(self.state.order_id).off()
       self.props.setDriverCoordnates('','')
-
+    }else if(notification.payload.additionalData.data[1].type=='clint_notification'){
+      self.props.navigation.navigate('Notifications')
     }
+  }catch(e){
+    console.log(e)
+  }
   }
 
   onOpened=(openResult)=> {
@@ -523,6 +535,6 @@ export default connect(mapStateToProps,
     setHomeComponent,
     selectedServices,providerInfo,setOrderID,favlocationlist,
     reverseCoordinatesToAdress,setCoordnates,setDriverCoordnates,
-    createorder,refreshPlayerId,orderLater
+    createorder,refreshPlayerId,orderLater,loginUser
   }
 ) (withNavigation(Map))

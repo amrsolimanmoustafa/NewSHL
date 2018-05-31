@@ -11,7 +11,7 @@ import {Images} from '../Themes';
 import  LinearGradientButton  from "../Components/LinearGradientButton";
 import { withNavigation } from "react-navigation";
 import { connect } from 'react-redux'
-
+import Button from '../containers/Components/button'
 import {VerificationCodeActivation} from "../../src/actions/authAction"
 
 class VerifyPhone extends Component {
@@ -71,15 +71,29 @@ class VerifyPhone extends Component {
           </Text>
         </View>
         <View style={{flex:1,width:"100%",justifyContent:'space-between'}}>
-          <LinearGradientButton
+        <Button
+  onPress={this.goToLoginScreen.bind(this)}
+  title="تغيير رقم الجوال"
+        />
+        {/* <LinearGradientButton
             style={{flex:1,hieght:'100%'}}
             press={this.goToLoginScreen.bind(this)}
             navigateScreen="LoginScreen"
             text="تغيير رقم الجوال"
-          />
+          /> */}
+ 
         </View>
         <View style={{flex:1,width:"100%",position:'relative',zIndex:-2,justifyContent:'space-between'}}>
-          <LinearGradientButton
+             <Button
+  onPress={()=>{
+    if(this.state.v_code != null && this.state.radioButtonSelected){
+      this.props.VerificationCodeActivation({'phone': this.props.user_phone,'v_code': this.state.v_code},this)
+    }
+    this.goToHomeScreen.bind(this)
+  }}
+  title="الدخول"
+        />
+          {/* <LinearGradientButton
             press={()=>{
               if(this.state.v_code != null && this.state.radioButtonSelected){
                 this.props.VerificationCodeActivation({'phone': this.props.user_phone,'v_code': this.state.v_code},this)
@@ -88,7 +102,7 @@ class VerifyPhone extends Component {
             }}
             navigateScreen="HomeScreen"
             text="الدخول"
-          />
+          /> */}
         </View>
       </View>
     );
