@@ -1,18 +1,19 @@
 import React, { Component } from 'react'
-// import PropTypes from 'prop-types';
-import { View, Text ,Image,TouchableOpacity } from 'react-native'
-//Style
+import {
+  View,
+  Text,
+  Image,
+  TouchableOpacity
+} from 'react-native'
 import styles from './Styles/VerifyPhoneStyle'
-//Native Base Lib for UI elements
 import {Form,Label,Input,Item,Radio,Right} from "native-base"
-//Images
 import {Images} from '../Themes';
-//Linear Gradients
 import  LinearGradientButton  from "../Components/LinearGradientButton";
 import { withNavigation } from "react-navigation";
 import { connect } from 'react-redux'
 
 import {VerificationCodeActivation} from "../../src/actions/authAction"
+import strings from '../strings'
 
 class VerifyPhone extends Component {
   constructor (props) {
@@ -32,7 +33,7 @@ class VerifyPhone extends Component {
     return(
       <View style={styles.container}>
         <Text style={styles.heading2}>
-          تم ارسال كود التأكيد للرقم التالي
+          {strings.theConfirmationCodeHasBeenSentToThisNumber}
         </Text>
         <Text style={styles.heading}>
           {this.props.user_phone}
@@ -42,7 +43,7 @@ class VerifyPhone extends Component {
             <Label
               style={styles.formInputPlaceholder}
             >
-              ادخل الكود
+              {strings.enterTheCode}
             </Label>
             <Input
               style={styles.input}
@@ -64,10 +65,10 @@ class VerifyPhone extends Component {
           <Text
             style={styles.radioButtonTextBlue}
           >
-            الشروط و الاحكام
+            {strings.termsAndConditions}
           </Text>
           <Text style={styles.radioButtonText}>
-            الموافقة علي
+            {strings.accept}
           </Text>
         </View>
         <View style={{flex:1,width:"100%",justifyContent:'space-between'}}>
@@ -75,7 +76,7 @@ class VerifyPhone extends Component {
             style={{flex:1,hieght:'100%'}}
             press={this.goToLoginScreen.bind(this)}
             navigateScreen="LoginScreen"
-            text="تغيير رقم الجوال"
+            text={strings.changeMobileNumber}
           />
         </View>
         <View style={{flex:1,width:"100%",position:'relative',zIndex:-2,justifyContent:'space-between'}}>
@@ -87,7 +88,7 @@ class VerifyPhone extends Component {
               this.goToHomeScreen.bind(this)
             }}
             navigateScreen="HomeScreen"
-            text="الدخول"
+            text={strings.login}
           />
         </View>
       </View>

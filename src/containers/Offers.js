@@ -6,13 +6,11 @@ import {
   Image,  
   TouchableOpacity,
   Dimensions,
- } from 'react-native';
-
-//  local files //
+} from 'react-native';
 import masterStyle from './masterStyle';
 import Container from './Components/container';
 import { Images } from './../Themes';
-
+import strings from '../strings'
 // style //
 const {
   appGreenBgColor,
@@ -23,58 +21,57 @@ const {
 } = masterStyle;
 
 export default class Offers extends Component {
-  state = {
-    sliderData: 
-    [
-      { id: 1, image: Images.offer3 },
-      { id: 2, image: Images.offer4 },
-      { id: 3, image: Images.offer2 },
-    ],
-    listData: [
-      { id: 1, image: Images.offer1 },
-      { id: 2, image: Images.offer2 },
-    ]
-    
+  constructor(props){
+    super(props)
+    this.state = {
+      sliderData: [
+        { id: 1, image: Images.offer3 },
+        { id: 2, image: Images.offer4 },
+        { id: 3, image: Images.offer2 },
+      ],
+      listData: [
+        { id: 1, image: Images.offer1 },
+        { id: 2, image: Images.offer2 },
+      ]
+    }
   }
-  ///////////////////////////////////////////  
-  renderSlideritem = ({ item }) => {
+
+  renderSlideritem(item){
     return (
       <View style={[ styles.sliderItemStyle]}>
         <Image source={item.image} style={[styles.offerImgStyle]}/>
       </View>
     );
   }
-  ///////////////////////////////////////////
-  renderOfferItem = ({ item }) => {
+
+  renderOfferItem(item){
     return (
       <View style={[styles.offerViewStyle]}>
         <Image source={item.image} style={[styles.offerImgStyle, { resizeMode: 'contain' }]}/>
       </View>
     );
   }
-  /////////////////////////////////////////// 
-  render() {   
-    return (
+
+  render(){   
+    return(
       <View style={[masterStyle.container]}>
-        <Container style={{ paddingHorizontal: 15,}} title='العروض' >
-          {/* // horizontal list // */}
+        <Container style={{ paddingHorizontal: 15,}} title={strings.offers}>
           <View style={[styles.silderContainer]}>
             <FlatList
-            data={this.state.sliderData}
-            keyExtractor={item => `${item.id}`}
-            renderItem={this.renderSlideritem}
-            horizontal
-            inverted
-            showsHorizontalScrollIndicator
-            ItemSeparatorComponent={() => <View style={styles.speratorStyle}/>}
+              data={this.state.sliderData}
+              keyExtractor={item => `${item.id}`}
+              renderItem={this.renderSlideritem}
+              horizontal
+              inverted
+              showsHorizontalScrollIndicator
+              ItemSeparatorComponent={() => <View style={styles.speratorStyle}/>}
             />
           </View>
-          {/* // vertical list // */}
           <FlatList
-          data={this.state.listData}
-          keyExtractor={item => `${item.id}`}
-          renderItem={this.renderOfferItem}
-          style={styles.verticalList}
+            data={this.state.listData}
+            keyExtractor={item => `${item.id}`}
+            renderItem={this.renderOfferItem}
+            style={styles.verticalList}
           />
         </Container>
       </View>
@@ -93,7 +90,6 @@ const styles = {
     borderBottomWidth: 1,
     borderBottomColor: '#ddd',
     padding: 3,
-
   },
   offerImgStyle: {
     flex: 1,
@@ -125,5 +121,4 @@ const styles = {
   speratorStyle: {
     width: 7
   }
-
 };

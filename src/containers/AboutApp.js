@@ -5,62 +5,59 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
+import { connect } from 'react-redux'
+import { withNavigation } from "react-navigation";
 
-// localFiles //
 import { Images } from './../Themes';
 import masterStyle from './masterStyle';
 import Container from './Components/container';
-import { withNavigation } from "react-navigation";
-import { connect } from 'react-redux'
 import axios from 'axios';
 import Base from "../Base"
 import {aboutApp} from './../actions/ContentActions/contentActions'
+import strings from '../strings';
 
-
- class AboutApp extends Component {
-  state = {
-    aboutAppText: ''}
-componentWillMount(){
-  this.aboutApp()
-}
-aboutApp=()=>{
-  var base_url =new Base()
-  var ABOUT_APP_URL="http://" + base_url.baseUrl + "aboutapp?lang="+base_url.lang
-  var self=this
-  try {
-    console.log('about res',ABOUT_APP_URL)
-
-    axios
-      .get(ABOUT_APP_URL)
-      .then((res) =>{
-        console.log('about res',res)
-        self.setState({aboutAppText:res.data[0].aboutapp_ar})
-
-        // dispatch({
-        //   type:ABOUT_APP_URL,
-        //   payload:res
-        // })
-      })
-      .catch(function(error) {
-      
-      });
-  }catch (error) {
-  
+class AboutApp extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      aboutAppText: ''
+    }
   }
-}
-  render() {
 
+  componentWillMount(){
+    this.aboutApp()
+  }
+
+  aboutApp=()=>{
+    var base_url =new Base()
+    var ABOUT_APP_URL="http://" + base_url.baseUrl + "aboutapp?lang="+base_url.lang
+    var self=this
+    try {
+      axios
+        .get(ABOUT_APP_URL)
+        .then((res) =>{
+          console.log('about res',res)
+          self.setState({aboutAppText:res.data[0].aboutapp_ar})
+        })
+        .catch(function(error) {
+        
+        });
+    }catch (error) {
+    
+    }
+  }
+
+  render() {
     return (
       <View style={[masterStyle.container]}>
-              { console.log(this.props.contentReducers) }
-
-        <Container title='عن التطبيق' >
-          <Image source={Images.logoIcon}  style={masterStyle.logoStyle} />
-          <Text style={[masterStyle.appName]}>SHL</Text>
+        <Container title={strings.about}>
+          <Image source={Images.logoIcon} style={masterStyle.logoStyle} />
+          <Text style={[masterStyle.appName]}>
+            {strings.shl}
+          </Text>
           <ScrollView>
             <Text style={[masterStyle.descTextStyle, { marginTop: 15 }]}>
-            {/* { console.log(this.props.contentReducers.data[0].aboutapp_ar) } */}
-{this.state.aboutAppText}
+              {this.state.aboutAppText}
             </Text>
           </ScrollView>
         </Container>
@@ -68,12 +65,13 @@ aboutApp=()=>{
     )
   }
 };
+
 const mapStateToProps = state => {
-  console.log('about  ..',state)
   return {
     contentReducers: state.contentReducers.aboutApp
   }
 }
+
 export default connect(mapStateToProps, {
   aboutApp
 }) (withNavigation(AboutApp))

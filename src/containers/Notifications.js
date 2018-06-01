@@ -4,26 +4,27 @@ import {
   FlatList,
   Text,
   Image,  
- } from 'react-native';
-
-//  local files //
+} from 'react-native';
+import { connect } from 'react-redux'
+import { withNavigation } from "react-navigation";
+import axios from 'axios';
 import masterStyle from './masterStyle';
 import Container from './Components/container';
 import { Images } from './../Themes';
-import { withNavigation } from "react-navigation";
-import { connect } from 'react-redux'
-import axios from 'axios';
 import Base from "../Base"
 import {aboutApp} from './../actions/ContentActions/contentActions'
-
+import strings from '../strings'
 // style //
 const {
   appGreenColor,
   appGrayColor,
 } = masterStyle;
- class Notifications extends Component {
-  state = {
-    notificationsList: []
+
+class Notifications extends Component {
+  constructor(props){
+    super(props)
+    this.state = {
+      notificationsList: []
     // [
     //   { id: 1, text: 'تم وصول مقدم الخدمة للموقع وتم الاتفاق على المبلغ المطلوب وعلى الاصلاحات المطلوبة', date: '12/3/2018', time: '12:00 م' },
     //   { id: 2, text: 'تم وصول مقدم الخدمة للموقع', date: '12/3/2018', time: '12:00 م'  },
@@ -38,12 +39,14 @@ const {
     //   { id: 11, text: 'تم وصول مقدم الخدمة للموقع', date: '12/3/2018', time: '12:00 م'  },
     //   { id: 14, text: 'تم وصول مقدم الخدمة للموقع', date: '12/3/2018', time: '12:00 م'  },
     // ],
-    
+    }
   }
+
   componentWillMount(){
     this.getNotifications(this.props.user_id)
   }
-  getNotifications=(user_id)=>{
+
+  getNotifications(user_id){
     var base_url =new Base()
     var GET_NOTIFICATIONS_URL="http://" + base_url.baseUrl + "clintnotification/"+user_id+"?lang="+base_url.lang
     var self=this
@@ -53,10 +56,6 @@ const {
         .then((res) =>{
           console.log('token uploaded',res.data)
           self.setState({notificationsList:res.data})
-          // dispatch({
-          //   type:GET_NOTIFICATIONS,
-          //   payload:res
-          // })
         })
         .catch(function(error) {
         
@@ -65,37 +64,33 @@ const {
     
     }
   }
-  ///////////////////////////////////////////
-  renderNotificationItem = ({ item }) => {
+
+  renderNotificationItem(item){
     return (
       <View style={[styles.rowStyle]}>
-        {/* // icon & text // */}
         <View style={[styles.subViewStyle, { flex: 1.8 }]}>
           <Image source={Images.userIcon} style={[styles.userIconStyle, { resizeMode: 'contain' }]}/>
-          <Text style={[appGrayColor, styles.textStyle]} >{item.notification_ar}</Text>
+          <Text style={[appGrayColor, styles.textStyle]} >
+            {item.notification_ar}
+          </Text>
         </View>
-        {/* // date view // */}
         <View style={[styles.subViewStyle, { flex: 0.8, justifyContent: 'space-between', }]}>
           <Text style={[masterStyle.dateText, appGrayColor,]}>
-          {item.created_at}
+            {item.created_at}
           </Text>
-          {/* <Text style={[masterStyle.dateText, appGrayColor]}>{item.time}</Text> */}
         </View>
-
       </View>
-      
     );
   }
-  /////////////////////////////////////////// 
+
   render() {   
     return (
       <View style={[masterStyle.container]}>
-        <Container style={{ paddingHorizontal: 0 }} title='التنبيهات' >
-          {/* // notifications list // */}
+        <Container style={{ paddingHorizontal: 0 }} title={strings.notifications}>
           <FlatList
-          data={this.state.notificationsList}
-          keyExtractor={item => `${item.id}`}
-          renderItem={this.renderNotificationItem}
+            data={this.state.notificationsList}
+            keyExtractor={item => `${item.id}`}
+            renderItem={this.renderNotificationItem}
           />
         </Container>
       </View>
@@ -133,8 +128,8 @@ const styles = {
     maxWidth: '90%', 
   }
 };
+
 const mapStateToProps = state => {
-  // console.log('about  ..',state)
   return {
     user_id: state.auth.user_id,
   }

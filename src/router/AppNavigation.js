@@ -9,6 +9,7 @@ import {
 } from 'react-native'
 const {width,height} = Dimensions.get('window')
 import { StackNavigator, DrawerNavigator, DrawerItems } from 'react-navigation'
+
 import HomeScreen from '../containers/HomeScreen'
 import VerifyPhoneScreen from '../containers/VerifyPhoneScreen'
 import LoginScreen from '../containers/LoginScreen'
@@ -27,7 +28,6 @@ import AboutApp from '../containers/AboutApp'
 import OrdersHistory from '../containers/OrdersHistory'
 import Notifications from '../containers/Notifications'
 
-
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -36,7 +36,8 @@ import Entypo from 'react-native-vector-icons/Entypo'
 import Octicons from 'react-native-vector-icons/Octicons'
 import styles from '../containers/Styles/NavigationStyles'
 
-// Manifest of possible screens
+import strings from '../strings'
+
 const PrimaryNav = StackNavigator({
   LaunchScreen: {
     screen: LaunchScreen,
@@ -71,13 +72,13 @@ const PrimaryNav = StackNavigator({
   FavoritePlaces: {
     screen: FavoritePlaces,
     navigationOptions: {
-      title: 'الأماكن المفضلة',
+      title: strings.favoritePlaces,
     }
   },
   AddFavoritePlace: {
     screen: AddFavoritePlace,
     navigationOptions: {
-      title: 'إضافة',
+      title: strings.add,
     }
   },
   Rules: {
@@ -157,7 +158,7 @@ const MainDrawer = DrawerNavigator(
     Home: {
       screen: PrimaryNav,
       navigationOptions: {
-        drawerLabel: ' الرئيسية ',
+        drawerLabel: strings.home,
         drawerIcon: ({ tintColor }) => (
           <Ionicons name='ios-home-outline' size={28} tintColor={tintColor} color="#36B051" />
         ),
@@ -166,7 +167,7 @@ const MainDrawer = DrawerNavigator(
     Contact: {
       screen: ({ navigation }) => <ContactWithAdministration navigation={navigation} />,
       navigationOptions: {
-        drawerLabel: ' التواصل مع الادارة ',
+        drawerLabel: strings.communicateWithManagement,
         drawerIcon: ({ tintColor }) => (
           <Ionicons name='ios-microphone-outline' size={28} tintColor={tintColor} color="#36B051" />
         ),
@@ -175,7 +176,7 @@ const MainDrawer = DrawerNavigator(
     Terms: {
       screen: ({ navigation }) => <Rules navigation={navigation} />,
       navigationOptions: {
-        drawerLabel: ' الشروط و الاحكام ',
+        drawerLabel: strings.termsAndConditions,
         drawerIcon: ({ tintColor }) => (
           <Ionicons name='ios-paper-outline' size={28} tintColor={tintColor} color="#36B051" />
         ),
@@ -184,7 +185,7 @@ const MainDrawer = DrawerNavigator(
     About: {
       screen: ({ navigation }) => <AboutApp navigation={navigation} />,
       navigationOptions: {
-        drawerLabel: ' عن التطبيق ',
+        drawerLabel: strings.about,
         drawerIcon: ({ tintColor }) => (
           <EvilIcons name='question' size={28} tintColor={tintColor} color="#36B051" />
         ),
@@ -193,7 +194,7 @@ const MainDrawer = DrawerNavigator(
     Prices: {
       screen: ({ navigation }) => <ServicesCost navigation={navigation} />,
       navigationOptions: {
-        drawerLabel: ' اسعار الخدمات ',
+        drawerLabel: strings.pricesOfServices,
         drawerIcon: ({ tintColor }) => (
           <Ionicons name='md-pricetags' size={28} tintColor={tintColor} color="#36B051" />
         ),
@@ -202,7 +203,7 @@ const MainDrawer = DrawerNavigator(
     JoinUs: {
       screen: ({ navigation }) => <HomeScreen navigation={navigation} />,
       navigationOptions: {
-        drawerLabel: ' انضم كمزود خدمة ',
+        drawerLabel: strings.joinAsAServiceProvider,
         drawerIcon: ({ tintColor }) => (
           <EvilIcons name='user' size={28} tintColor={tintColor} color="#36B051" />
         ),
@@ -211,7 +212,7 @@ const MainDrawer = DrawerNavigator(
     Share: {
       screen: ({ navigation }) => <ShareYourOpinion navigation={navigation} />,
       navigationOptions: {
-        drawerLabel: ' شاركنا رأيك ',
+        drawerLabel: strings.shareYourOpinion,
         drawerIcon: ({ tintColor }) => (
           <EvilIcons name='share-google' size={28} tintColor={tintColor} color="#36B051" />
         ),
@@ -220,7 +221,7 @@ const MainDrawer = DrawerNavigator(
     Adds: {
       screen: ({ navigation }) => <Offers navigation={navigation} />,
       navigationOptions: {
-        drawerLabel: ' العروض ',
+        drawerLabel: strings.offers,
         drawerIcon: ({ tintColor }) => (
           <MaterialCommunityIcons name='sign-caution' size={28} tintColor={tintColor} color="#36B051" />
         ),
@@ -244,7 +245,7 @@ const RootRoute = DrawerNavigator(
     EditProfile: {
       screen: ({ navigation }) => <HomeScreen navigation={navigation} />,
       navigationOptions: {
-        drawerLabel: ' تعديل البيانات الشخصية ',
+        drawerLabel: strings.editPersonalData,
         drawerIcon: ({ tintColor }) => (
           <MaterialCommunityIcons name='account-edit' size={28} tintColor={tintColor} color="#36B051" />
         ),
@@ -253,7 +254,7 @@ const RootRoute = DrawerNavigator(
     OrdersHistory: {
       screen: ({ navigation }) => <OrdersHistory navigation={navigation} />,
       navigationOptions: {
-        drawerLabel: ' تاريخ الطلبات ',
+        drawerLabel: strings.ordersHistory,
         drawerIcon: ({ tintColor }) => (
           <FontAwesome name='history' size={28} tintColor={tintColor} color="#36B051" />
         ),
@@ -262,7 +263,7 @@ const RootRoute = DrawerNavigator(
     FavPlaces: {
       screen: ({ navigation }) => <FavoritePlaces navigation={navigation} />,
       navigationOptions: {
-        drawerLabel: ' الاماكن المفضلة ',
+        drawerLabel: strings.favoritePlaces,
         drawerIcon: ({ tintColor }) => (
           <EvilIcons name='bell' size={28} tintColor={tintColor} color="#36B051" />
         ),
@@ -271,7 +272,7 @@ const RootRoute = DrawerNavigator(
     Notifications: {
       screen: ({ navigation }) => <Notifications navigation={navigation} />,
       navigationOptions: {
-        drawerLabel: ' التنبيهات ',
+        drawerLabel: strings.notifications,
         drawerIcon: ({ tintColor }) => (
           <FontAwesome name='heart' size={28} tintColor={tintColor} color="#36B051" />
         ),
@@ -280,7 +281,7 @@ const RootRoute = DrawerNavigator(
     Wallet: {
       screen: ({ navigation }) => <HomeScreen navigation={navigation} />,
       navigationOptions: {
-        drawerLabel: ' المحفظة ',
+        drawerLabel: strings.wallet,
         drawerIcon: ({ tintColor }) => (
           <Entypo name='wallet' size={28} tintColor={tintColor} color="#36B051" />
         ),
@@ -289,7 +290,7 @@ const RootRoute = DrawerNavigator(
     Points: {
       screen: ({ navigation }) => <HomeScreen navigation={navigation} />,
       navigationOptions: {
-        drawerLabel: ' النقاط ',
+        drawerLabel: strings.points,
         drawerIcon: ({ tintColor }) => (
           <Octicons name='gift' size={28} tintColor={tintColor} color="#36B051" />
         ),

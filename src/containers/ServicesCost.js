@@ -5,11 +5,10 @@ import {
   Image,
   ScrollView,
 } from 'react-native';
-
-// localFiles //
 import { Images } from './../Themes';
 import masterStyle from './masterStyle';
 import Container from './Components/container';
+import strings from '../strings'
 
 export default class ServicesCost extends Component {
   state = {
@@ -17,12 +16,10 @@ export default class ServicesCost extends Component {
   }
 
   render() {
-
     return (
       <View style={[masterStyle.container]}>
-        <Container title='أسعار الخدمات' >
+        <Container title={strings.pricesOfServices}>
           <Image source={{}} />
-
           {/* <Image source={Images.logoIcon}  style={masterStyle.logoStyle} />
           <Text style={[masterStyle.appName]}>SHL</Text> */}
           <ScrollView>

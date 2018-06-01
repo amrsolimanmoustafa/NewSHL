@@ -36,29 +36,38 @@ import {refreshPlayerId} from "../../src/actions/authAction"
 import OneSignal from 'react-native-onesignal';
 import Carousel from 'react-native-snap-carousel';
 import {Calendar} from 'react-native-calendars'
-let self;
 import style from './Styles/MainButtonsStyle'
+import strings from '../strings'
+let self;
 
 class Map extends Component {
-  state= { order_id:'',lat:0,lng:0,currentComponent:2,showMainButtons:true,page:0,provider_info:[],mapState:'standard',servicesSliderState:true,calenderShow:false}
   origin = {latitude:31.2064717, longitude:29.9279375};
   constructor(props) {
     super(props);
     this.state = {
       currentMainCategory: null,
-      showMainButtons:true
+      showMainButtons: true,
+      order_id: '',
+      lat: 0,
+      lng: 0,
+      currentComponent: 2,
+      showMainButtons: true,
+      page: 0,
+      provider_info: [],
+      mapState: 'standard',
+      servicesSliderState: true,
+      calenderShow: false
     }
   }
 
   componentWillMount() {
     // this.props.favlocationlist(this.props.user_id)
-
     self=this
-    OneSignal.setLogLevel(6, 0)
-    OneSignal.addEventListener('received', self.onReceived);
-    OneSignal.addEventListener('opened', this.onOpened);
-    OneSignal.addEventListener('ids', this.onIds);
-    OneSignal.init('a3551d54-e1bc-4f12-874c-7f6cb7982f95',  {kOSSettingsKeyAutoPrompt : true});
+    ////OneSignal.setLogLevel(6, 0)
+    ////OneSignal.addEventListener('received', self.onReceived);
+    ////OneSignal.addEventListener('opened', this.onOpened);
+    ////OneSignal.addEventListener('ids', this.onIds);
+    ////OneSignal.init('a3551d54-e1bc-4f12-874c-7f6cb7982f95',  {kOSSettingsKeyAutoPrompt : true});
     this.props.setHomeComponent(1)
     ////OneSignal.configure()
     // this.props.reverseCoordinatesToAdress(this.props.common.lat,this.props.common.lng)
@@ -68,9 +77,9 @@ class Map extends Component {
   }
   
   componentWillUnmount(){
-    OneSignal.removeEventListener('received', this.onReceived);
-    OneSignal.removeEventListener('opened', this.onOpened);
-    OneSignal.removeEventListener('ids', this.onIds);
+    ////OneSignal.removeEventListener('received', this.onReceived);
+    ////OneSignal.removeEventListener('opened', this.onOpened);
+    ////OneSignal.removeEventListener('ids', this.onIds);
   }
 
   onReceived=(notification)=> {
@@ -87,14 +96,12 @@ class Map extends Component {
       var firebaseRef = firebase.database().ref('orders');
       firebaseRef.child(this.state.order_id).off()
       self.props.setDriverCoordnates('','')
-
     }else if(notification.payload.additionalData.data[1].type=='order_cancel'){
       console.log("Notification order ended succesfuly: ",notification.payload);
       // self.props.setHomeComponent(0)
       var firebaseRef = firebase.database().ref('orders');
       firebaseRef.child(this.state.order_id).off()
       self.props.setDriverCoordnates('','')
-
     }
   }
 
@@ -155,16 +162,15 @@ class Map extends Component {
               style={style.opacityWight}
             >
               <Text style={style.opacityWightText}>
-                اطلب لاحقاً
+                {strings.orderLater}
               </Text>
             </TouchableOpacity>
           </View>
           <View style={style.opacityView2}>
             <LinearGradientForMap
-              text="اطلب الان"
+              text={strings.orderNow}
               style={style.opacity}
               press={() => {
-                //dispach 2nd component in map view
                 this.props.setHomeComponent(2)
               }}
             />
@@ -258,7 +264,11 @@ class Map extends Component {
     return(
       <View style={{ flex: 1, position: "relative", zIndex: 0 }}>
         <View style={{ width: "100%",position:'absolute',zIndex:3}}>
-        {this.props.common.driverLat==''&& this.props.compState.__CurrentComponent == 1 ? <GooglePlacesInput />:null}
+        {this.props.common.driverLat==''&& this.props.compState.__CurrentComponent == 1?
+          <GooglePlacesInput />
+          :
+          null
+        }
         </View>
         <MapView
           onPress={()=> {
@@ -276,16 +286,14 @@ class Map extends Component {
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
-          
         >
           <MapView.Marker
-                      pinColor={"rgba(153, 137, 0,0.5)"}
-
-                        // image={ require("../assets/Assets/Group-1353.bmp")}
-                        draggable={true}
+            pinColor={"rgba(153, 137, 0,0.5)"}
+            // image={ require("../assets/Assets/Group-1353.bmp")}
+            draggable={true}
             coordinate={{
               // new MapView.AnimatedRegion({
-                latitude:this.props.common.lat? this.props.common.lat : 6.2672295570373535,
+                latitude: this.props.common.lat? this.props.common.lat : 6.2672295570373535,
                 longitude:this.props.common.lng?this.props.common.lng : 31.229478498675235
               // })
             }}
@@ -300,15 +308,15 @@ class Map extends Component {
           />
           {this.props.common.driverLat!=''?
             <MapView.Marker.Animated
-            opacity={0.6}
-            pinColor={"rgb(65, 118, 57)"}
-              // image={"../assets/icons/faq-icon.png"}
-              coordinate={{
-                // new MapView.AnimatedRegion({
-                  latitude:this.props.common.driverLat? this.props.common.driverLat : 0,
-                  longitude:this.props.common.driverLng?this.props.common.driverLng : 0
-                // })
-              }}
+              opacity={0.6}
+              pinColor={"rgb(65, 118, 57)"}
+                // image={"../assets/icons/faq-icon.png"}
+                coordinate={{
+                  // new MapView.AnimatedRegion({
+                    latitude:this.props.common.driverLat? this.props.common.driverLat : 0,
+                    longitude:this.props.common.driverLng?this.props.common.driverLng : 0
+                  // })
+                }}
             />
             :
             <View style={{ width: 0, height: 0 }} />
@@ -339,7 +347,6 @@ class Map extends Component {
             hideExtraDays={true}
             blurRadius={1}
             firstDay={1}
-          
             showWeekNumbers={true}
             markingType={'custom'}
             style={{
@@ -510,19 +517,23 @@ const mapStateToProps = state => {
     services: state.makeOrder.services.data,
     service: state.makeOrder.service ,
     common: state.common,
-    compState:state.compState,
-    makeOrder:state.makeOrder,
-    user_id:state.auth.user_id
-
+    compState: state.compState,
+    makeOrder: state.makeOrder,
+    user_id: state.auth.user_id
   }
 }
 
-export default connect(mapStateToProps,
-  {
-    getServices,
-    setHomeComponent,
-    selectedServices,providerInfo,setOrderID,favlocationlist,
-    reverseCoordinatesToAdress,setCoordnates,setDriverCoordnates,
-    createorder,refreshPlayerId,orderLater
-  }
-) (withNavigation(Map))
+export default connect(mapStateToProps,{
+  getServices,
+  setHomeComponent,
+  selectedServices,
+  providerInfo,
+  setOrderID,
+  favlocationlist,
+  reverseCoordinatesToAdress,
+  setCoordnates,
+  setDriverCoordnates,
+  createorder,
+  refreshPlayerId,
+  orderLater
+}) (withNavigation(Map))

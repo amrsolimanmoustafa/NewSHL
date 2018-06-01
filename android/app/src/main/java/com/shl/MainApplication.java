@@ -3,6 +3,7 @@ package com.shl;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.avishayil.rnrestart.ReactNativeRestartPackage;
 import com.babisoft.ReactNativeLocalization.ReactNativeLocalizationPackage;
 // import com.babisoft.ReactNativeLocalization.ReactNativeLocalizationPackage;
 import com.BV.LinearGradient.LinearGradientPackage;
@@ -28,6 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+            new ReactNativeRestartPackage(),
             new ReactNativeLocalizationPackage(),
             // new ReactNativeLocalizationPackage(),
             new LinearGradientPackage(),

@@ -5,11 +5,10 @@ import {
   Text,
   Image,  
  } from 'react-native';
-
-//  local files //
 import masterStyle from './masterStyle';
 import Container from './Components/container';
 import { Images } from './../Themes';
+import strings from '../strings';
 
 // style //
 const {
@@ -18,103 +17,99 @@ const {
 } = masterStyle;
 
 export default class OrdersHistory extends Component {
-  state = {
-    ordersHistoryList: 
-    [
-      { id: 1, 
-        name: 'ماجد أحمد', 
-        image: Images.offer1,
-        cost: '100 ريال', 
-        status: 'مكتمل',
-        statusLabel: 'لحظى',
-        serviceNmae: 'خدمة الصرف الصحي', 
-        serviceType: 'خدمة فرعية 1', 
-        cityName: 'حى الزهور', 
-        address: '193 الحى السابع بجوار مسجد نورى الخطاب',
-        date: '12/3/2018',
-      },
-      { id: 2, 
-        name: 'ماجد أحمد', 
-        image: Images.humanIcon,
-        cost: '100 ريال', 
-        status: 'مكتمل',
-        statusLabel: 'لحظى',
-        serviceNmae: 'خدمة الصرف الصحي', 
-        serviceType: 'خدمة فرعية 1', 
-        cityName: 'حى الزهور', 
-        address: '193 الحى السابع بجوار مسجد نورى الخطاب',
-        date: '12/3/2018',
-      },
-      { id: 3, 
-        name: 'عبدالكريم أحمد', 
-        image: Images.humanIcon,
-        cost: '100 ريال', 
-        status: 'غير مكتمل',
-        statusLabel: 'مجدول',
-        serviceNmae: 'خدمة الصرف الصحي', 
-        serviceType: 'خدمة فرعية 1', 
-        cityName: 'حى الزهور', 
-        address: '193 الحى السابع بجوار مسجد نورى الخطاب',
-        date: '12/3/2018',
-      },
-      { id: 4, 
-        name: 'ماجد أحمد', 
-        image: Images.humanIcon,
-        cost: '100 ريال', 
-        status: 'مكتمل',
-        statusLabel: 'لحظى',
-        serviceNmae: 'خدمة الصرف الصحي', 
-        serviceType: 'خدمة فرعية 1', 
-        cityName: 'حى الزهور', 
-        address: '193 الحى السابع بجوار مسجد نورى الخطاب',
-        date: '12/3/2018',
-      },
-    ],
+  constructor(props){
+    super(props)
+    this.state = {
+      ordersHistoryList: [
+        { id: 1, 
+          name: 'ماجد أحمد', 
+          image: Images.offer1,
+          cost: '100 ريال', 
+          status: 'مكتمل',
+          statusLabel: 'لحظى',
+          serviceNmae: 'خدمة الصرف الصحي', 
+          serviceType: 'خدمة فرعية 1', 
+          cityName: 'حى الزهور', 
+          address: '193 الحى السابع بجوار مسجد نورى الخطاب',
+          date: '12/3/2018',
+        },
+        { id: 2, 
+          name: 'ماجد أحمد', 
+          image: Images.humanIcon,
+          cost: '100 ريال', 
+          status: 'مكتمل',
+          statusLabel: 'لحظى',
+          serviceNmae: 'خدمة الصرف الصحي', 
+          serviceType: 'خدمة فرعية 1', 
+          cityName: 'حى الزهور', 
+          address: '193 الحى السابع بجوار مسجد نورى الخطاب',
+          date: '12/3/2018',
+        },
+        { id: 3, 
+          name: 'عبدالكريم أحمد', 
+          image: Images.humanIcon,
+          cost: '100 ريال', 
+          status: 'غير مكتمل',
+          statusLabel: 'مجدول',
+          serviceNmae: 'خدمة الصرف الصحي', 
+          serviceType: 'خدمة فرعية 1', 
+          cityName: 'حى الزهور', 
+          address: '193 الحى السابع بجوار مسجد نورى الخطاب',
+          date: '12/3/2018',
+        },
+        { id: 4, 
+          name: 'ماجد أحمد', 
+          image: Images.humanIcon,
+          cost: '100 ريال', 
+          status: 'مكتمل',
+          statusLabel: 'لحظى',
+          serviceNmae: 'خدمة الصرف الصحي', 
+          serviceType: 'خدمة فرعية 1', 
+          cityName: 'حى الزهور', 
+          address: '193 الحى السابع بجوار مسجد نورى الخطاب',
+          date: '12/3/2018',
+        },
+      ],
+    }
   }
-  ///////////////////////////////////////////
-  renderOrderItem = ({ item }) => {
+
+  renderOrderItem(item){
     return (
       <View style={[styles.rowStyle]}>
-        {/* imageContainer */}
         <View style={[styles.imageContainer, styles.viewContainer]} >
           <Text style={[styles.titleStyle, appGreenColor]}>
-          {item.cost}
+            {item.cost}
           </Text>
           <View style={[styles.AvatarView]}>
             <Image source={item.image} style={[styles.userIconStyle]}/>
           </View>
         </View>
-        {/* nameContainer */}        
         <View style={[styles.nameContainer, styles.viewContainer]}>
-          <Text style={[styles.titleStyle, appGreenColor]} >{item.name}</Text>
-          <Text style={[styles.labelStyle, appGrayColor]} >{item.date}</Text>
+          <Text style={[styles.titleStyle, appGreenColor]}>{item.name}</Text>
+          <Text style={[styles.labelStyle, appGrayColor]}>{item.date}</Text>
         </View>
-        {/* statusContainer */}        
         <View style={[styles.statusContainer, styles.viewContainer]}>
-          <Text style={[styles.titleStyle, appGreenColor]} >{item.status}</Text>
-          <Text style={[styles.labelStyle, appGrayColor]} >{item.statusLabel}</Text>
+          <Text style={[styles.titleStyle, appGreenColor]}>{item.status}</Text>
+          <Text style={[styles.labelStyle, appGrayColor]}>{item.statusLabel}</Text>
         </View>
-        {/* serviceContainer */}        
         <View style={[styles.serviceContainer, styles.viewContainer]}>
-          <Text style={[styles.titleStyle, appGreenColor]} >{item.serviceNmae}</Text>
-          <Text style={[styles.labelStyle, appGrayColor]} >{item.serviceType}</Text>
-          <Text style={[styles.titleStyle, appGreenColor]} >{item.cityName}</Text>
-          <Text style={[styles.labelStyle, appGrayColor]} >{item.address}</Text>          
+          <Text style={[styles.titleStyle, appGreenColor]}>{item.serviceNmae}</Text>
+          <Text style={[styles.labelStyle, appGrayColor]}>{item.serviceType}</Text>
+          <Text style={[styles.titleStyle, appGreenColor]}>{item.cityName}</Text>
+          <Text style={[styles.labelStyle, appGrayColor]}>{item.address}</Text>          
         </View>
       </View>
-      
     );
   }
-  /////////////////////////////////////////// 
+
   render() {   
     return (
       <View style={[masterStyle.container]}>
-        <Container style={{ paddingHorizontal: 0,}} title='تاريخ الطلبات' >
-          {/* // Orders History list // */}
+        <Container style={{ paddingHorizontal: 0,}} title={strings.ordersHistory}>
           <FlatList
-          data={this.state.ordersHistoryList}
-          keyExtractor={item => `${item.id}`}
-          renderItem={this.renderOrderItem}
+            data={this.state.ordersHistoryList}
+            keyExtractor={item => `${item.id}`}
+            renderItem={this.renderOrderItem}
           />
         </Container>
       </View>
@@ -181,5 +176,4 @@ const styles = {
   viewContainer: {
     alignItems: 'center',
   }
-
 };

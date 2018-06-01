@@ -24,8 +24,7 @@ import StarRating from 'react-native-star-rating';
 import {rateProvider,getServices} from './../actions/makeOrderAction'
 import Base from '../Base';
 import axios from 'axios';
-import { reject } from 'rsvp';
-
+import strings from '../strings';
 let self;
 
 const cancelResonesList = [
@@ -51,7 +50,8 @@ class HomeScreen extends Component  {
   constructor(props) {
     super(props);
     this.state = {
-      starCount: 1,popupCommentText:''
+      starCount: 1,
+      popupCommentText: ''
     }
     self = this
   }
@@ -133,8 +133,6 @@ class HomeScreen extends Component  {
           haveTitleBar={false}
         >
           <View style={{flex: 1,backgroundColor: '#FFFFFF',borderRadius: 9,padding: 10}}>
-            {/* <Text style={{fontFamily: 'NeoSansArabic',fontSize: 16,color: '#707070',textAlign: 'center'}}>
-            </Text> */}
             <View style={{alignItems: 'center'}}>
               <Image
                 source={{ uri:this.props.makeOrder.provider!=[]?base.icon_url+this.props.makeOrder.provider.personal_pic:''}}
@@ -175,7 +173,7 @@ class HomeScreen extends Component  {
             <View style={{marginTop: 10}}>
               <TextInput
               onChangeText={text=>{
-                this.setState({popupCommentText:text})
+                this.setState({popupCommentText: text})
               }}
                 style={{height: 60,borderWidth: 1,borderColor: '#000000',borderRadius: 4}}
               />
@@ -189,7 +187,7 @@ class HomeScreen extends Component  {
                 style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}
               >
                 <Text style={{color: '#ffffff',fontSize: 13,fontFamily: 'NeoSansArabic'}}>
-                  {'Approve'}
+                  {strings.approve}
                 </Text>
               </ImageBackground>
             </TouchableOpacity>

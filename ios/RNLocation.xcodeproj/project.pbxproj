@@ -9,10 +9,18 @@
 /* Begin PBXBuildFile section */
 		13BE3DEE1AC21097009241FE /* RNLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = 13BE3DED1AC21097009241FE /* RNLocation.m */; };
 		19E9D66D89944F0082A54791 /* libRNFIRMessaging.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 54A4A0173BFA423483298162 /* libRNFIRMessaging.a */; };
+		5FD6769F647C46AF9F0383EF /* libRCTRestart.a in Frameworks */ = {isa = PBXBuildFile; fileRef = BF6662756742462F85FAF5AB /* libRCTRestart.a */; };
 		608DC4B6179A4EABB640D707 /* libRCTOneSignal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 08F5D67E63D844028F2474BA /* libRCTOneSignal.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		D15D7BCA20C02C51007BC122 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 569E50D3CB664AEB90DAE028 /* RCTRestart.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3245CDED1BFEE35C00EABF68;
+			remoteInfo = RCTRestart;
+		};
 		D1CE816C20B84B01000508DB /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = EE993DBD542842B49D3F3D6B /* RCTOneSignal.xcodeproj */;
@@ -48,7 +56,9 @@
 		13BE3DED1AC21097009241FE /* RNLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RNLocation.m; sourceTree = "<group>"; };
 		3C65905E56AC4672A299994C /* RNLocation.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNLocation.xcodeproj; path = "../node_modules/react-native-location/RNLocation.xcodeproj"; sourceTree = "<group>"; };
 		54A4A0173BFA423483298162 /* libRNFIRMessaging.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNFIRMessaging.a; sourceTree = "<group>"; };
+		569E50D3CB664AEB90DAE028 /* RCTRestart.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTRestart.xcodeproj; path = "../node_modules/react-native-restart/ios/RCTRestart.xcodeproj"; sourceTree = "<group>"; };
 		9D86DF48D91F4631962F78FB /* RNFIRMessaging.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNFIRMessaging.xcodeproj; path = "../node_modules/react-native-fcm/ios/RNFIRMessaging.xcodeproj"; sourceTree = "<group>"; };
+		BF6662756742462F85FAF5AB /* libRCTRestart.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRCTRestart.a; sourceTree = "<group>"; };
 		EE993DBD542842B49D3F3D6B /* RCTOneSignal.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RCTOneSignal.xcodeproj; path = "../node_modules/react-native-onesignal/ios/RCTOneSignal.xcodeproj"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -59,6 +69,7 @@
 			files = (
 				19E9D66D89944F0082A54791 /* libRNFIRMessaging.a in Frameworks */,
 				608DC4B6179A4EABB640D707 /* libRCTOneSignal.a in Frameworks */,
+				5FD6769F647C46AF9F0383EF /* libRCTRestart.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -79,6 +90,7 @@
 				9D86DF48D91F4631962F78FB /* RNFIRMessaging.xcodeproj */,
 				EE993DBD542842B49D3F3D6B /* RCTOneSignal.xcodeproj */,
 				3C65905E56AC4672A299994C /* RNLocation.xcodeproj */,
+				569E50D3CB664AEB90DAE028 /* RCTRestart.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -94,11 +106,20 @@
 			);
 			sourceTree = "<group>";
 		};
+		D15D7BC720C02C51007BC122 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D15D7BCB20C02C51007BC122 /* libRCTRestart.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		D1CE813E20B84678000508DB /* Recovered References */ = {
 			isa = PBXGroup;
 			children = (
 				54A4A0173BFA423483298162 /* libRNFIRMessaging.a */,
 				08F5D67E63D844028F2474BA /* libRCTOneSignal.a */,
+				BF6662756742462F85FAF5AB /* libRCTRestart.a */,
 			);
 			name = "Recovered References";
 			sourceTree = "<group>";
@@ -169,6 +190,10 @@
 					ProjectRef = EE993DBD542842B49D3F3D6B /* RCTOneSignal.xcodeproj */;
 				},
 				{
+					ProductGroup = D15D7BC720C02C51007BC122 /* Products */;
+					ProjectRef = 569E50D3CB664AEB90DAE028 /* RCTRestart.xcodeproj */;
+				},
+				{
 					ProductGroup = D1CE816F20B84B21000508DB /* Products */;
 					ProjectRef = 3C65905E56AC4672A299994C /* RNLocation.xcodeproj */;
 				},
@@ -181,6 +206,13 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
+		D15D7BCB20C02C51007BC122 /* libRCTRestart.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTRestart.a;
+			remoteRef = D15D7BCA20C02C51007BC122 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		D1CE816D20B84B01000508DB /* libRCTOneSignal.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -299,6 +331,7 @@
 					"$(inherited)",
 					"\"$(SRCROOT)/RNLocation\"",
 					"\"$(SRCROOT)/RNLocation\"",
+					"\"$(SRCROOT)/RNLocation\"",
 				);
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = RNLocation;
@@ -321,6 +354,7 @@
 				);
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/RNLocation\"",
 					"\"$(SRCROOT)/RNLocation\"",
 					"\"$(SRCROOT)/RNLocation\"",
 				);
