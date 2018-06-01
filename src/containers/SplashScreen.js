@@ -10,6 +10,9 @@ import { NavigationActions } from 'react-navigation';
 import styles from './Styles/SplashScreenStyle'
 import * as Animatable from "react-native-animatable";
 import * as firebase from 'firebase';
+import {loginUser} from "../../src/actions/authAction"
+import { withNavigation } from "react-navigation";
+
 var config = {
   apiKey: "AIzaSyAm7qwx12pV5PdH100bkZQTtLfR6BGKk5U",
   authDomain: "shlapp-fd7eb.firebaseapp.com",
@@ -31,8 +34,8 @@ class SplashScreen extends Component {
   }
 
   async componentDidMount(){
-    const { navigation } = this.props;
-    const result = await AsyncStorage.multiGet(['token_id','user_id'])
+    const { navigation,loginUser } = this.props;
+    const result = await AsyncStorage.multiGet(['token_id','user_id','phone'])
     console.log(result)
     setTimeout(() => {
       if(result[0][1]){
@@ -40,6 +43,10 @@ class SplashScreen extends Component {
           index: 0,
           actions: [NavigationActions.navigate({ routeName: 'HomeScreen' })],
         });
+        /////////
+        let data = { phone:result[0][1]['phone'] , token_id: '', lang_id: 'ar' };
+        loginUser(data,'')
+        ////////////
         navigation.dispatch(resetAction);
       }else{
         const resetAction = NavigationActions.reset({
@@ -82,4 +89,5 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(SplashScreen)
+// export default connect(mapStateToProps,{loginUser}, mapDispatchToProps)(SplashScreen)
+export default connect(mapStateToProps, { loginUser }) (withNavigation(SplashScreen));

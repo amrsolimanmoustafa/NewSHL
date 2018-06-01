@@ -90,9 +90,9 @@ flexDirection:"column"
     zIndex:2,
 bottom:0,
   // position:"absolute",
-    marginTop:"2%",
+    marginTop:"10%",
     borderRadius: 80,
-    width:"90%",
+    width:"70%",
     height:"150%",
     
   },

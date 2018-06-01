@@ -19,6 +19,7 @@ import Toast from "react-native-simple-toast";
 import { connect } from 'react-redux'
 import {loginUser} from "../../src/actions/authAction"
 import strings from '../strings'
+import Button from "../containers/Components/button"
 
 class LoginInsertPhone extends Component<> {
   constructor(props){
@@ -77,12 +78,16 @@ class LoginInsertPhone extends Component<> {
     } else {
       return(
         <View style={styles.opacity}>
-          <LinearGradientButton
+        <Button            
+         title="التسجيل"
+      onPress={this.doLogIn.bind(this)}         
+/>
+          {/* <LinearGradientButton
             press={this.doLogIn.bind(this)}
             navigateScreen={this.state.VerifyPhoneScreen}
             text={strings.signup}
             style={{}}
-          />
+          /> */}
         </View>
       )
     }
@@ -98,7 +103,7 @@ class LoginInsertPhone extends Component<> {
       error,
       lang_id
     } = this.state;
-    let data = { phone: phone, token_id: token_id, lang_id: 1 };
+    let data = { phone: phone, token_id: token_id, lang_id: 'ar' };
     this.props.loginUser(data,this)
     // console.log(this.state);
     // Default options are marked with *

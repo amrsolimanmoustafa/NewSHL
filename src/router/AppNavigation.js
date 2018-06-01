@@ -20,6 +20,7 @@ import AddFavoritePlace from '../containers/addFavoritePlace'
 // import opinionRow from '../containers/opinionRow'
 import ShareYourOpinion from '../containers/ShareYourOpinion'
 import ServicesCost from '../containers/ServicesCost'
+import JoinAsServiceProvider from '../containers/JoinAsServiceProvider'
 
 import Rules from '../containers/Rules'
 import ContactWithAdministration from '../containers/ContactWithAdministration'
@@ -47,6 +48,13 @@ const PrimaryNav = StackNavigator({
   },
   SplashScreen: {
     screen: SplashScreen,
+    navigationOptions: {
+      header: null
+    }
+  },
+  
+  JoinAsServiceProvider: {
+    screen: JoinAsServiceProvider,
     navigationOptions: {
       header: null
     }
@@ -201,7 +209,7 @@ const MainDrawer = DrawerNavigator(
       }
     },
     JoinUs: {
-      screen: ({ navigation }) => <HomeScreen navigation={navigation} />,
+      screen: ({ navigation }) => <JoinAsServiceProvider navigation={navigation} />,
       navigationOptions: {
         drawerLabel: strings.joinAsAServiceProvider,
         drawerIcon: ({ tintColor }) => (
