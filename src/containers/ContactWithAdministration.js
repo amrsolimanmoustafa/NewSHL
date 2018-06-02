@@ -6,12 +6,10 @@ import {
   Image,  
   TouchableOpacity,
  } from 'react-native';
-
-//  local files //
 import masterStyle from './masterStyle';
 import Container from './Components/container';
 import { Images } from './../Themes';
-
+import strings from '../strings'
 // style //
 const {
   appGreenBgColor,
@@ -22,75 +20,76 @@ const {
 } = masterStyle;
 
 export default class ContactWithAdministration extends Component {
-  state = {
-    contacts: 
-      [
-       { id: 1, title: 'أرقام الهاتف', texts: ['9987883122526', '86886767677', '856554454555'], icon: Images.callIcon },
-       { id: 2, title: 'العنوان', texts: ['Alex - Raml station', 'Cairo - Nasr city'], icon: Images.addressIcon },
-       { id: 3, title: 'البريد الالكتروني', texts: ['test@test.com', 'test2@test.com', 'test3@test.com'], icon: Images.emailIcon },
+  constructor(props){
+    super(props)
+    this.state = {
+      contacts: [
+        { id: 1, title: strings.phoneNumbers, texts: ['9987883122526', '86886767677', '856554454555'], icon: Images.callIcon },
+        { id: 2, title: strings.address, texts: ['Alex - Raml station', 'Cairo - Nasr city'], icon: Images.addressIcon },
+        { id: 3, title: strings.email, texts: ['test@test.com', 'test2@test.com', 'test3@test.com'], icon: Images.emailIcon },
       ],
       faceBook: 'https://www.facebook.com',
       twitter: 'https://twitter.com',
       instagram: 'https://www.instagram.com',
-      skype: 'https://www.skype.com', 
+      skype: 'https://www.skype.com',
+    }
   }
-  ///////////////////////////////////////////
-  // this function render Contacts Array as (phone numbers, emails ...)
+
   renderContactsArray = ({ item }) => {
     return (
       <View style={[styles.contactRowStyle]}>
         <View style={[styles.rowHeadrStyle]} >
-          {/* <View style={[styles.iconView, appGreenBgColor ]}> */}
-            <Image source={item.icon} style={styles.iconStyle} />
-          {/* </View> */}
+          <Image source={item.icon} style={styles.iconStyle} />
           <Text style={[styles.titleStyle, appGreenColor]}>{item.title}</Text>
         </View>
         <View style={[styles.textsView,]}>
-          {
-            item.texts.map((element, index )=> {
-              return (
-                <Text key={index} style={[styles.textStyle, appGrayColor]}>{element}</Text>
-              );
-            })
-          }
+          {item.texts.map((element, index )=> {
+            return (
+              <Text key={index} style={[styles.textStyle, appGrayColor]}>
+                {element}
+              </Text>
+            );
+          })}
         </View>
       </View>
     );
   }
-  /////////////////////////////////////////// 
+
   render() {   
-    const { faceBook, twitter, instagram, skype } = this.state;
+    const {
+      faceBook,
+      twitter,
+      instagram,
+      skype
+    } = this.state;
     return (
       <View style={[masterStyle.container]}>
-        <Container style={{ paddingHorizontal: 15,}} title='التواصل مع  الادارة' >
-          {/* /// body /// */}
+        <Container
+          style={{ paddingHorizontal: 15,}}
+          title={strings.communicateWithManagement}
+        >
           <FlatList
-          data={this.state.contacts}
-          keyExtractor={item => `${item.id}`}
-          renderItem={this.renderContactsArray}
+            data={this.state.contacts}
+            keyExtractor={item => `${item.id}`}
+            renderItem={this.renderContactsArray}
           />
-          {/* // Social icons // */}
           <View style={[styles.socialsView]}>
-            {
-              !!twitter && 
+            {!!twitter && 
               <TouchableOpacity >
                 <Image source={Images.twitterIcon} style={styles.socialImg} />
               </TouchableOpacity>
             }
-            {
-              !!skype && 
+            {!!skype && 
               <TouchableOpacity>
                 <Image source={Images.skypeIcon} style={styles.socialImg} />
               </TouchableOpacity>
             }
-            {
-              !!instagram && 
+            {!!instagram && 
               <TouchableOpacity>
                 <Image source={Images.instagramIcon} style={styles.socialImg} />
               </TouchableOpacity>
             }
-            {
-              !!faceBook && 
+            {!!faceBook && 
               <TouchableOpacity>
                 <Image source={Images.facebookIcon} style={styles.socialImg} />
               </TouchableOpacity>

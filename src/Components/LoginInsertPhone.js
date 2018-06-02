@@ -18,7 +18,9 @@ import { withNavigation } from "react-navigation";
 import Toast from "react-native-simple-toast";
 import { connect } from 'react-redux'
 import {loginUser} from "../../src/actions/authAction"
+import strings from '../strings'
 import Button from "../containers/Components/button"
+
 class LoginInsertPhone extends Component<> {
   constructor(props){
     super(props)
@@ -36,27 +38,26 @@ class LoginInsertPhone extends Component<> {
   render() {
     return(
       <View style={styles.container}>
-        {/* Headings */}
         <Text style={styles.heading}>
-          ادخل رقم الجوال
+          {strings.insertMobileNumber}
         </Text>
         <Text style={styles.heading2}>
-          يجب تسجيل الدخول حتي تستطيع الاستفادة من تطبيق سهل
+          {strings.youNeedToSignin}
         </Text>
         <View style={styles.inputBoxView}>
-          {/* Input */}
           <Item stackedLabel style={styles.itemStyle}>
-            <Label style={styles.formInputPlaceholder}>رقم الهاتف</Label>
-            <Input
+            <Label style={styles.formInputPlaceholder}>
+              {strings.mobile}
+            </Label>
+            <TextInput
               onChangeText={text => this.setState({phone: text})}
               style={styles.input}
             />
             {this.props.text}
           </Item>
-          {/* Flags */}
           <View style={styles.countryView}>
             <Text style={styles.countryText}>
-              الدولة
+              {strings.country}
             </Text>
             <Image source={Images.SaudiFlag} style={styles.countryFlag} />
           </View>
@@ -84,7 +85,7 @@ class LoginInsertPhone extends Component<> {
           {/* <LinearGradientButton
             press={this.doLogIn.bind(this)}
             navigateScreen={this.state.VerifyPhoneScreen}
-            text="التسجيل"
+            text={strings.signup}
             style={{}}
           /> */}
         </View>

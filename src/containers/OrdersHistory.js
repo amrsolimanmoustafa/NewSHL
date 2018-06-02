@@ -5,8 +5,6 @@ import {
   Text,
   Image,  
  } from 'react-native';
-
-//  local files //
 import masterStyle from './masterStyle';
 import Container from './Components/container';
 import { Images } from './../Themes';
@@ -14,6 +12,7 @@ import Base from '../Base';
 import axios from 'axios'
 import { connect } from 'react-redux'
 import { withNavigation } from "react-navigation";
+import strings from '../strings';
 
 // style //
 const {
@@ -102,46 +101,40 @@ async  componentWillMount(){
   renderOrderItem = ({ item }) => {
     return (
       <View style={[styles.rowStyle]}>
-        {/* imageContainer */}
         <View style={[styles.imageContainer, styles.viewContainer]} >
           <Text style={[styles.titleStyle, appGreenColor]}>
-          {item.cost}
+            {item.cost}
           </Text>
           <View style={[styles.AvatarView]}>
             <Image source={item.image} style={[styles.userIconStyle]}/>
           </View>
         </View>
-        {/* nameContainer */}        
         <View style={[styles.nameContainer, styles.viewContainer]}>
-          <Text style={[styles.titleStyle, appGreenColor]} >{item.name}</Text>
-          <Text style={[styles.labelStyle, appGrayColor]} >{item.date}</Text>
+          <Text style={[styles.titleStyle, appGreenColor]}>{item.name}</Text>
+          <Text style={[styles.labelStyle, appGrayColor]}>{item.date}</Text>
         </View>
-        {/* statusContainer */}        
         <View style={[styles.statusContainer, styles.viewContainer]}>
-          <Text style={[styles.titleStyle, appGreenColor]} >{item.status}</Text>
-          <Text style={[styles.labelStyle, appGrayColor]} >{item.statusLabel}</Text>
+          <Text style={[styles.titleStyle, appGreenColor]}>{item.status}</Text>
+          <Text style={[styles.labelStyle, appGrayColor]}>{item.statusLabel}</Text>
         </View>
-        {/* serviceContainer */}        
         <View style={[styles.serviceContainer, styles.viewContainer]}>
-          <Text style={[styles.titleStyle, appGreenColor]} >{item.serviceNmae}</Text>
-          <Text style={[styles.labelStyle, appGrayColor]} >{item.serviceType}</Text>
-          <Text style={[styles.titleStyle, appGreenColor]} >{item.cityName}</Text>
-          <Text style={[styles.labelStyle, appGrayColor]} >{item.address}</Text>          
+          <Text style={[styles.titleStyle, appGreenColor]}>{item.serviceNmae}</Text>
+          <Text style={[styles.labelStyle, appGrayColor]}>{item.serviceType}</Text>
+          <Text style={[styles.titleStyle, appGreenColor]}>{item.cityName}</Text>
+          <Text style={[styles.labelStyle, appGrayColor]}>{item.address}</Text>          
         </View>
       </View>
-      
     );
   }
-  /////////////////////////////////////////// 
+
   render() {   
     return (
       <View style={[masterStyle.container]}>
-        <Container style={{ paddingHorizontal: 0,}} title='تاريخ الطلبات' >
-          {/* // Orders History list // */}
+        <Container style={{ paddingHorizontal: 0,}} title={strings.ordersHistory}>
           <FlatList
-          data={this.state.ordersHistoryList}
-          keyExtractor={item => `${item.id}`}
-          renderItem={this.renderOrderItem}
+            data={this.state.ordersHistoryList}
+            keyExtractor={item => `${item.id}`}
+            renderItem={this.renderOrderItem}
           />
         </Container>
       </View>

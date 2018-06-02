@@ -10,37 +10,32 @@ import { connect } from 'react-redux'
 import { withNavigation } from "react-navigation";
 import {favlocationlist} from "../actions/makeOrderAction"
 import {setCoordnates} from "../actions/CommonServicesActions/commonServicesActions"
+import strings from '../strings'
 
-const RESPONSE = [
-  {"NAME":"المنزل","STREET":"225 Bills Place","RowSelected":true},
-  {"NAME":"المنزل 2","STREET":"486 Manhattan Avenue","RowSelected":false},
-  {"NAME":"المنزل 3","STREET":"486 Manhattan Avenue","RowSelected":false},
-]
  class FavoritePlaces extends Component {
   constructor(props) {
     super(props);
     this.state = {
 
     }
- 
   }
-componentWillMount(){
-  this.props.favlocationlist(this.props.user_id)
-  console.log(this.props) 
-}
-  render () {
-   
 
+  componentWillMount(){
+    this.props.favlocationlist(this.props.user_id)
+  }
+
+  render () {
     const {
       navigation
     } = this.props
     return (
       <View style={styles.container}>
-          <Text style={styles.SubHeading}>
-            تتيح الصفحة اضافة العناوين المفضلة لاستخدامها بالخدمات
-          </Text>
-          <View style={styles.FavoritePlacesListStyle}>
-            {this.props.makeOrder.favlocationlist.data?this.props.makeOrder.favlocationlist.data.map((item,index)=>(
+        <Text style={styles.SubHeading}>
+          {strings.thePageAllowsYouToAddBookmarksToUseForServices}
+        </Text>
+        <View style={styles.FavoritePlacesListStyle}>
+          {this.props.makeOrder.favlocationlist.data?
+            this.props.makeOrder.favlocationlist.data.map((item,index)=>(
               <TouchableOpacity
                 key={index}
                 onPress={()=> {
@@ -48,7 +43,7 @@ componentWillMount(){
                   this.props.setCoordnates(item.lat,item.long)
                   this.setState({selectedPlace: item})
                   navigation.navigate('HomeScreen')
-              }}
+                }}
                 style={{flexDirection: 'row',alignItems: 'center',paddingVertical: 10}}
               >
                 <View style={{width: 20,height: 20,borderWidth: 1,borderColor: '#3C403F',borderRadius: 10,justifyContent: 'center',alignItems: 'center'}}>
@@ -61,17 +56,20 @@ componentWillMount(){
                   {item.area}
                 </Text>
               </TouchableOpacity>
-            )):null}
-          </View>
-          <TouchableOpacity
-            onPress={()=> navigation.navigate('AddFavoritePlace')}
-            style={styles.AddView}
-          >
-            <Icon name="plus" type="SimpleLineIcons" style={styles.AddIcon}/>
-            <Text style={styles.AddText}>
-              إضافة
-            </Text>
-          </TouchableOpacity>
+            ))
+          :
+          null
+        }
+        </View>
+        <TouchableOpacity
+          onPress={()=> navigation.navigate('AddFavoritePlace')}
+          style={styles.AddView}
+        >
+          <Icon name="plus" type="SimpleLineIcons" style={styles.AddIcon}/>
+          <Text style={styles.AddText}>
+            {strings.add}
+          </Text>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -79,18 +77,13 @@ componentWillMount(){
 
 const mapStateToProps = state => {
   return {
-    // services: state.makeOrder.services.data,
-    // service: state.makeOrder.service ,
     common: state.common,
-    // compState:state.compState,
     makeOrder:state.makeOrder,
     user_id:state.auth.user_id
-
   }
 }
 
-export default connect(mapStateToProps,
-  {
-  favlocationlist,setCoordnates
-  }
-) (withNavigation(FavoritePlaces))
+export default connect(mapStateToProps,{
+  favlocationlist,
+  setCoordnates
+}) (withNavigation(FavoritePlaces))

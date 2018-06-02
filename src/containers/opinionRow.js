@@ -7,8 +7,6 @@ import {
   FlatList,
   ImageBackground,
 } from 'react-native';
-
-// localFiles //
 import { Images } from './../Themes';
 import masterStyle from './masterStyle';
 import Container from './Components/container';
@@ -22,78 +20,65 @@ const {
   appGrayColor,
 } = masterStyle;
 
-
 class OpinionRow extends Component {
-  state = {
-    answerSelected: 'answer1',
+  constructor(props){
+    super(props)
+    this.state = {
+      answerSelected: 'answer1',
+    }
   }
-  answerPress = (answer) => {
-    this.setState({
-      answerSelected: answer
-    });
-  }
-  /////////////////////////////////////
+
   render () {
     const { item } = this.props;
     const { answerSelected } = this.state;
-
     return (
       <View style={[styles.rowStyle]}>
-        {/* /// /// */}
-        <View
-        style={[styles.questionRowStyle]}
-        >
+        <View style={[styles.questionRowStyle]}>
           <View style={styles.dotOfQustion} />
-          <Text style={[styles.textStyle, appBlueColor, { fontSize: 18 }]}>{item.questionText}</Text>
+          <Text style={[styles.textStyle, appBlueColor, { fontSize: 18 }]}>
+            {item.questionText}
+          </Text>
         </View>
-        {/* //// answers //// */}
         <View style={[styles.answerRowStyle]}> 
-          {/* answer1 */}
           <TouchableOpacity 
-          style={[styles.answerContainer]}
-          onPress={() => this.answerPress('answer1')}          
+            style={[styles.answerContainer]}
+            onPress={() => this.answerPress('answer1')}          
           >
-            {/* radio btn */}          
-            <View 
-            style={ answerSelected === 'answer1' ? 
-              styles.dotSelectedStyle : styles.dotWhiteStyle
-            } 
-            />
-            <Text style={[styles.textStyle]}>{item.answer1}</Text>
+            <View style={answerSelected === 'answer1'? styles.dotSelectedStyle : styles.dotWhiteStyle}/>
+            <Text style={[styles.textStyle]}>
+              {item.answer1}
+            </Text>
           </TouchableOpacity>
-          {/* answer2 */}
           <TouchableOpacity 
-          style={[styles.answerContainer]}
-          onPress={() => this.answerPress('answer2')}          
+            style={[styles.answerContainer]}
+            onPress={() => this.answerPress('answer2')}          
           >
-            {/* radio btn */}          
-            <View 
-            style= { answerSelected === 'answer2' ? 
-              styles.dotSelectedStyle : styles.dotWhiteStyle
-            } 
-            />
-            <Text style={[styles.textStyle]}>{item.answer2}</Text>
+            <View style= {answerSelected === 'answer2'? styles.dotSelectedStyle : styles.dotWhiteStyle}/>
+            <Text style={[styles.textStyle]}>
+              {item.answer2}
+            </Text>
          </TouchableOpacity>
-          {/* answer3 */}
           <TouchableOpacity 
-          style={[styles.answerContainer]}
-          onPress={() => this.answerPress('answer3')}          
+            style={[styles.answerContainer]}
+            onPress={() => this.answerPress('answer3')}          
           >
-            {/* radio btn */}
-            <View
-            style= { answerSelected === 'answer3' ? 
-              styles.dotSelectedStyle : styles.dotWhiteStyle
-            }              
-            />
-            <Text style={[styles.textStyle]}>{item.answer3}</Text>
+            <View style= {answerSelected === 'answer3'?  styles.dotSelectedStyle : styles.dotWhiteStyle}/>
+            <Text style={[styles.textStyle]}>
+              {item.answer3}
+            </Text>
           </TouchableOpacity>
         </View>
       </View>
     );
   }
+
+  answerPress(answer){
+    this.setState({
+      answerSelected: answer
+    });
+  }
 }
 
-export default OpinionRow;
 const styles = {
   rowStyle: {
     marginTop: 15,
@@ -142,3 +127,5 @@ const styles = {
     // marginLeft: 10
   }
 };
+
+export default OpinionRow;
