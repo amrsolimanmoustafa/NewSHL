@@ -14,7 +14,7 @@ import HomeScreen from '../containers/HomeScreen'
 import VerifyPhoneScreen from '../containers/VerifyPhoneScreen'
 import LoginScreen from '../containers/LoginScreen'
 import SplashScreen from '../containers/SplashScreen'
-import LaunchScreen from '../containers/LaunchScreen'
+//import LaunchScreen from '../containers/LaunchScreen'
 import FavoritePlaces from '../containers/favoritePlaces'
 import AddFavoritePlace from '../containers/addFavoritePlace'
 // import opinionRow from '../containers/opinionRow'
@@ -40,21 +40,14 @@ import styles from '../containers/Styles/NavigationStyles'
 import strings from '../strings'
 
 const PrimaryNav = StackNavigator({
-  LaunchScreen: {
+  /*LaunchScreen: {
     screen: LaunchScreen,
     navigationOptions: {
       header: null
     }
-  },
+  },*/
   SplashScreen: {
     screen: SplashScreen,
-    navigationOptions: {
-      header: null
-    }
-  },
-  
-  JoinAsServiceProvider: {
-    screen: JoinAsServiceProvider,
     navigationOptions: {
       header: null
     }
@@ -137,11 +130,17 @@ const PrimaryNav = StackNavigator({
       header: null
     }
   },
+  JoinAsServiceProvider: {
+    screen: JoinAsServiceProvider,
+    navigationOptions: {
+      header: null
+    }
+  },
 }, {
   // Default config for all screens
   //headerMode: 'none',
   headerBackTitle: null,
-  initialRouteName: 'SplashScreen',
+  initialRouteName: 'VerifyPhoneScreen',//'SplashScreen',
   navigationOptions: {
     headerStyle: {
       backgroundColor: 'transparent'
