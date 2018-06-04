@@ -75,6 +75,7 @@ class HomeScreen extends Component  {
         + lng+ 
         '&key='+APIKEY+'&language=en&region=EN"')
         .then((response) =>{
+          console.log('response',response)
           self.props.getServices(response.data.results[0].address_components[2].long_name)      
         }).catch((error) =>{
           console.log(error);
@@ -96,6 +97,7 @@ class HomeScreen extends Component  {
             + position.coords.longitude + 
             '&key='+APIKEY+'&language=en&region=EN"')
             .then((response) =>{
+              console.log('response',response)
               self.props.getServices(response.data.results[0].address_components[2].long_name)    
             }).catch((error) =>{
               console.log(error);

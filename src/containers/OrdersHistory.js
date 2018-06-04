@@ -21,17 +21,24 @@ const {
 } = masterStyle;
 
  class OrdersHistory extends Component {
+  constructor(props) {
+    super(props);
+// alert('test')  
+this.getHistoryList()
+  
+}
   state = {
     ordersHistoryList: 
     [  ]
   }
-async  componentWillMount(){
-   await this.getHistoryList
+  componentWillMount(){
+    this.getHistoryList
   }
-  getHistoryList=()=>{
-
+  getHistoryList(){
+    // const {ordersHistoryList}=this.state
+// alert('ss')
     var base_url =new Base()
-    console.log('test')
+    // console.log('test')
 
 
     var ORDERS_HISTORY_URL="http://" + base_url.baseUrl + "clintordershoistry/"+this.props.user_id+"?lang="+base_url.lang  
@@ -39,7 +46,8 @@ async  componentWillMount(){
     axios
       .get(ORDERS_HISTORY_URL)
       .then((res) =>{
- console.log(res)
+       this.setState({ ordersHistoryList:res.data})
+ console.log(res.data)
       })
       .catch(function(error) {
       
@@ -99,29 +107,41 @@ async  componentWillMount(){
   
   ///////////////////////////////////////////
   renderOrderItem = ({ item }) => {
+    var base =new Base
     return (
       <View style={[styles.rowStyle]}>
         <View style={[styles.imageContainer, styles.viewContainer]} >
+     
+     {/*  */}
           <Text style={[styles.titleStyle, appGreenColor]}>
-            {item.cost}
+            {item.sub_services!=null?item.sub_services.services_zone[0].price:null}
           </Text>
+         {/*  */}
           <View style={[styles.AvatarView]}>
-            <Image source={item.image} style={[styles.userIconStyle]}/>
+            
+            <Image source={item.provider!= null?base.icon_url+item.provider.users.profile_pic:null} style={[styles.userIconStyle]}/>
+          {item.provider!= null?console.log(base.icon_url+item.provider.users.profile_pic):null}
           </View>
         </View>
         <View style={[styles.nameContainer, styles.viewContainer]}>
-          <Text style={[styles.titleStyle, appGreenColor]}>{item.name}</Text>
-          <Text style={[styles.labelStyle, appGrayColor]}>{item.date}</Text>
+          <Text style={[styles.titleStyle, appGreenColor]}>{item.provider!= null?item.provider.users.user_name:''}</Text>
+          <Text style={[styles.labelStyle, appGrayColor]}>{item.created_at}</Text>
         </View>
         <View style={[styles.statusContainer, styles.viewContainer]}>
-          <Text style={[styles.titleStyle, appGreenColor]}>{item.status}</Text>
-          <Text style={[styles.labelStyle, appGrayColor]}>{item.statusLabel}</Text>
+          <Text style={[styles.titleStyle, appGreenColor]}>{item.order_state}</Text>
+        
+          {/*  */}
+          {/* <Text style={[styles.labelStyle, appGrayColor]}>{item.statusLabel}</Text> */}
+          {/*  */}
+
         </View>
         <View style={[styles.serviceContainer, styles.viewContainer]}>
-          <Text style={[styles.titleStyle, appGreenColor]}>{item.serviceNmae}</Text>
-          <Text style={[styles.labelStyle, appGrayColor]}>{item.serviceType}</Text>
-          <Text style={[styles.titleStyle, appGreenColor]}>{item.cityName}</Text>
-          <Text style={[styles.labelStyle, appGrayColor]}>{item.address}</Text>          
+          <Text style={[styles.titleStyle, appGreenColor]}>{item.service!=null?item.service.services_name_ar:null}</Text>
+          <Text style={[styles.labelStyle, appGrayColor]}>{item.sub_services!=null?item.sub_services.sub_services_name_ar:null}</Text>
+          {/*  */}
+          {/* <Text style={[styles.titleStyle, appGreenColor]}>{item.sub_services.services_zone[0].zones.zone_ar}</Text> */}
+          {/*  */}
+          <Text style={[styles.labelStyle, appGrayColor]}>{item.sub_services!=null?item.sub_services.services_zone[0].zones.zone_ar:null}</Text>          
         </View>
       </View>
     );

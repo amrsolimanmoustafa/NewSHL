@@ -13,7 +13,7 @@ import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 import com.geektime.rnonesignalandroid.ReactNativeOneSignalPackage;
-
+import com.dylanvann.fastimage.FastImageViewPackage;
 import java.util.Arrays;
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class MainApplication extends Application implements ReactApplication {
             // new ReactNativeLocalizationPackage(),
             new LinearGradientPackage(),
             new ReactNativeOneSignalPackage(),
-
+            new FastImageViewPackage(),
             new MapsPackage()
       );
     }
