@@ -19,13 +19,18 @@ class LinearGradientButton extends Component {
   // }
 
   render () {
-    return <View style={styles.container}>
-        <TouchableOpacity onPress={this.props.press} style={styles.opacity}>
-          <LinearGradient start={{ x: 0.0, y: 0.25 }} end={{ x: 0.9, y: 1.0 }} locations={[0, 0.5, 0.9]} colors={["rgb(57,180,76)", "#299386", "rgb(29,122,179)"]} style={styles.linearGradient}>
-            <Text style={styles.buttonText}>{this.props.text}</Text>
+    return (
+        <TouchableOpacity onPress={this.props.press} style={this.props.style}>
+          <LinearGradient
+            colors={["rgb(57,180,76)", "#299386", "rgb(29,122,179)"]}
+            style={this.props.style}
+          >
+            <Text style={this.props.textStyle}>
+              {this.props.text}
+            </Text>
           </LinearGradient>
         </TouchableOpacity>
-      </View>;
+    )
   }
 }
 

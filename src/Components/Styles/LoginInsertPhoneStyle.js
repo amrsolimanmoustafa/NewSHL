@@ -88,7 +88,7 @@ flexDirection:"column"
   },
   opacity: {
     zIndex:2,
-bottom:0,
+    bottom:0,
   // position:"absolute",
     marginTop:"10%",
     borderRadius: 80,

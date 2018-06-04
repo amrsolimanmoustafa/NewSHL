@@ -78,10 +78,10 @@ class LoginInsertPhone extends Component<> {
     } else {
       return(
         <View style={styles.opacity}>
-        <Button            
-         title="التسجيل"
-      onPress={this.doLogIn.bind(this)}         
-/>
+          <Button            
+            title={strings.signup}
+            onPress={this.doLogIn.bind(this)}         
+          />
           {/* <LinearGradientButton
             press={this.doLogIn.bind(this)}
             navigateScreen={this.state.VerifyPhoneScreen}
