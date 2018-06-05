@@ -6,11 +6,12 @@ import {
   ImageBackground,
   TextInput,AsyncStorage,
   TouchableOpacity,
-  Image
+  Image,
+  Dimensions,
+  StyleSheet
 } from 'react-native'
 import { connect } from 'react-redux'
 import {Images} from '../Themes';
-import styles from './Styles/HomeScreenStyle'
 import Header from "../Components/Header"
 import Map from '../Components/Map';
 import { withNavigation } from "react-navigation";
@@ -25,26 +26,8 @@ import {rateProvider,getServices} from './../actions/makeOrderAction'
 import Base from '../Base';
 import axios from 'axios';
 import strings from '../strings';
+const {width,height} = Dimensions.get('window')
 let self;
-
-const cancelResonesList = [
-  {
-      // "cancel_order_reasons_id": 1,
-      // "cancel_order_reasons_ar": "لا أحد فى الموقع",
-      // "cancel_order_reasons_en": "No one in the site",
-      // "cancel_order_reasons_ur": "اس سائٹ میں کوئی بھی نہیں",
-      // "created_at": null,
-      // "updated_at": null
-  },
-  {
-      // "cancel_order_reasons_id": 2,
-      // "cancel_order_reasons_ar": "العميل يرفض الدفع",
-      // "cancel_order_reasons_en": "Customer refuses to pay",
-      // "cancel_order_reasons_ur": "کسٹمر ادا کرنے سے انکار",
-      // "created_at": null,
-      // "updated_at": null
-  },
-]
 
 class HomeScreen extends Component  {
   constructor(props) {
@@ -256,17 +239,32 @@ class HomeScreen extends Component  {
   }
 }
 
+const styles = StyleSheet.create({
+  container:{
+    flex:1,
+    backgroundColor:"white"
+  },
+  loginBackground:{
+    width: width,
+    height: height,
+    paddingTop: 20,
+  },
+  Map:{
+    position:"absolute",
+    height:"87.5%",
+    width:"95%",
+    marginTop:"18%",
+    marginLeft:"2.5%",
+    marginRight:"2.5%",
+    marginBottom:"2.5%"
+  }
+})
+
 const mapStateToProps = state => {
   return {
     common: state.common,
     user_id: state.auth.user_id,
     makeOrder: state.makeOrder,
-  }
-}
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-
   }
 }
 

@@ -10,24 +10,24 @@ import {
 const {width,height} = Dimensions.get('window')
 import { StackNavigator, DrawerNavigator, DrawerItems } from 'react-navigation'
 
-import HomeScreen from '../containers/HomeScreen'
-import VerifyPhoneScreen from '../containers/VerifyPhoneScreen'
-import LoginScreen from '../containers/LoginScreen'
 import SplashScreen from '../containers/SplashScreen'
-//import LaunchScreen from '../containers/LaunchScreen'
+import LoginScreen from '../containers/LoginScreen'
+import VerifyPhoneScreen from '../containers/VerifyPhoneScreen'
+import HomeScreen from '../containers/HomeScreen'
 import FavoritePlaces from '../containers/favoritePlaces'
 import AddFavoritePlace from '../containers/addFavoritePlace'
-// import opinionRow from '../containers/opinionRow'
 import ShareYourOpinion from '../containers/ShareYourOpinion'
 import ServicesCost from '../containers/ServicesCost'
 import JoinAsServiceProvider from '../containers/JoinAsServiceProvider'
-
 import Rules from '../containers/Rules'
 import ContactWithAdministration from '../containers/ContactWithAdministration'
 import Offers from '../containers/Offers'
 import AboutApp from '../containers/AboutApp'
 import OrdersHistory from '../containers/OrdersHistory'
 import Notifications from '../containers/Notifications'
+
+import LeftNavigationDrawer from '../Components/leftNavigationDrawer'
+import RightNavigationDrawer from '../Components/rightNavigationDrawer'
 
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import EvilIcons from 'react-native-vector-icons/EvilIcons'
@@ -40,12 +40,6 @@ import styles from '../containers/Styles/NavigationStyles'
 import strings from '../strings'
 
 const PrimaryNav = StackNavigator({
-  /*LaunchScreen: {
-    screen: LaunchScreen,
-    navigationOptions: {
-      header: null
-    }
-  },*/
   SplashScreen: {
     screen: SplashScreen,
     navigationOptions: {
@@ -140,7 +134,7 @@ const PrimaryNav = StackNavigator({
   // Default config for all screens
   //headerMode: 'none',
   headerBackTitle: null,
-  initialRouteName: 'VerifyPhoneScreen',//'SplashScreen',
+  initialRouteName: 'SplashScreen',
   navigationOptions: {
     headerStyle: {
       backgroundColor: 'transparent'
@@ -165,78 +159,55 @@ const MainDrawer = DrawerNavigator(
     Home: {
       screen: PrimaryNav,
       navigationOptions: {
-        drawerLabel: strings.home,
-        drawerIcon: ({ tintColor }) => (
-          <Ionicons name='ios-home-outline' size={28} tintColor={tintColor} color="#36B051" />
-        ),
+        title: strings.home,
       }
     },
     Contact: {
-      screen: ({ navigation }) => <ContactWithAdministration navigation={navigation} />,
+      screen: ContactWithAdministration,
       navigationOptions: {
-        drawerLabel: strings.communicateWithManagement,
-        drawerIcon: ({ tintColor }) => (
-          <Ionicons name='ios-microphone-outline' size={28} tintColor={tintColor} color="#36B051" />
-        ),
+        title: strings.communicateWithManagement,
       }
     },
     Terms: {
-      screen: ({ navigation }) => <Rules navigation={navigation} />,
+      screen: Rules,
       navigationOptions: {
-        drawerLabel: strings.termsAndConditions,
-        drawerIcon: ({ tintColor }) => (
-          <Ionicons name='ios-paper-outline' size={28} tintColor={tintColor} color="#36B051" />
-        ),
+        title: strings.termsAndConditions,
       }
     },
     About: {
-      screen: ({ navigation }) => <AboutApp navigation={navigation} />,
+      screen: AboutApp,
       navigationOptions: {
-        drawerLabel: strings.about,
-        drawerIcon: ({ tintColor }) => (
-          <EvilIcons name='question' size={28} tintColor={tintColor} color="#36B051" />
-        ),
+        title: strings.about,
       }
     },
     Prices: {
-      screen: ({ navigation }) => <ServicesCost navigation={navigation} />,
+      screen: ServicesCost,
       navigationOptions: {
-        drawerLabel: strings.pricesOfServices,
-        drawerIcon: ({ tintColor }) => (
-          <Ionicons name='md-pricetags' size={28} tintColor={tintColor} color="#36B051" />
-        ),
+        title: strings.pricesOfServices,
       }
     },
     JoinUs: {
-      screen: ({ navigation }) => <JoinAsServiceProvider navigation={navigation} />,
+      screen: JoinAsServiceProvider,
       navigationOptions: {
-        drawerLabel: strings.joinAsAServiceProvider,
-        drawerIcon: ({ tintColor }) => (
-          <EvilIcons name='user' size={28} tintColor={tintColor} color="#36B051" />
-        ),
+        title: strings.joinAsAServiceProvider,
       }
     },
     Share: {
-      screen: ({ navigation }) => <ShareYourOpinion navigation={navigation} />,
+      screen: ShareYourOpinion,
       navigationOptions: {
-        drawerLabel: strings.shareYourOpinion,
-        drawerIcon: ({ tintColor }) => (
-          <EvilIcons name='share-google' size={28} tintColor={tintColor} color="#36B051" />
-        ),
+        title: strings.shareYourOpinion,
       }
     },
     Adds: {
-      screen: ({ navigation }) => <Offers navigation={navigation} />,
+      screen: Offers,
       navigationOptions: {
-        drawerLabel: strings.offers,
-        drawerIcon: ({ tintColor }) => (
-          <MaterialCommunityIcons name='sign-caution' size={28} tintColor={tintColor} color="#36B051" />
-        ),
+        title: strings.offers,
       }
     },
   },
   {
     initialRouteName: 'Home',
+    contentComponent: LeftNavigationDrawer,
     drawerPosition: 'left',
     drawerOpenRoute: 'LeftSideMenu',
     drawerCloseRoute: 'LeftSideMenuClose',
@@ -307,7 +278,7 @@ const RootRoute = DrawerNavigator(
   {
     navigationOptions: {
     },
-    // contentComponent: RightDrawerContent,
+    contentComponent: RightNavigationDrawer,
     drawerPosition: 'right',
     drawerOpenRoute: 'RightSideMenu',
     drawerCloseRoute: 'RightSideMenuClose',
