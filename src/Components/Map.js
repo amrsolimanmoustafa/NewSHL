@@ -39,7 +39,6 @@ import { Calendar } from 'react-native-calendars'
 import style from './Styles/MainButtonsStyle'
 import strings from '../strings'
 import { loginUser } from "../../src/actions/authAction"
-import FastImage from 'react-native-fast-image'
 let self;
 class Map extends Component {
   origin = { latitude: 31.2064717, longitude: 29.9279375 };
@@ -464,11 +463,10 @@ class Map extends Component {
                           alignItems: "center"
                         }}
                       >
-                        <FastImage
-                          resizeMode="contain"
+                        <Image
                           source={{
-                            uri: base.icon_url + mainService.icone,
-                            priority: FastImage.priority.normal,
+                            uri: base.icon_url + mainService.icone,  
+                            resizeMode:"contain"
                           }}
                           style={{
                             width: 70,
