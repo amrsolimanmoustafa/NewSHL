@@ -18,7 +18,6 @@ export default class ServicesCost extends Component {
   render() {
     return (
       <View style={[masterStyle.container]}>
-        <Container title={strings.pricesOfServices}>
           <Image source={{}} />
           {/* <Image source={Images.logoIcon}  style={masterStyle.logoStyle} />
           <Text style={[masterStyle.appName]}>SHL</Text> */}
@@ -27,7 +26,6 @@ export default class ServicesCost extends Component {
               { this.state.aboutAppText }
             </Text>
           </ScrollView>
-        </Container>
       </View>
     )
   }

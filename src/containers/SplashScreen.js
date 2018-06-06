@@ -55,7 +55,7 @@ class SplashScreen extends Component {
         });
         navigation.dispatch(resetAction);
       }
-    },5000)
+    },3000)
   }
 
   render() {

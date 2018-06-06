@@ -34,7 +34,6 @@ export default class JoinAsServiceProviderNow extends Component {
     const { acceptRules } = this.state;
     return (
       <View style={[masterStyle.container]}>
-        <Container title='انضم كموزود الخدمة' style={{ paddingHorizontal: 20 }} >
           <ScrollView>
             <View style={[styles.rowStyle]}>
               <View style={[dotStyle]} />
@@ -79,7 +78,6 @@ export default class JoinAsServiceProviderNow extends Component {
 console.log('clicked')          }
           title='التأكيد'
           />:null}
-        </Container>
       </View>
     )
   }

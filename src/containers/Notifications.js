@@ -86,13 +86,11 @@ class Notifications extends Component {
   render() {   
     return (
       <View style={[masterStyle.container]}>
-        <Container style={{ paddingHorizontal: 0 }} title={strings.notifications}>
           <FlatList
             data={this.state.notificationsList}
             keyExtractor={item => `${item.id}`}
             renderItem={this.renderNotificationItem}
           />
-        </Container>
       </View>
     )
   }

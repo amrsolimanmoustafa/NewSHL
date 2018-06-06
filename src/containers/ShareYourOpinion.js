@@ -40,7 +40,6 @@ export default class ShareYourOpinion extends Component {
   render() {
     return (
       <View style={[masterStyle.container]}>
-        <Container title={strings.shareYourOpinion}>
           <FlatList
             data={this.state.questionsData}
             keyExtractor={item => `${item.id}`}
@@ -57,7 +56,6 @@ export default class ShareYourOpinion extends Component {
               </Text>
             </ImageBackground>
           </TouchableOpacity>
-        </Container>
       </View>
     )
   }

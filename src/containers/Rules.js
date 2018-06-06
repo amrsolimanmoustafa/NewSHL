@@ -28,7 +28,6 @@ class Rules extends Component {
   render() {
     return (
       <View style={[masterStyle.container]}>
-        <Container title={strings.termsAndConditions}>
           <Image source={Images.logoIcon} style={masterStyle.logoStyle}/>
           <Text style={[masterStyle.appName]}>
             {strings.shl}
@@ -38,7 +37,6 @@ class Rules extends Component {
               {this.state.rulesText}
             </Text>
           </ScrollView>
-        </Container>
       </View>
     )
   }

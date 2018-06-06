@@ -150,13 +150,11 @@ this.getHistoryList()
   render() {   
     return (
       <View style={[masterStyle.container]}>
-        <Container style={{ paddingHorizontal: 0,}} title={strings.ordersHistory}>
           <FlatList
             data={this.state.ordersHistoryList}
             keyExtractor={item => `${item.id}`}
             renderItem={this.renderOrderItem}
           />
-        </Container>
       </View>
     )
   }

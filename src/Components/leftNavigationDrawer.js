@@ -28,6 +28,9 @@ class SideMenu extends Component {
     }
 
     render() {
+        const {
+            navigation
+        } = this.props
         return (
             <ImageBackground
                 source={require('../assets/images/NavigationDrawer_BackgroundImage.png')}
@@ -46,8 +49,7 @@ class SideMenu extends Component {
                     <TouchableOpacity
                         style={{marginTop: 24,flexDirection: 'row',alignItems: 'center',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => {
-                            navigation.dispatch(DrawerActions.closeDrawer());
-                            navigation.navigate('Main')
+                            //navigation.navigate('EditProfile',{title: strings.editPersonalData})
                         }}
                     >
                         <Image
@@ -61,8 +63,7 @@ class SideMenu extends Component {
                     <TouchableOpacity
                         style={{marginTop: 5,flexDirection: 'row',alignItems: 'center',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => {
-                            navigation.dispatch(DrawerActions.closeDrawer());
-                            navigation.navigate('Main')
+                            navigation.navigate('OrdersHistory',{title: strings.ordersHistory})
                         }}
                     >
                         <Image
@@ -76,8 +77,7 @@ class SideMenu extends Component {
                     <TouchableOpacity
                         style={{marginTop: 5,flexDirection: 'row',alignItems: 'center',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => {
-                            navigation.dispatch(DrawerActions.closeDrawer());
-                            navigation.navigate('Main')
+                            navigation.navigate('FavoritePlaces',{title: strings.favoritePlaces})
                         }}
                     >
                         <Image
@@ -91,8 +91,7 @@ class SideMenu extends Component {
                     <TouchableOpacity
                         style={{marginTop: 5,flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => {
-                            navigation.dispatch(DrawerActions.closeDrawer());
-                            navigation.navigate('Main')
+                            navigation.navigate('Notifications',{title: strings.notifications})
                         }}
                     >
                         <View style={{flexDirection: 'row',alignItems: 'center'}}>
@@ -113,8 +112,7 @@ class SideMenu extends Component {
                     <TouchableOpacity
                         style={{marginTop: 5,flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => {
-                            navigation.dispatch(DrawerActions.closeDrawer());
-                            navigation.navigate('Main')
+                            //navigation.navigate('Wallet',{title: strings.wallet})
                         }}
                     >
                         <View style={{flexDirection: 'row',alignItems: 'center'}}>
@@ -133,8 +131,7 @@ class SideMenu extends Component {
                     <TouchableOpacity
                         style={{marginTop: 5,flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => {
-                            navigation.dispatch(DrawerActions.closeDrawer());
-                            navigation.navigate('Main')
+                            //navigation.navigate('Points',{title: strings.points})
                         }}
                     >
                         <View style={{flexDirection: 'row',alignItems: 'center'}}>
@@ -148,6 +145,18 @@ class SideMenu extends Component {
                         </View>
                         <Text style={{marginTop: 8,fontFamily: 'NeoSansArabic',fontSize: 14,color: '#28918B',textAlign: 'right'}}>
                             20
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={{marginTop: 5,flexDirection: 'row',alignItems: 'center',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
+                        onPress={() => this.logout()}
+                    >
+                        <Image
+                            source={require('../assets/icons/logout.png')}
+                            style={{width: 24,height: 24}}
+                        />
+                        <Text style={{marginLeft: 16,fontFamily: 'NeoSansArabic',fontSize: 14,color: '#1B76BB',textAlign: 'left'}}>
+                            {strings.logout}
                         </Text>
                     </TouchableOpacity>
                     <View style={{marginTop: 26,paddingHorizontal: 16,flexDirection: 'row',justifyContent: 'center',alignItems: 'center'}}>
@@ -192,25 +201,22 @@ class SideMenu extends Component {
             </ImageBackground>
         );
     }
-    
-    onLanguageChange(){
-        if(I18nManager.isRTL){
-            I18nManager.forceRTL(false);
-            I18nManager.allowRTL(false);
-            I18nManager.isRTL = false;
-            strings.setLanguage('en');
-        }else{
-            I18nManager.forceRTL(true);
-            I18nManager.allowRTL(true);
-            I18nManager.isRTL = true;
-            strings.setLanguage('ar');
+
+    async changeLanguage(language){
+        await AsyncStorage.setItem('uiLanguage',language)
+        if(language == 'en'){
+          I18nManager.forceRTL(false);
+          I18nManager.isRTL = false;
+          I18nManager.allowRTL(false)
+        }else {
+          I18nManager.forceRTL(true);
+          I18nManager.isRTL = true;
         }
         RNRestart.Restart();
-    }
-
+      }
+    
     async logout(){
-        const { navigation } = this.props;
-        await AsyncStorage.multiRemove(['token','donorId','fullname','tempDonorId'])
+        AsyncStorage.clear()
         RNRestart.Restart();
     }
 }

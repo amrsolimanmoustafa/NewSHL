@@ -64,10 +64,6 @@ export default class ContactWithAdministration extends Component {
     } = this.state;
     return (
       <View style={[masterStyle.container]}>
-        <Container
-          style={{ paddingHorizontal: 15,}}
-          title={strings.communicateWithManagement}
-        >
           <FlatList
             data={this.state.contacts}
             keyExtractor={item => `${item.id}`}
@@ -95,7 +91,6 @@ export default class ContactWithAdministration extends Component {
               </TouchableOpacity>
             }
           </View>
-        </Container>
       </View>
     )
   }

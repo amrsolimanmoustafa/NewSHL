@@ -66,69 +66,87 @@ const PrimaryNav = StackNavigator({
   },
   FavoritePlaces: {
     screen: FavoritePlaces,
-    navigationOptions: {
-      title: strings.favoritePlaces,
-    }
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    })
   },
   AddFavoritePlace: {
     screen: AddFavoritePlace,
-    navigationOptions: {
-      title: strings.add,
-    }
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    })
   },
-  Rules: {
+  EditProfile: {
+    screen: HomeScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    })
+  },
+  Terms: {
     screen: Rules,
-    navigationOptions: {
-      header: null
-    }
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    })
   },
   Notifications: {
     screen: Notifications,
-    navigationOptions: {
-      header: null
-    }
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    })
+  },
+  Wallet: {
+    screen: HomeScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    })
+  },
+  Points: {
+    screen: HomeScreen,
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    })
   },
   AboutApp: {
     screen: AboutApp,
-    navigationOptions: {
-      header: null
-    }
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    })
   },
   OrdersHistory: {
     screen: OrdersHistory,
-    navigationOptions: {
-      header: null
-    }
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    })
   },
   Offers: {
     screen: Offers,
-    navigationOptions: {
-      header: null
-    }
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    })
   },
   ContactWithAdministration: {
     screen: ContactWithAdministration,
-    navigationOptions: {
-      header: null
-    }
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    })
   },
   ServicesCost: {
     screen: ServicesCost,
-    navigationOptions: {
-      header: null
-    }
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    })
   },
   ShareYourOpinion: {
     screen: ShareYourOpinion,
-    navigationOptions: {
-      header: null
-    }
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    })
   },
   JoinAsServiceProvider: {
     screen: JoinAsServiceProvider,
-    navigationOptions: {
-      header: null
-    }
+    navigationOptions: ({ navigation }) => ({
+      title: navigation.state.params.title,
+    })
   },
 }, {
   // Default config for all screens
@@ -162,48 +180,6 @@ const MainDrawer = DrawerNavigator(
         title: strings.home,
       }
     },
-    Contact: {
-      screen: ContactWithAdministration,
-      navigationOptions: {
-        title: strings.communicateWithManagement,
-      }
-    },
-    Terms: {
-      screen: Rules,
-      navigationOptions: {
-        title: strings.termsAndConditions,
-      }
-    },
-    About: {
-      screen: AboutApp,
-      navigationOptions: {
-        title: strings.about,
-      }
-    },
-    Prices: {
-      screen: ServicesCost,
-      navigationOptions: {
-        title: strings.pricesOfServices,
-      }
-    },
-    JoinUs: {
-      screen: JoinAsServiceProvider,
-      navigationOptions: {
-        title: strings.joinAsAServiceProvider,
-      }
-    },
-    Share: {
-      screen: ShareYourOpinion,
-      navigationOptions: {
-        title: strings.shareYourOpinion,
-      }
-    },
-    Adds: {
-      screen: Offers,
-      navigationOptions: {
-        title: strings.offers,
-      }
-    },
   },
   {
     initialRouteName: 'Home',
@@ -220,63 +196,24 @@ const RootRoute = DrawerNavigator(
     MainDrawer: {
       screen: MainDrawer,
     },
-    EditProfile: {
-      screen: ({ navigation }) => <HomeScreen navigation={navigation} />,
-      navigationOptions: {
-        drawerLabel: strings.editPersonalData,
-        drawerIcon: ({ tintColor }) => (
-          <MaterialCommunityIcons name='account-edit' size={28} tintColor={tintColor} color="#36B051" />
-        ),
-      }
-    },
-    OrdersHistory: {
-      screen: ({ navigation }) => <OrdersHistory navigation={navigation} />,
-      navigationOptions: {
-        drawerLabel: strings.ordersHistory,
-        drawerIcon: ({ tintColor }) => (
-          <FontAwesome name='history' size={28} tintColor={tintColor} color="#36B051" />
-        ),
-      }
-    },
-    FavPlaces: {
-      screen: ({ navigation }) => <FavoritePlaces navigation={navigation} />,
-      navigationOptions: {
-        drawerLabel: strings.favoritePlaces,
-        drawerIcon: ({ tintColor }) => (
-          <EvilIcons name='bell' size={28} tintColor={tintColor} color="#36B051" />
-        ),
-      }
-    },
-    Notifications: {
-      screen: ({ navigation }) => <Notifications navigation={navigation} />,
-      navigationOptions: {
-        drawerLabel: strings.notifications,
-        drawerIcon: ({ tintColor }) => (
-          <FontAwesome name='heart' size={28} tintColor={tintColor} color="#36B051" />
-        ),
-      }
-    },
-    Wallet: {
-      screen: ({ navigation }) => <HomeScreen navigation={navigation} />,
-      navigationOptions: {
-        drawerLabel: strings.wallet,
-        drawerIcon: ({ tintColor }) => (
-          <Entypo name='wallet' size={28} tintColor={tintColor} color="#36B051" />
-        ),
-      }
-    },
-    Points: {
-      screen: ({ navigation }) => <HomeScreen navigation={navigation} />,
-      navigationOptions: {
-        drawerLabel: strings.points,
-        drawerIcon: ({ tintColor }) => (
-          <Octicons name='gift' size={28} tintColor={tintColor} color="#36B051" />
-        ),
-      }
-    },
   },
   {
     navigationOptions: {
+      headerStyle: {
+        backgroundColor: 'transparent'
+      },
+      headerTitleStyle:{
+        fontFamily: 'NeoSansArabic',
+        fontSize: 18,
+        color: '#ffffff'
+      },
+      headerTintColor: '#ffffff',
+      headerBackground: (
+        <Image
+          source={require('../assets/images/rsz_123123.png')}
+          style={{width: width,height: 64,resizeMode: 'cover'}}
+        />
+      )  
     },
     contentComponent: RightNavigationDrawer,
     drawerPosition: 'right',

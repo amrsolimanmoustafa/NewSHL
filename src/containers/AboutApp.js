@@ -50,7 +50,6 @@ class AboutApp extends Component {
   render() {
     return (
       <View style={[masterStyle.container]}>
-        <Container title={strings.about}>
           <Image source={Images.logoIcon} style={masterStyle.logoStyle} />
           <Text style={[masterStyle.appName]}>
             {strings.shl}
@@ -60,7 +59,6 @@ class AboutApp extends Component {
               {this.state.aboutAppText}
             </Text>
           </ScrollView>
-        </Container>
       </View>
     )
   }

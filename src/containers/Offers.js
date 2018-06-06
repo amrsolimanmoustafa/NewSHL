@@ -55,7 +55,6 @@ export default class Offers extends Component {
   render(){   
     return(
       <View style={[masterStyle.container]}>
-        <Container style={{ paddingHorizontal: 15,}} title={strings.offers}>
           <View style={[styles.silderContainer]}>
             <FlatList
               data={this.state.sliderData}
@@ -73,7 +72,6 @@ export default class Offers extends Component {
             renderItem={this.renderOfferItem}
             style={styles.verticalList}
           />
-        </Container>
       </View>
     )
   }

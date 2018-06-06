@@ -28,6 +28,9 @@ class SideMenu extends Component {
     }
 
     render() {
+        const {
+            navigation
+        } = this.props
         return (
             <ImageBackground
                 source={require('../assets/images/NavigationDrawer_BackgroundImage.png')}
@@ -38,8 +41,7 @@ class SideMenu extends Component {
                     <TouchableOpacity
                         style={{marginTop: 24,flexDirection: 'row',alignItems: 'center',justifyContent: 'flex-end',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => {
-                            navigation.dispatch(DrawerActions.closeDrawer());
-                            navigation.navigate('Main')
+                            navigation.navigate('ContactWithAdministration',{title: strings.communicateWithManagement})
                         }}
                     >
                         <Text style={{marginTop: 5,fontFamily: 'NeoSansArabic',fontSize: 14,color: '#1B76BB',textAlign: 'left'}}>
@@ -53,8 +55,7 @@ class SideMenu extends Component {
                     <TouchableOpacity
                         style={{marginTop: 5,flexDirection: 'row',alignItems: 'center',justifyContent: 'flex-end',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => {
-                            navigation.dispatch(DrawerActions.closeDrawer());
-                            navigation.navigate('Main')
+                            navigation.navigate('Terms',{title: strings.termsAndConditions})
                         }}
                     >
                         <Text style={{fontFamily: 'NeoSansArabic',fontSize: 14,color: '#1B76BB',textAlign: 'left'}}>
@@ -68,8 +69,7 @@ class SideMenu extends Component {
                     <TouchableOpacity
                         style={{marginTop: 5,flexDirection: 'row',alignItems: 'center',justifyContent: 'flex-end',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => {
-                            navigation.dispatch(DrawerActions.closeDrawer());
-                            navigation.navigate('Main')
+                            navigation.navigate('AboutApp',{title: strings.about})
                         }}
                     >
                         <Text style={{fontFamily: 'NeoSansArabic',fontSize: 14,color: '#1B76BB',textAlign: 'left'}}>
@@ -83,8 +83,7 @@ class SideMenu extends Component {
                     <TouchableOpacity
                         style={{marginTop: 5,flexDirection: 'row',alignItems: 'center',justifyContent: 'flex-end',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => {
-                            navigation.dispatch(DrawerActions.closeDrawer());
-                            navigation.navigate('Main')
+                            navigation.navigate('ServicesCost',{title: strings.pricesOfServices})
                         }}
                     >
                         <Text style={{fontFamily: 'NeoSansArabic',fontSize: 14,color: '#1B76BB',textAlign: 'left'}}>
@@ -98,8 +97,7 @@ class SideMenu extends Component {
                     <TouchableOpacity
                         style={{marginTop: 5,flexDirection: 'row',alignItems: 'center',justifyContent: 'flex-end',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => {
-                            navigation.dispatch(DrawerActions.closeDrawer());
-                            navigation.navigate('Main')
+                            navigation.navigate('JoinAsServiceProvider',{title: strings.joinAsAServiceProvider})
                         }}
                     >
                         <Text style={{fontFamily: 'NeoSansArabic',fontSize: 14,color: '#1B76BB',textAlign: 'left'}}>
@@ -113,8 +111,7 @@ class SideMenu extends Component {
                     <TouchableOpacity
                         style={{marginTop: 5,flexDirection: 'row',alignItems: 'center',justifyContent: 'flex-end',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => {
-                            navigation.dispatch(DrawerActions.closeDrawer());
-                            navigation.navigate('Main')
+                            navigation.navigate('ShareYourOpinion',{title: strings.shareYourOpinion})
                         }}
                     >
                         <Text style={{fontFamily: 'NeoSansArabic',fontSize: 14,color: '#1B76BB',textAlign: 'left'}}>
@@ -128,8 +125,7 @@ class SideMenu extends Component {
                     <TouchableOpacity
                         style={{marginTop: 5,flexDirection: 'row',alignItems: 'center',justifyContent: 'flex-end',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => {
-                            navigation.dispatch(DrawerActions.closeDrawer());
-                            navigation.navigate('Main')
+                            navigation.navigate('Offers',{title: strings.offers})
                         }}
                     >
                         <Text style={{fontFamily: 'NeoSansArabic',fontSize: 14,color: '#1B76BB',textAlign: 'left'}}>
