@@ -4,7 +4,7 @@ import {
   Text,
   Image,
   ScrollView,
-  TouchableHighlight,TouchableOpacity
+  TouchableOpacity
 } from 'react-native';
 
 // localFiles //
@@ -33,51 +33,61 @@ export default class JoinAsServiceProviderNow extends Component {
   render() {
     const { acceptRules } = this.state;
     return (
-      <View style={[masterStyle.container]}>
+      <View style={{flex: 1,padding: 16}}>
           <ScrollView>
             <View style={[styles.rowStyle]}>
               <View style={[dotStyle]} />
-              <Text style={[appGrayColor, styles.textStyle]}>قم بتسجيل بياناتك الخاصة</Text>
+              <Text style={[appGrayColor, styles.textStyle]}>
+              قم بتسجيل بياناتك الخاصة</Text>
             </View>
             <View style={[styles.rowStyle]}>
               <View style={[dotStyle]} />
-              <Text style={[appGrayColor, styles.textStyle]}>سيتم مراجعة طلبك من الادارة</Text>
+              <Text style={[appGrayColor, styles.textStyle]}>
+              سيتم مراجعة طلبك من الادارة</Text>
             </View>
               <View style={[styles.rowStyle]}>
             <View style={[dotStyle]} />
-              <Text style={[appGrayColor, styles.textStyle]}>سيتم اعلامك بموافقة او رفض طلبك</Text>
+              <Text style={[appGrayColor, styles.textStyle]}>
+              سيتم اعلامك بموافقة او رفض طلبك</Text>
             </View>
             <View style={[styles.rowStyle]}>
               <View style={[dotStyle]} />
-              <Text style={[appGrayColor, styles.textStyle]}>الموافقة على </Text>
+              <Text style={[appGrayColor, styles.textStyle]}>
+              الموافقة على </Text>
               
-              <TouchableHighlight 
-              onPress={()=>{
-                this.props.navigation.navigate('Rules')
+              <TouchableOpacity 
+                onPress={()=>{
+                  this.props.navigation.navigate('Rules')
 
-              }} >
+                }}
+              >
                 <Text style={[styles.rulesText]}>الشروط والأحكام</Text>
-              </TouchableHighlight>
+              </TouchableOpacity>
 
               <TouchableOpacity 
-              style={[styles.radioView, { borderWidth: acceptRules ? 0 : 1 } ]} 
-              onPress={this.rulesOnPress}
+                style={[styles.radioView, { borderWidth: acceptRules ? 0 : 1 } ]} 
+                onPress={this.rulesOnPress}
               >
-                { acceptRules &&
-                  <Image 
-                  source={Images.checkIcon} 
-                  style={[styles.checkIconStyle]} 
+                {acceptRules &&
+                  <Image
+                    source={Images.checkIcon} 
+                    style={[styles.checkIconStyle]} 
                   />
                 }
               </TouchableOpacity>
             </View>
           </ScrollView>
           {/* /// btn ///  */}
-          {this.state.acceptRules?<Button 
-          onPress={() => 
-console.log('clicked')          }
-          title='التأكيد'
-          />:null}
+          {this.state.acceptRules?
+            <Button
+              onPress={() => 
+                console.log('clicked')
+              }
+              title='التأكيد'
+            />
+            :
+            null
+          }
       </View>
     )
   }
@@ -85,12 +95,13 @@ console.log('clicked')          }
 
 const styles = {
   rowStyle: {
-    flexDirection: 'row-reverse',
+    flexDirection: 'row',
     marginVertical: 12,
     alignItems: 'center',
   },
   textStyle: {
-    fontSize: 16
+    fontSize: 16,
+    textAlign: 'left'
   },
   rulesText: {
     color: 'black',

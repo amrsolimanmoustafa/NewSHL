@@ -1,9 +1,10 @@
 import {FETCH_POSTS,LOGIN,ACTIVATION_STATE,REFRESH_PLAYER_ID} from '../actions/types'
 const initialState={
     user:[],
-    activated_user:[],
-    user_phone:'',
-    user_id:''
+    activated_user: [],
+    user_phone: '',
+    user_id: '',
+    token_id: ''
 }
 export default function(state=initialState,action){
     switch(action.type){

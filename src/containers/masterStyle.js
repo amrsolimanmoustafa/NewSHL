@@ -33,9 +33,9 @@ export default styles = StyleSheet.create({
   },
   descTextStyle: {
     fontSize: 13,
-    textAlign: 'right',
     color: '#bcbcbc',
-    lineHeight: 18
+    lineHeight: 18,
+    textAlign: 'left'
   },
   logoStyle: {
     width: 50,
@@ -48,5 +48,6 @@ export default styles = StyleSheet.create({
     color: '#8b8c8e',
     alignSelf: 'center',
     fontWeight: 'bold',
+    textAlign: 'center'
   }
 });

@@ -63,7 +63,7 @@ export default class ContactWithAdministration extends Component {
       skype
     } = this.state;
     return (
-      <View style={[masterStyle.container]}>
+      <View style={{flex: 1,padding: 16}}>
           <FlatList
             data={this.state.contacts}
             keyExtractor={item => `${item.id}`}
@@ -103,11 +103,10 @@ const styles = {
     marginTop: 5,
   },
   contactRowStyle: {
-    alignItems: 'flex-end',
     marginTop: 20,
   },
   rowHeadrStyle: {
-    flexDirection: 'row-reverse',
+    flexDirection: 'row',
     alignItems: 'center',
   },
   iconView: {
@@ -123,7 +122,7 @@ const styles = {
   },
   textStyle: {
     fontSize: 12,
-    textAlign: 'right',
+    textAlign: 'left',
   },
   textsView: {
     marginRight: 30,

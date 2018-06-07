@@ -39,7 +39,7 @@ class SideMenu extends Component {
             >
                 <ScrollView scrollEnabled={false} style={styles.viewContainer}>
                     <TouchableOpacity
-                        style={{marginTop: 24,flexDirection: 'row',alignItems: 'center',justifyContent: 'flex-end',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
+                        style={{marginTop: 20,flexDirection: 'row',alignItems: 'center',justifyContent: 'flex-end',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => {
                             navigation.navigate('ContactWithAdministration',{title: strings.communicateWithManagement})
                         }}
@@ -53,7 +53,7 @@ class SideMenu extends Component {
                         />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={{marginTop: 5,flexDirection: 'row',alignItems: 'center',justifyContent: 'flex-end',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
+                        style={{marginTop: 2.5,flexDirection: 'row',alignItems: 'center',justifyContent: 'flex-end',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => {
                             navigation.navigate('Terms',{title: strings.termsAndConditions})
                         }}
@@ -67,7 +67,7 @@ class SideMenu extends Component {
                         />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={{marginTop: 5,flexDirection: 'row',alignItems: 'center',justifyContent: 'flex-end',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
+                        style={{marginTop: 2.5,flexDirection: 'row',alignItems: 'center',justifyContent: 'flex-end',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => {
                             navigation.navigate('AboutApp',{title: strings.about})
                         }}
@@ -81,7 +81,7 @@ class SideMenu extends Component {
                         />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={{marginTop: 5,flexDirection: 'row',alignItems: 'center',justifyContent: 'flex-end',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
+                        style={{marginTop: 2.5,flexDirection: 'row',alignItems: 'center',justifyContent: 'flex-end',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => {
                             navigation.navigate('ServicesCost',{title: strings.pricesOfServices})
                         }}
@@ -95,7 +95,7 @@ class SideMenu extends Component {
                         />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={{marginTop: 5,flexDirection: 'row',alignItems: 'center',justifyContent: 'flex-end',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
+                        style={{marginTop: 2.5,flexDirection: 'row',alignItems: 'center',justifyContent: 'flex-end',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => {
                             navigation.navigate('JoinAsServiceProvider',{title: strings.joinAsAServiceProvider})
                         }}
@@ -109,7 +109,7 @@ class SideMenu extends Component {
                         />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={{marginTop: 5,flexDirection: 'row',alignItems: 'center',justifyContent: 'flex-end',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
+                        style={{marginTop: 2.5,flexDirection: 'row',alignItems: 'center',justifyContent: 'flex-end',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => {
                             navigation.navigate('ShareYourOpinion',{title: strings.shareYourOpinion})
                         }}
@@ -123,7 +123,7 @@ class SideMenu extends Component {
                         />
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={{marginTop: 5,flexDirection: 'row',alignItems: 'center',justifyContent: 'flex-end',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
+                        style={{marginTop: 2.5,flexDirection: 'row',alignItems: 'center',justifyContent: 'flex-end',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => {
                             navigation.navigate('Offers',{title: strings.offers})
                         }}
@@ -136,7 +136,7 @@ class SideMenu extends Component {
                             style={{marginLeft: 16,width: 25,height: 31}}
                         />
                     </TouchableOpacity>
-                    <View style={{marginTop: 26,paddingHorizontal: 16,flexDirection: 'row',justifyContent: 'center',alignItems: 'center'}}>
+                    <View style={{marginTop: 20,paddingHorizontal: 16,flexDirection: 'row',justifyContent: 'center',alignItems: 'center'}}>
                         <TouchableOpacity
                             onPress={() => this.changeLanguage('urdu')}
                             style={styles.languageButton}

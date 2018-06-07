@@ -64,11 +64,11 @@ class LoginScreen extends Component {
               <View style={{marginTop: 20,flexDirection: 'row',alignItems: 'center'}}>
                 <Image
                   source={Images.SaudiFlag}
-                  style={{width: 46,height: 50,resizeMode: 'cover'}}
+                  style={{width: 45,height: 30,resizeMode: 'cover'}}
                 />
                 <View style={{}}>
                   <TextInput
-                    style={{width: width - (40+90),height: 40,marginLeft: 10,borderBottomWidth: 1,borderColor: '#707070',backgroundColor: '#ffffff',fontFamily: 'NeoSansArabic',fontSize: 20,color: '#1B76BA',textAlign: I18nManager.isRTL? 'right' : 'left'}}
+                    style={{width: width - (40+90),height: 40,marginLeft: 10,borderBottomWidth: 1,borderColor: '#707070',backgroundColor: '#ffffff',fontFamily: 'NeoSansArabic',fontSize: 16,color: '#1B76BA',textAlign: I18nManager.isRTL? 'right' : 'left'}}
                     placeholder={strings.mobile}
                     placeholderTextColor={'#1B76BA'}
                     underlineColorAndroid={'transparent'}
@@ -215,10 +215,11 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   languageImage: {
-    width: 46,
-    height: 33
+    width: 30,
+    height: 20
   },
   languageText: {
+    marginLeft: 5,
     fontFamily: 'NeoSansArabic',
     fontSize: 16,
     color: '#707070'

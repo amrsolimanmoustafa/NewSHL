@@ -5,7 +5,9 @@ import {
   TouchableOpacity,
   Image,
   View,
-  Dimensions
+  Dimensions,
+  Platform,
+  I18nManager
 } from 'react-native'
 const {width,height} = Dimensions.get('window')
 import { StackNavigator, DrawerNavigator, DrawerItems } from 'react-navigation'
@@ -184,7 +186,7 @@ const MainDrawer = DrawerNavigator(
   {
     initialRouteName: 'Home',
     contentComponent: LeftNavigationDrawer,
-    drawerPosition: 'left',
+    drawerPosition: (I18nManager.isRTL && Platform.OS == 'android')? 'right' : 'left',
     drawerOpenRoute: 'LeftSideMenu',
     drawerCloseRoute: 'LeftSideMenuClose',
     drawerToggleRoute: 'LeftSideMenuToggle',
@@ -216,7 +218,7 @@ const RootRoute = DrawerNavigator(
       )  
     },
     contentComponent: RightNavigationDrawer,
-    drawerPosition: 'right',
+    drawerPosition: (I18nManager.isRTL && Platform.OS == 'android')? 'left' : 'right',
     drawerOpenRoute: 'RightSideMenu',
     drawerCloseRoute: 'RightSideMenuClose',
     drawerToggleRoute: 'RightSideMenuToggle',

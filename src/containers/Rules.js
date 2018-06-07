@@ -4,6 +4,7 @@ import {
   View, 
   Image,
   ScrollView,
+  Dimensions
 } from 'react-native';
 import { connect } from 'react-redux'
 import { withNavigation } from "react-navigation";
@@ -14,6 +15,7 @@ import Container from './Components/container';
 import {termsAndConditions} from './../actions/ContentActions/contentActions'
 import Base from "../Base"
 import strings from '../strings';
+const {width,height} = Dimensions.get('window')
 
 class Rules extends Component {
   constructor(props){
@@ -27,13 +29,13 @@ class Rules extends Component {
   }
   render() {
     return (
-      <View style={[masterStyle.container]}>
+      <View style={{flex: 1}}>
           <Image source={Images.logoIcon} style={masterStyle.logoStyle}/>
           <Text style={[masterStyle.appName]}>
             {strings.shl}
           </Text>
-          <ScrollView>
-            <Text style={[masterStyle.descTextStyle, { marginTop: 15 }]}>
+          <ScrollView style={{padding: 16}}>
+            <Text style={[masterStyle.descTextStyle, { width: width - 32}]}>
               {this.state.rulesText}
             </Text>
           </ScrollView>

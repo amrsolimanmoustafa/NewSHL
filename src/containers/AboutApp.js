@@ -4,6 +4,7 @@ import {
   Text,
   Image,
   ScrollView,
+  Dimensions
 } from 'react-native';
 import { connect } from 'react-redux'
 import { withNavigation } from "react-navigation";
@@ -15,6 +16,7 @@ import axios from 'axios';
 import Base from "../Base"
 import {aboutApp} from './../actions/ContentActions/contentActions'
 import strings from '../strings';
+const {width,height} = Dimensions.get('window')
 
 class AboutApp extends Component {
   constructor(props){
@@ -49,13 +51,13 @@ class AboutApp extends Component {
 
   render() {
     return (
-      <View style={[masterStyle.container]}>
+      <View style={{flex: 1}}>
           <Image source={Images.logoIcon} style={masterStyle.logoStyle} />
           <Text style={[masterStyle.appName]}>
             {strings.shl}
           </Text>
-          <ScrollView>
-            <Text style={[masterStyle.descTextStyle, { marginTop: 15 }]}>
+          <ScrollView style={{padding: 16}}>
+            <Text style={[masterStyle.descTextStyle, { width: width - 32}]}>
               {this.state.aboutAppText}
             </Text>
           </ScrollView>

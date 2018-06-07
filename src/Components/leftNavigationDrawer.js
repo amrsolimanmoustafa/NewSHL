@@ -47,7 +47,7 @@ class SideMenu extends Component {
                         </Text>
                     </View>
                     <TouchableOpacity
-                        style={{marginTop: 24,flexDirection: 'row',alignItems: 'center',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
+                        style={{marginTop: 20,flexDirection: 'row',alignItems: 'center',marginHorizontal: 16,paddingVertical: 10,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => {
                             //navigation.navigate('EditProfile',{title: strings.editPersonalData})
                         }}
@@ -61,7 +61,7 @@ class SideMenu extends Component {
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={{marginTop: 5,flexDirection: 'row',alignItems: 'center',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
+                        style={{marginTop: 2.5,flexDirection: 'row',alignItems: 'center',marginHorizontal: 16,paddingVertical: 10,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => {
                             navigation.navigate('OrdersHistory',{title: strings.ordersHistory})
                         }}
@@ -75,7 +75,7 @@ class SideMenu extends Component {
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={{marginTop: 5,flexDirection: 'row',alignItems: 'center',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
+                        style={{marginTop: 2.5,flexDirection: 'row',alignItems: 'center',marginHorizontal: 16,paddingVertical: 10,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => {
                             navigation.navigate('FavoritePlaces',{title: strings.favoritePlaces})
                         }}
@@ -89,7 +89,7 @@ class SideMenu extends Component {
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={{marginTop: 5,flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
+                        style={{marginTop: 2.5,flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center',marginHorizontal: 16,paddingVertical: 10,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => {
                             navigation.navigate('Notifications',{title: strings.notifications})
                         }}
@@ -110,7 +110,7 @@ class SideMenu extends Component {
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={{marginTop: 5,flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
+                        style={{marginTop: 2.5,flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center',marginHorizontal: 16,paddingVertical: 10,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => {
                             //navigation.navigate('Wallet',{title: strings.wallet})
                         }}
@@ -129,7 +129,7 @@ class SideMenu extends Component {
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={{marginTop: 5,flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
+                        style={{marginTop: 2.5,flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center',marginHorizontal: 16,paddingVertical: 10,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => {
                             //navigation.navigate('Points',{title: strings.points})
                         }}
@@ -148,7 +148,7 @@ class SideMenu extends Component {
                         </Text>
                     </TouchableOpacity>
                     <TouchableOpacity
-                        style={{marginTop: 5,flexDirection: 'row',alignItems: 'center',marginHorizontal: 16,paddingVertical: 12,borderColor: '#7D7D7D',borderBottomWidth: 1}}
+                        style={{marginTop: 2.5,flexDirection: 'row',alignItems: 'center',marginHorizontal: 16,paddingVertical: 10,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => this.logout()}
                     >
                         <Image
@@ -159,7 +159,7 @@ class SideMenu extends Component {
                             {strings.logout}
                         </Text>
                     </TouchableOpacity>
-                    <View style={{marginTop: 26,paddingHorizontal: 16,flexDirection: 'row',justifyContent: 'center',alignItems: 'center'}}>
+                    <View style={{marginTop: 20,paddingHorizontal: 16,flexDirection: 'row',justifyContent: 'center',alignItems: 'center'}}>
                         <TouchableOpacity
                             onPress={() => this.changeLanguage('ar')}
                             style={styles.languageButton}
@@ -222,35 +222,37 @@ class SideMenu extends Component {
 }
 
 const styles = StyleSheet.create({
-  viewContainer: {
-    flex: 1,
-    paddingTop: 50,
-  },
-  container: {
-    height: 45,
-    paddingHorizontal: 25,
-    justifyContent: 'center',
-    borderBottomWidth: 1,
-    borderColor: '#000000',
-  },
-  name: {
-    fontSize: 14,
-    color: '#000000',
-    fontWeight: '400'
-  },
-  languageButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-  languageImage: {
-    width: 46,
-    height: 33
-  },
-  languageText: {
-    fontFamily: 'NeoSansArabic',
-    fontSize: 16,
-    color: '#707070'
-  },
+    viewContainer: {
+        flex: 1,
+        paddingTop: 50,
+    },
+    container: {
+        height: 45,
+        paddingHorizontal: 25,
+        justifyContent: 'center',
+        borderBottomWidth: 1,
+        borderColor: '#000000',
+    },
+    name: {
+        fontSize: 14,
+        color: '#000000',
+        fontWeight: '400'
+    },
+    languageButton: {
+        padding: 2.5,
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    languageImage: {
+        width: 30,
+        height: 20
+    },
+    languageText: {
+        marginLeft: 5,
+        fontFamily: 'NeoSansArabic',
+        fontSize: 16,
+        color: '#707070'
+    },
 });
 
 const mapStateToProps = () => {
