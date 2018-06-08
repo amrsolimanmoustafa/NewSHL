@@ -47,7 +47,7 @@ class Notifications extends Component {
 
   renderNotificationItem(item){
     return (
-      <View style={{flex: 1,height: 4,padding: 4,flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center'}}>
+      <View style={{flex: 1,height: 40,padding: 4,flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center'}}>
         <View style={{flexDirection: 'row',alignItems: 'center'}}>
           <Image
             source={require('../assets/icons/User-icon.png')}
