@@ -62,7 +62,7 @@ import strings from '../strings'
         }
         </View>
         <TouchableOpacity
-          onPress={()=> navigation.navigate('AddFavoritePlace')}
+          onPress={()=> navigation.navigate('AddFavoritePlace',{title: strings.add})}
           style={styles.AddView}
         >
           <Icon name="plus" type="SimpleLineIcons" style={styles.AddIcon}/>
