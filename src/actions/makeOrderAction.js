@@ -141,6 +141,10 @@ export const cancelOrder=(order_id)=>dispatch=>{
                 }
 }
 export const favlocationlist=(user_id)=>dispatch=>{
+      return new Promise((resolve, reject)=>{
+
+      
+
   const GET_FAV_LOCS_URL="http://" + base_url.baseUrl +'favlocationlist'+"/"+user_id
    console.log(GET_FAV_LOCS_URL)
    try {
@@ -155,12 +159,15 @@ export const favlocationlist=(user_id)=>dispatch=>{
                          type:GET_FAV_LOCS,
                          payload:res
                        }) 
+                       resolve()
+
                      }).catch(function(error) {
                        console.log(error);
                      });
                  } catch (error) {
                    console.error(error);
                  }
+                })
  }
  
  export const addToFavLocs=(locObj)=>dispatch=>{

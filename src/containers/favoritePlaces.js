@@ -11,31 +11,42 @@ import { withNavigation } from "react-navigation";
 import {favlocationlist} from "../actions/makeOrderAction"
 import {setCoordnates} from "../actions/CommonServicesActions/commonServicesActions"
 import strings from '../strings'
+import Base from "../Base"
+import axios from 'axios';
 
  class FavoritePlaces extends Component {
   constructor(props) {
     super(props);
     this.state = {
-
+      list:[]
     }
   }
 
-  componentWillMount(){
-    this.props.favlocationlist(this.props.user_id)
+ async componentWillMount(){
+   var self =this
+      this.props.favlocationlist(this.props.user_id).then(()=>{
+         self.setState({list: self.props.makeOrder.favlocationlist.data})
+
+      })
+
   }
 
   render () {
     const {
       navigation
     } = this.props
+
     return (
       <View style={styles.container}>
         <Text style={styles.SubHeading}>
           {strings.thePageAllowsYouToAddBookmarksToUseForServices}
         </Text>
         <View style={styles.FavoritePlacesListStyle}>
+
           {this.props.makeOrder.favlocationlist.data?
-            this.props.makeOrder.favlocationlist.data.map((item,index)=>(
+
+this.state.list.map((item,index)=>(
+              <View>
               <TouchableOpacity
                 key={index}
                 onPress={()=> {
@@ -56,6 +67,38 @@ import strings from '../strings'
                   {item.area}
                 </Text>
               </TouchableOpacity>
+              <TouchableOpacity  key={index}
+
+                onPress={()=> {
+                  console.log(item)
+                  var base_url = new Base()
+                  
+                  var TERMS_URL="http://" + base_url.baseUrl + "deleteformfavlist/"+item.favourite_user_location_id
+                  console.log('TERMS_URL',TERMS_URL)
+                  var self=this
+                  try {
+                    axios
+                      .get(TERMS_URL)
+                      .then((res) =>{
+var newList=self.props.makeOrder.favlocationlist.data.slice();
+                        self.props.makeOrder.favlocationlist.data.splice(index,1)
+                        self.setState({list:self.props.makeOrder.favlocationlist.data})
+                        // self.props.makeOrder.favlocationlist.data.cloneWithRows(self.props.makeOrder.favlocationlist.data)
+                        console.log(self.props.makeOrder.favlocationlist.data)
+
+                      })
+                      .catch(function(error) {
+                      
+                      });
+                  }catch (error) {
+                  
+                  }
+                }} >
+              <Text style={{left:0,fontFamily: 'NeoSansArabic',fontSize: 24,color: 'red',position:'relative'}}>
+                 X
+                </Text>
+                </TouchableOpacity>
+              </View>
             ))
           :
           null
