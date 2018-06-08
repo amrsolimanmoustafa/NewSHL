@@ -51,7 +51,7 @@ class VerifyPhoneScreen extends Component {
                 {this.props.user_phone}
               </Text>
               <TextInput
-                style={{width: width - (40+90),height: 40,marginTop: 20,borderBottomWidth: 1,borderColor: '#707070',backgroundColor: '#ffffff',fontFamily: 'NeoSansArabic',fontSize: 20,color: '#1B76BA',textAlign: 'center',alignSelf: 'center'}}
+                style={{width: width - (40+90),height: 40,marginTop: 20,borderBottomWidth: 1,borderColor: '#707070',backgroundColor: '#ffffff',fontFamily: 'NeoSansArabic',fontSize: 16,color: '#1B76BA',textAlign: 'center',alignSelf: 'center'}}
                 placeholder={strings.enterTheCode}
                 placeholderTextColor={'#1B76BA'}
                 underlineColorAndroid={'transparent'}

@@ -42,6 +42,7 @@ let strings = new LocalizedStrings({
         editPersonalData: 'Edit personal data',
         wallet: 'Wallet',
         points: 'Points',
+        logout: 'Logout',
     },
     ar:{
         insertMobileNumber: 'ادخل رقم الجوال',
@@ -79,6 +80,7 @@ let strings = new LocalizedStrings({
         editPersonalData: 'تعديل البيانات الشخصية',
         wallet: 'المحفظة',
         points: 'النقاط',
+        logout: 'تسجيل الخروج',
     },
     urdu:{
         insertMobileNumber: 'اپنا موبائل نمبر درج کریں',
@@ -116,6 +118,7 @@ let strings = new LocalizedStrings({
         editPersonalData: 'ذاتی ڈیٹا میں ترمیم کریں',
         wallet: 'والٹ',
         points: 'پوائنٹس',
+        logout: 'لاگ آوٹ'
     }
 })
 
