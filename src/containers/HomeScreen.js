@@ -111,7 +111,7 @@ class HomeScreen extends Component  {
       <View style={styles.container}>
         <ImageBackground style={styles.loginBackground} source={Images.loginBackground} resizeMode={'cover'}>
           <Header navigation={navigation}/>
-          <View style={{flex: 1,padding: 12}}>
+          <View style={{flex: 1}}>
             <Map popup={this.cancelPopupDialog} watchPosition={this.refreshServices}/>
           </View>
        </ImageBackground>

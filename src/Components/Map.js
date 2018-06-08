@@ -15,7 +15,7 @@ import {
 import MapView from 'react-native-maps';
 import CarouselPager from 'react-native-carousel-pager';
 import { Icon, Button } from 'native-base';
-import { Images } from '../Themes';
+import { Images, Colors } from '../Themes';
 import SideMapButtons from "./SideMapButtons"
 import OtlobNow from "./OtlobNow"
 import { reverseCoordinatesToAdress, setCoordnates, setDriverCoordnates } from "../actions/CommonServicesActions/commonServicesActions"
@@ -264,12 +264,17 @@ class Map extends Component {
   }
 
 
-  setCoordinates = (lat,lng) =>{
-    console.log('marker',this.marker)
-    this.marker.setCoordinate({
-      latitude:lat,
-      longitude:lng
-    })
+
+
+  autoLocateUser() {
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        this.props.setCoordnates(position.coords.latitude, position.coords.longitude)
+        this.props.watchPosition(position.coords.latitude, position.coords.longitude)
+      },
+      (error) => self.setState({ error: error.message }),
+      { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000, distanceFilter: 100 },
+    );
   }
 
   render() {
@@ -292,6 +297,7 @@ class Map extends Component {
           }
         </View>
         <MapView
+          showsMyLocationButton={true}
           onPress={() => {
             if (this.state.servicesSliderState == true) {
               this.setState({ servicesSliderState: false })
@@ -304,15 +310,15 @@ class Map extends Component {
           region={{
             // latitude: this.props.common.lat ? this.props.common.lat : 6.2672295570373535,
             // longitude: this.props.common.lng ? this.props.common.lng : 31.229478498675235,
-            latitude: this.props.common.lat ? this.props.common.lat :0,
-            longitude: this.props.common.lng ? this.props.common.lng :0,
+            latitude: this.props.common.lat ? this.props.common.lat : 0,
+            longitude: this.props.common.lng ? this.props.common.lng : 0,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
-          onRegionChangeComplete={(e)=>{
-            this.props.setCoordnates(e.latitude, e.longitude) 
+          onRegionChangeComplete={(e) => {
+            this.props.setCoordnates(e.latitude, e.longitude)
             this.props.watchPosition(e.latitude, e.longitude)
-          //  this.setState({ servicesSliderState: true })
+            //  this.setState({ servicesSliderState: true })
           }}
         >
           {/* <MapView.Marker ref={(e)=>this.marker=e}
@@ -329,7 +335,7 @@ class Map extends Component {
               this.setState({ servicesSliderState: false })
             }}
           /> */}
-          
+
           {this.props.common.driverLat != '' ?
             <MapView.Marker.Animated
               opacity={0.6}
@@ -348,7 +354,7 @@ class Map extends Component {
         </MapView>
 
 
-        <Image style={{width:20,height:30,position:'absolute',top:(height/2)-70,left:(width/2)-20}} source={require("../assets/icons/marker.png")} />
+        <Image style={{ width: 20, height: 30, position: 'absolute', top: (height / 2) - 70, left: (width / 2) - 20 }} source={require("../assets/icons/marker.png")} />
         {this.props.compState.__CurrentComponent === 2 ?
           <OtlobNow />
           :
@@ -418,10 +424,18 @@ class Map extends Component {
         {/* Right side buttons */}
         {this.props.common.driverLat == '' && this.props.compState.__CurrentComponent == 1 ? <View style={{ position: "absolute", right: 16, top: 105 }}>
           <TouchableOpacity
-            onPress={() => navigation.navigate('FavoritePlaces')}
-            style={styles.touchable}
+            onPress={() => {
+              this.autoLocateUser()
+            }}
+            style={[styles.touchable]}
           >
-            <Image source={Images.pinIcon} style={styles.image} />
+            <Image source={Images.gpsLocation} style={styles.icon} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => navigation.navigate('FavoritePlaces')}
+            style={[styles.touchable, { marginTop: 16 }]}
+          >
+            <Image source={Images.pinIcon}  style={styles.image} />
           </TouchableOpacity>
           <TouchableOpacity
             onPress={() => {
@@ -480,8 +494,8 @@ class Map extends Component {
                       >
                         <Image
                           source={{
-                            uri: base.icon_url + mainService.icone,  
-                            resizeMode:"contain"
+                            uri: base.icon_url + mainService.icone,
+                            resizeMode: "contain"
                           }}
                           style={{
                             width: 70,
@@ -538,7 +552,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
-
+  },
+  icon: {
+    width: 20, height: 20
   }
 })
 

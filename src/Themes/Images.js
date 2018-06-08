@@ -37,7 +37,8 @@ const images = {
   pickup:require("../assets/Assets/pickup.png"),
   waterconnect:require("../assets/Assets/waterconnect.png"),
   stahat:require("../assets/Assets/stahat.png"),
-  MainSarf:require("../assets/Assets/MainSarf.png")
+  MainSarf:require("../assets/Assets/MainSarf.png"),
+  gpsLocation:require("../assets/icons/autoLocate.png")
 }
 
 export default images
