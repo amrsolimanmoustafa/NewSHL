@@ -110,7 +110,7 @@ export const VerificationCodeActivation = (v_object,context) => {
               ['profile_pic', user.profile_pic? user.profile_pic : ''],
               ['token_id', user.token_id? user.token_id : ''],
               ['type', user.type? user.type : ''],
-              ['user_id', user.user_id.toString()],
+              ['user_id', user.user_id+''],
               ['user_name', user.user_name? user.user_name : ''],
               ['zone_id', user.zone_id? user.zone_id : ''],
             ])
