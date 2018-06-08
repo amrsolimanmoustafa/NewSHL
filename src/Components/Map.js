@@ -56,7 +56,7 @@ class Map extends Component {
       provider_info: [],
       mapState: 'standard',
       servicesSliderState: true,
-      calenderShow: false
+      calenderShow: false,
     }
   }
 
@@ -263,6 +263,15 @@ class Map extends Component {
     // return <View/>}
   }
 
+
+  setCoordinates = (lat,lng) =>{
+    console.log('marker',this.marker)
+    this.marker.setCoordinate({
+      latitude:lat,
+      longitude:lng
+    })
+  }
+
   render() {
     const {
       service,
@@ -298,8 +307,13 @@ class Map extends Component {
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
+          onRegionChangeComplete={(e)=>{
+            this.props.watchPosition(e.latitude, e.longitude)
+            this.props.setCoordnates(e.latitude, e.longitude) 
+           this.setState({ servicesSliderState: true })
+          }}
         >
-          <MapView.Marker
+          {/* <MapView.Marker ref={(e)=>this.marker=e}
             pinColor={"rgba(153, 137, 0,0.5)"}
             // image={ require("../assets/Assets/Group-1353.bmp")}
             draggable={true}
@@ -312,12 +326,8 @@ class Map extends Component {
             onDragStart={() => {
               this.setState({ servicesSliderState: false })
             }}
-            onDragEnd={(e) => {
-              this.props.watchPosition(e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude)
-              this.props.setCoordnates(e.nativeEvent.coordinate.latitude, e.nativeEvent.coordinate.longitude)
-              this.setState({ servicesSliderState: true })
-            }}
-          />
+          /> */}
+          
           {this.props.common.driverLat != '' ?
             <MapView.Marker.Animated
               opacity={0.6}
@@ -334,6 +344,9 @@ class Map extends Component {
             <View style={{ width: 0, height: 0 }} />
           }
         </MapView>
+
+
+        <Image style={{width:20,height:30,position:'absolute',top:(height/2)-70,left:(width/2)-20}} source={require("../assets/Icons/marker.png")} />
         {this.props.compState.__CurrentComponent === 2 ?
           <OtlobNow />
           :
