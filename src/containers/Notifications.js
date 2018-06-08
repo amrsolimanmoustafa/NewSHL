@@ -88,7 +88,7 @@ class Notifications extends Component {
       <View style={[masterStyle.container]}>
           <FlatList
             data={this.state.notificationsList}
-            keyExtractor={item => `${item.id}`}
+            keyExtractor={(item, index) => index.toString() }
             renderItem={this.renderNotificationItem}
           />
       </View>
@@ -123,7 +123,8 @@ const styles = {
   },
   textStyle: {
     fontSize: 14,
-    maxWidth: '90%', 
+    maxWidth: '90%',
+    color: '#000000'
   }
 };
 
