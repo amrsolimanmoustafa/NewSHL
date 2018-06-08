@@ -302,15 +302,17 @@ class Map extends Component {
           mapType={this.state.mapState}
           style={{ flex: 1, borderRadius: 10, borderWidth: 2, zIndex: 0, borderColor: "#fff" }}
           region={{
-            latitude: this.props.common.lat ? this.props.common.lat : 6.2672295570373535,
-            longitude: this.props.common.lng ? this.props.common.lng : 31.229478498675235,
+            // latitude: this.props.common.lat ? this.props.common.lat : 6.2672295570373535,
+            // longitude: this.props.common.lng ? this.props.common.lng : 31.229478498675235,
+            latitude: this.props.common.lat ? this.props.common.lat :0,
+            longitude: this.props.common.lng ? this.props.common.lng :0,
             latitudeDelta: 0.0922,
             longitudeDelta: 0.0421,
           }}
           onRegionChangeComplete={(e)=>{
-            this.props.watchPosition(e.latitude, e.longitude)
             this.props.setCoordnates(e.latitude, e.longitude) 
-           this.setState({ servicesSliderState: true })
+            this.props.watchPosition(e.latitude, e.longitude)
+          //  this.setState({ servicesSliderState: true })
           }}
         >
           {/* <MapView.Marker ref={(e)=>this.marker=e}
@@ -346,7 +348,7 @@ class Map extends Component {
         </MapView>
 
 
-        <Image style={{width:20,height:30,position:'absolute',top:(height/2)-70,left:(width/2)-20}} source={require("../assets/Icons/marker.png")} />
+        <Image style={{width:20,height:30,position:'absolute',top:(height/2)-70,left:(width/2)-20}} source={require("../assets/icons/marker.png")} />
         {this.props.compState.__CurrentComponent === 2 ?
           <OtlobNow />
           :

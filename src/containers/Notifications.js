@@ -25,20 +25,7 @@ class Notifications extends Component {
     super(props)
     this.state = {
       notificationsList: []
-    // [
-    //   { id: 1, text: 'تم وصول مقدم الخدمة للموقع وتم الاتفاق على المبلغ المطلوب وعلى الاصلاحات المطلوبة', date: '12/3/2018', time: '12:00 م' },
-    //   { id: 2, text: 'تم وصول مقدم الخدمة للموقع', date: '12/3/2018', time: '12:00 م'  },
-    //   { id: 3, text: 'تم وصول مقدم الخدمة للموقع', date: '12/3/2018', time: '12:00 م'  },
-    //   { id: 4, text: 'تم وصول مقدم الخدمة للموقع', date: '12/3/2018', time: '12:00 م' },
-    //   { id: 5, text: 'تم وصول مقدم الخدمة للموقع', date: '12/3/2018', time: '12:00 م'  },
-    //   { id: 6, text: 'تم وصول مقدم الخدمة للموقع', date: '12/3/2018', time: '12:00 م'  },
-    //   { id: 7, text: 'تم وصول مقدم الخدمة للموقع', date: '12/3/2018', time: '12:00 م' },
-    //   { id: 8, text: 'تم وصول مقدم الخدمة للموقع', date: '12/3/2018', time: '12:00 م'  },
-    //   { id: 9, text: 'تم وصول مقدم الخدمة للموقع', date: '12/3/2018', time: '12:00 م'  },
-    //   { id: 10, text: 'تم وصول مقدم الخدمة للموقع', date: '12/3/2018', time: '12:00 م' },
-    //   { id: 11, text: 'تم وصول مقدم الخدمة للموقع', date: '12/3/2018', time: '12:00 م'  },
-    //   { id: 14, text: 'تم وصول مقدم الخدمة للموقع', date: '12/3/2018', time: '12:00 م'  },
-    // ],
+    
     }
   }
 
@@ -50,11 +37,12 @@ class Notifications extends Component {
     var base_url =new Base()
     var GET_NOTIFICATIONS_URL="http://" + base_url.baseUrl + "clintnotification/"+user_id+"?lang="+base_url.lang
     var self=this
+    console.log(GET_NOTIFICATIONS_URL)
     try {
       axios
         .get(GET_NOTIFICATIONS_URL)
         .then((res) =>{
-          console.log('token uploaded',res.data)
+          console.log('',res.data)
           self.setState({notificationsList:res.data})
         })
         .catch(function(error) {
@@ -68,16 +56,17 @@ class Notifications extends Component {
   renderNotificationItem(item){
     return (
       <View style={[styles.rowStyle]}>
+      {console.log('item',item)}
         <View style={[styles.subViewStyle, { flex: 1.8 }]}>
-          <Image source={Images.userIcon} style={[styles.userIconStyle, { resizeMode: 'contain' }]}/>
+          {/* <Image source={Images.userIcon} style={[styles.userIconStyle, { resizeMode: 'contain' }]}/>
           <Text style={[appGrayColor, styles.textStyle]} >
-            {item.notification_ar}
-          </Text>
+            {item.notification_ar?item.notification_ar:null}
+          </Text> */}
         </View>
         <View style={[styles.subViewStyle, { flex: 0.8, justifyContent: 'space-between', }]}>
-          <Text style={[masterStyle.dateText, appGrayColor,]}>
-            {item.created_at}
-          </Text>
+          {/* <Text style={[masterStyle.dateText, appGrayColor,]}> */}
+            {/* {item.created_at!=null?item.created_at:null} */}
+          {/* </Text> */}
         </View>
       </View>
     );

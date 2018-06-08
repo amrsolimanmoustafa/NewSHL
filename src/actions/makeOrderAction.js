@@ -8,7 +8,7 @@ var VARS={'zone':''}
 var base_url =new Base()
 // var SEND_ORDER_REQUEST="http://" + base_url.baseUrl + "createorder"
 
-export const getServices=(zone)=>dispatch=>{
+export const getServices=(zone,city)=>dispatch=>{
   VARS.zone=zone
   const GETALLSERVICES_URL="http://" + base_url.baseUrl + "allserivces/"+zone+"?lang="+base_url.lang
 

@@ -42,7 +42,9 @@ class HomeScreen extends Component  {
   async componentWillMount(){
     const user_id = await AsyncStorage.getItem('user_id')
     console.log(user_id)
-    this.watchPosition()
+    if(this.props.common.lat===''){
+
+    this.watchPosition()}
   }
 
   componentWillUnmount() {
@@ -68,7 +70,7 @@ class HomeScreen extends Component  {
     }
   }
 
-  async watchPosition(){      
+   watchPosition(){      
     self.watchId = navigator.geolocation.getCurrentPosition(
       (position) => {
         self.props.setCoordnates(position.coords.latitude,position.coords.longitude)
@@ -81,13 +83,15 @@ class HomeScreen extends Component  {
             '&key='+APIKEY+'&language=en&region=EN"')
             .then((response) =>{
               console.log('response',response)
-              self.props.getServices(response.data.results[0].address_components[2].long_name)    
+              self.props.getServices(response.data.results[0].address_components[2].long_name,response.data.results[0].address_components[4].long_name)    
             }).catch((error) =>{
               console.log(error);
             });
         }catch (error) {
           console.error(error);
         }
+        navigator.geolocation.clearWatch(this.watchId);
+
       },
       (error) => self.setState({ error: error.message }),
       { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000, distanceFilter: 100 },
