@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
   loginBackground:{
     width: width,
     height: height,
-    paddingTop: 20,
+    //paddingTop: 20,
   },
   Map:{
     position:"absolute",

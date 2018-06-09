@@ -4,7 +4,6 @@ export default StyleSheet.create({
   container: {
     height:"10%",
     width:"100%",
-    marginTop:"2%",
     flexDirection:"row",
     justifyContent: 'space-between',
     
@@ -12,21 +11,18 @@ export default StyleSheet.create({
   component:{
     height:"100%",
     width:"20%",
-
   },
   componentCenter:{
     height:"100%",
     width:"20%",
-    marginLeft:"10%",
-    marginTop:"2%"
-
+    alignItems: 'center',
+    justifyContent: 'center'
   },
   headerButton:{
     backgroundColor:"#rgba(0,0,0,0)",
     height:"100%",
     width:"100%",
     justifyContent:"center"
-
   },
   headerButton2:{
     backgroundColor:"#rgba(0,0,0,0)",

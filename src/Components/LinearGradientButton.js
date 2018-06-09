@@ -20,15 +20,29 @@ class LinearGradientButton extends Component {
 
   render () {
     return (
-        <TouchableOpacity onPress={this.props.press} style={this.props.style}>
-          <LinearGradient
-            colors={["rgb(57,180,76)", "#299386", "rgb(29,122,179)"]}
-            style={this.props.style}
-          >
-            <Text style={this.props.textStyle}>
-              {this.props.text}
-            </Text>
-          </LinearGradient>
+        <TouchableOpacity
+          onPress={this.props.press}
+          style={this.props.style}
+          disabled={this.props.disabled}
+        >
+          {this.props.disabled?
+            <View
+              style={[this.props.style,{backgroundColor: '#707070'}]}
+            >
+              <Text style={this.props.textStyle}>
+                {this.props.text}
+              </Text>
+            </View>
+          :
+            <LinearGradient
+              colors={["rgb(57,180,76)", "#299386", "rgb(29,122,179)"]}
+              style={this.props.style}
+            >
+              <Text style={this.props.textStyle}>
+                {this.props.text}
+              </Text>
+            </LinearGradient>
+          }
         </TouchableOpacity>
     )
   }

@@ -28,7 +28,6 @@ class LoginScreen extends Component {
     this.state = {
       token_id: '',
       lang_id: '',
-      phone: '',
       logedIn: null,
       loading: false,
       VerifyPhoneScreen: '',
@@ -69,8 +68,8 @@ class LoginScreen extends Component {
                 <View style={{}}>
                   <TextInput
                     style={{width: width - (40+90),height: 40,marginLeft: 10,borderBottomWidth: 1,borderColor: '#707070',backgroundColor: '#ffffff',fontFamily: 'NeoSansArabic',fontSize: 16,color: '#1B76BA',textAlign: I18nManager.isRTL? 'right' : 'left'}}
-                    placeholder={strings.mobile}
-                    placeholderTextColor={'#1B76BA'}
+                    placeholder={'5xxxxxxxxx'}
+                    placeholderTextColor={'#707070'}
                     underlineColorAndroid={'transparent'}
                     keyboardType={'phone-pad'}
                     onChangeText={text => this.setState({phone: text})}
@@ -80,10 +79,11 @@ class LoginScreen extends Component {
               </View>
               <View style={{alignSelf: 'center',marginTop: 30}}>
                 <LinearGradientButton
-                  style={{width: 230,height: 40,backgroundColor: 'red',borderRadius: 20,justifyContent: 'center',alignItems: 'center'}}
+                  style={{width: 230,height: 40,borderRadius: 20,justifyContent: 'center',alignItems: 'center'}}
                   textStyle={{fontFamily: 'NeoSansArabic',fontSize: 16,color: '#FFFFFF'}}
                   text={strings.signup}
                   press={()=> this.doLogIn()}
+                  disabled={!this.state.phone}
                 />
               </View>
             </View>

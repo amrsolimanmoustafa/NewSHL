@@ -4,34 +4,28 @@ export default StyleSheet.create({
   container: {
     alignSelf:"center",
     backgroundColor:"transparent",
-    height:"5%",
-    width:"50%",
-    marginLeft:"20%",
-    // marginTop:"20",
-    // position:'absolute',
-    bottom:0,
+    width: 220,
+    height: 100,
     justifyContent:"center",
     alignItems:"center",
     borderRadius:10,
-    // elevation:10
-    // ,
-    flex:1
+    position: 'absolute',
+    bottom: 150,
   },
   opacity:{
-    height:"35%",
-    width:"100%",
-    borderRadius:70
+    justifyContent: 'center',
   },
   linearGradient:{
-    height:"45%",
-    width:"100%",
-    borderRadius:100,
+    height: 70,
+    width: 220,
+    borderRadius: 35,
     flexDirection:"row",
-    justifyContent:"space-between"
+    justifyContent:"space-between",
+    alignItems: 'center',
+    paddingHorizontal: 10,
   },
   buttonText:{
     marginRight:"14%",
-    marginTop:"8%",
     color:"white",
     fontSize:24   
   },
@@ -39,11 +33,10 @@ export default StyleSheet.create({
     width:"50%",
     height:"80%",
     backgroundColor:"white",
-    borderRadius:100,
-    marginTop:"5%",
-    marginLeft:"10%",
+    borderRadius: 100,
     elevation:50,
     justifyContent:"center",
+    alignItems: 'center',
   },
   priceText:{
     color:"#rgb(31,127,169)",

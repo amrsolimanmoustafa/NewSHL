@@ -118,12 +118,13 @@ android {
                 onesignal_google_project_number: 'REMOTE'
         ]
         minSdkVersion 16
-        targetSdkVersion 22
+        targetSdkVersion 27
         versionCode 1
         versionName "1.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
+        vectorDrawables.useSupportLibrary = true
     }
     signingConfigs {
         release {
@@ -172,17 +173,18 @@ dependencies {
     compile project(':react-native-linear-gradient')
     compile project(':react-native-maps')
     compile project(':react-native-onesignal')
-  compile('com.onesignal:OneSignal:3.9.0') {
+    compile('com.onesignal:OneSignal:3.9.0') {
         // Exclude com.android.support(Android Support library) as the version range starts at 26.0.0
         //    This is due to compileSdkVersion defaulting to 23 which cant' be lower than the support library version
         //    And the fact that the default root project is missing the Google Maven repo required to pull down 26.0.0+
         exclude group: 'com.android.support'
         // Keeping com.google.android.gms(Google Play services library) as this version range starts at 10.2.1
     }
-    // compile project(':react-native-onesignal')
-//    compile project(':react-native-fcm')
-//    compile 'com.google.firebase:firebase-core:10.0.1' //this decides your firebase SDK version
-//    compile 'com.google.firebase:firebase-messaging:10.0.1'
+    //compile project(':react-native-onesignal')
+    //compile project(':react-native-fcm')
+    //compile 'com.google.firebase:firebase-core:10.0.1' //this decides your firebase SDK version
+    //compile 'com.google.firebase:firebase-messaging:10.0.1'
+    //compile project(':react-native-image-crop-picker')
     compile fileTree(dir: "libs", include: ["*.jar"])
     compile "com.android.support:appcompat-v7:23.0.1"
     compile "com.facebook.react:react-native:+"  // From node_modules

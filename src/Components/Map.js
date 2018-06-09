@@ -13,10 +13,7 @@ import {
   ImageBackground, AsyncStorage
 } from 'react-native'
 import MapView from 'react-native-maps';
-import CarouselPager from 'react-native-carousel-pager';
-import { Icon, Button } from 'native-base';
 import { Images, Colors } from '../Themes';
-import SideMapButtons from "./SideMapButtons"
 import OtlobNow from "./OtlobNow"
 import { reverseCoordinatesToAdress, setCoordnates, setDriverCoordnates } from "../actions/CommonServicesActions/commonServicesActions"
 import { withNavigation } from "react-navigation";
@@ -26,8 +23,6 @@ import { getServices, selectedServices, favlocationlist, createorder, orderLater
 import ProviderInfo from '../Components/ProviderInfo'
 import Base from '../Base'
 import LinearGradientForMap from "./LinearGradientForMap"
-import LinearGradient from 'react-native-linear-gradient';
-import OrderService from '../service_api/OrderService'
 import GooglePlacesInput from "./GooglePlacesInput";
 const { width, height } = Dimensions.get('window')
 import * as firebase from "firebase";
@@ -40,6 +35,7 @@ import style from './Styles/MainButtonsStyle'
 import strings from '../strings'
 import { loginUser } from "../../src/actions/authAction"
 let self;
+
 class Map extends Component {
   origin = { latitude: 31.2064717, longitude: 29.9279375 };
   constructor(props) {
@@ -163,7 +159,7 @@ class Map extends Component {
   orderButtons_View() {
     if (true) {
       return (
-        <View style={{ justifyContent: "center", flexDirection: "row", position: "relative", zIndex: 0, flex: 1 }}>
+        <View style={{flex: 1,flexDirection: 'row',justifyContent: "space-between",alignItems: 'center'}}>
           <View style={style.opacityView}>
             <TouchableOpacity
               onPress={() => {
@@ -263,9 +259,6 @@ class Map extends Component {
     // return <View/>}
   }
 
-
-
-
   autoLocateUser() {
     navigator.geolocation.getCurrentPosition(
       (position) => {
@@ -352,8 +345,6 @@ class Map extends Component {
             <View style={{ width: 0, height: 0 }} />
           }
         </MapView>
-
-
         <Image style={{ width: 20, height: 30, position: 'absolute', top: (height / 2) - 70, left: (width / 2) - 20 }} source={require("../assets/icons/marker.png")} />
         {this.props.compState.__CurrentComponent === 2 ?
           <OtlobNow />
@@ -432,7 +423,7 @@ class Map extends Component {
             <Image source={Images.gpsLocation} style={styles.icon} />
           </TouchableOpacity>
           <TouchableOpacity
-            onPress={() => navigation.navigate('FavoritePlaces')}
+            onPress={() => navigation.navigate('FavoritePlaces',{title: strings.favoritePlaces})}
             style={[styles.touchable, { marginTop: 16 }]}
           >
             <Image source={Images.pinIcon}  style={styles.image} />
@@ -457,7 +448,7 @@ class Map extends Component {
           </TouchableOpacity> */}
         </View> : null}
         {service.length > 0 && this.props.compState.__CurrentComponent == 1 && this.props.common.driverLat == '' && this.state.servicesSliderState == true ?
-          <View style={{ position: "absolute", left: 0, bottom: 10, right: 0 }}>
+          <View style={{ position: "absolute", left: 0, bottom: 30, right: 0 }}>
             {parseInt(self.state.page) >= 0 ? this.RenderSubCategories() : null}
             <View style={{ flex: .3, justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 0, right: 0, left: 0, overflow: 'hidden' }} >
               <View style={{ position: 'absolute', bottom: 20, flex: 1, flexDirection: 'row', flexWrap: 'wrap', right: 0, left: 0 }}  >
@@ -482,7 +473,6 @@ class Map extends Component {
                   slideStyle={{}}
                   data={
                     self.props.service.map(mainService => (
-
                       <TouchableOpacity
                         key={mainService.services_id}
                         style={{
@@ -528,11 +518,11 @@ class Map extends Component {
         {this.props.common.driverLat != '' ?
           <ProviderInfo
             info={this.state.provider_info}
-          // name='محمد أحمد مصطفي ' 
-          // carType='Mercedes 2018' 
-          // mints={8} 
-          // phoneNumber='012345678'
-          // profileImage='http://www.status77.in/wp-content/uploads/2015/07/14533584_1117069508383461_6955991993080086528_n.jpg' 
+            //name='محمد أحمد مصطفي ' 
+            //carType='Mercedes 2018' 
+            //mints={8} 
+            //phoneNumber='012345678'
+            //profileImage='http://www.status77.in/wp-content/uploads/2015/07/14533584_1117069508383461_6955991993080086528_n.jpg' 
           />
           :
           <View style={{ width: 0, height: 0 }} />
@@ -554,7 +544,8 @@ const styles = StyleSheet.create({
   image: {
   },
   icon: {
-    width: 20, height: 20
+    width: 20,
+    height: 20
   }
 })
 

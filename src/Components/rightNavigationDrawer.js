@@ -136,7 +136,7 @@ class SideMenu extends Component {
                             style={{marginLeft: 16,width: 25,height: 31}}
                         />
                     </TouchableOpacity>
-                    <View style={{marginTop: 20,paddingHorizontal: 16,flexDirection: 'row',justifyContent: 'center',alignItems: 'center'}}>
+                    {/*<View style={{marginTop: 20,paddingHorizontal: 16,flexDirection: 'row',justifyContent: 'center',alignItems: 'center'}}>
                         <TouchableOpacity
                             onPress={() => this.changeLanguage('urdu')}
                             style={styles.languageButton}
@@ -173,7 +173,7 @@ class SideMenu extends Component {
                                 style={styles.languageImage}
                             />
                         </TouchableOpacity>
-                    </View>
+                    </View>*/}
                 </ScrollView>
             </ImageBackground>
         );
