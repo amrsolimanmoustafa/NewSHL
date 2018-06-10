@@ -354,7 +354,7 @@ class Map extends Component {
         </MapView>
 
 
-        <Image style={{ width: 20, height: 30, position: 'absolute', top: (height / 2) - 70, left: (width / 2) - 20 }} source={require("../assets/icons/marker.png")} />
+        <Image style={{ width: 40, height: 40, position: 'absolute', top: (height / 2) - 70, left: (width / 2) - 20 }} source={require("../assets/icons/marker.png")} />
         {this.props.compState.__CurrentComponent === 2 ?
           <OtlobNow />
           :
