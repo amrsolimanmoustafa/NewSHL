@@ -17,6 +17,10 @@
         {
           "client_id": "663864784757-n3ufouslf8sif1aio3r0f6ceenmr0hbb.apps.googleusercontent.com",
           "client_type": 3
+        },
+        {
+          "client_id": "663864784757-n3ufouslf8sif1aio3r0f6ceenmr0hbb.apps.googleusercontent.com",
+          "client_type": 3
         }
       ],
       "api_key": [
@@ -45,6 +49,10 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "663864784757-n3ufouslf8sif1aio3r0f6ceenmr0hbb.apps.googleusercontent.com",
+          "client_type": 3
+        },
         {
           "client_id": "663864784757-n3ufouslf8sif1aio3r0f6ceenmr0hbb.apps.googleusercontent.com",
           "client_type": 3

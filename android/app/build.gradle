@@ -1,18 +1,15 @@
+apply plugin: "com.android.application"
 buildscript {
     repositories {
-        maven { url 'https://plugins.gradle.org/m2/'}
+        maven { url 'https://plugins.gradle.org/m2/' }
     }
     dependencies {
-        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:0.8.1'
+        classpath 'gradle.plugin.com.onesignal:onesignal-gradle-plugin:[0.10.0, 0.99.99]'
     }
 }
+
 apply plugin: 'com.onesignal.androidsdk.onesignal-gradle-plugin'
 
-repositories {
-    maven { url 'https://maven.google.com' }
-}
-apply from: "../../node_modules/react-native-vector-icons/fonts.gradle"
-apply plugin: "com.android.application"
 import com.android.build.OutputFile
 
 /**
@@ -108,23 +105,17 @@ def enableProguardInReleaseBuilds = false
 
 android {
     compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    buildToolsVersion "27.0.3"
 
     defaultConfig {
         applicationId "com.shl"
-        manifestPlaceholders = [
-                onesignal_app_id: 'a3551d54-e1bc-4f12-874c-7f6cb7982f95',
-                // Project number pulled from dashboard, local value is ignored.
-                onesignal_google_project_number: 'REMOTE'
-        ]
         minSdkVersion 16
-        targetSdkVersion 27
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
-        vectorDrawables.useSupportLibrary = true
     }
     signingConfigs {
         release {
@@ -148,8 +139,7 @@ android {
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-                        signingConfig signingConfigs.release
-
+            signingConfig signingConfigs.release
         }
     }
     // applicationVariants are e.g. debug, release
@@ -168,25 +158,24 @@ android {
 }
 
 dependencies {
-    compile project(':react-native-restart')
-    compile project(':react-native-localization')
-    compile project(':react-native-linear-gradient')
-    compile project(':react-native-maps')
-    compile project(':react-native-onesignal')
-    compile('com.onesignal:OneSignal:3.9.0') {
-        // Exclude com.android.support(Android Support library) as the version range starts at 26.0.0
-        //    This is due to compileSdkVersion defaulting to 23 which cant' be lower than the support library version
-        //    And the fact that the default root project is missing the Google Maven repo required to pull down 26.0.0+
-        exclude group: 'com.android.support'
-        // Keeping com.google.android.gms(Google Play services library) as this version range starts at 10.2.1
+    implementation(project(':react-native-firebase')) {
+        transitive = false
     }
-    //compile project(':react-native-onesignal')
-    //compile project(':react-native-fcm')
-    //compile 'com.google.firebase:firebase-core:10.0.1' //this decides your firebase SDK version
-    //compile 'com.google.firebase:firebase-messaging:10.0.1'
-    //compile project(':react-native-image-crop-picker')
+    implementation project(':react-native-vector-icons')
+    implementation project(':react-native-restart')
+    implementation project(':react-native-onesignal')
+    implementation project(':react-native-localization')
+    implementation project(':react-native-linear-gradient')
+    implementation 'com.google.android.gms:play-services-base:15.0.0'
+    implementation 'com.google.android.gms:play-services-maps:15.0.0'
+    implementation "com.google.firebase:firebase-core:15.0.0"
+    implementation "com.google.firebase:firebase-database:15.0.0"
+    implementation(project(':react-native-maps')){
+        exclude group: 'com.google.android.gms', module: 'play-services-base'
+        exclude group: 'com.google.android.gms', module: 'play-services-maps'
+    }
     compile fileTree(dir: "libs", include: ["*.jar"])
-    compile "com.android.support:appcompat-v7:23.0.1"
+    compile "com.android.support:appcompat-v7:27.1.1"
     compile "com.facebook.react:react-native:+"  // From node_modules
 }
 
@@ -196,4 +185,5 @@ task copyDownloadableDepsToLibs(type: Copy) {
     from configurations.compile
     into 'libs'
 }
-//apply plugin: 'com.google.gms.google-services'
+
+apply plugin: 'com.google.gms.google-services'

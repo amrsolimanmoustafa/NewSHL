@@ -25,7 +25,7 @@ import Base from '../Base'
 import LinearGradientForMap from "./LinearGradientForMap"
 import GooglePlacesInput from "./GooglePlacesInput";
 const { width, height } = Dimensions.get('window')
-import * as firebase from "firebase";
+import firebase from 'react-native-firebase';
 let GeoFire = require('geofire');
 import { refreshPlayerId } from "../../src/actions/authAction"
 import OneSignal from 'react-native-onesignal';
@@ -63,13 +63,12 @@ class Map extends Component {
       console.log('phone', phone)
       self.props.loginUser({ 'phone': phone, 'token_id': '', lang: 'ar' }, '')
     })
-    OneSignal.setLogLevel(6, 0)
+    OneSignal.init('a3551d54-e1bc-4f12-874c-7f6cb7982f95', { kOSSettingsKeyAutoPrompt: true });
     OneSignal.addEventListener('received', self.onReceived);
     OneSignal.addEventListener('opened', this.onOpened);
     OneSignal.addEventListener('ids', this.onIds);
-    OneSignal.init('a3551d54-e1bc-4f12-874c-7f6cb7982f95', { kOSSettingsKeyAutoPrompt: true });
-    this.props.setHomeComponent(1)
     OneSignal.configure()
+    this.props.setHomeComponent(1)
     // this.props.reverseCoordinatesToAdress(this.props.common.lat,this.props.common.lng)
     // this.props.getServices('Mohammed Farid')
     // this.props.reverseCoordinatesToAdress()
