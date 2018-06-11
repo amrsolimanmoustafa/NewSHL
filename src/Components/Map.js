@@ -59,10 +59,10 @@ class Map extends Component {
   async componentWillMount() {
     // this.props.favlocationlist(this.props.user_id)
     self = this
-    await AsyncStorage.getItem('phone').then((phone) => {
+    /*await AsyncStorage.getItem('phone').then((phone) => {
       console.log('phone', phone)
       self.props.loginUser({ 'phone': phone, 'token_id': '', lang: 'ar' }, '')
-    })
+    })*/
     OneSignal.init('a3551d54-e1bc-4f12-874c-7f6cb7982f95', { kOSSettingsKeyAutoPrompt: true });
     OneSignal.addEventListener('received', self.onReceived);
     OneSignal.addEventListener('opened', this.onOpened);

@@ -10,6 +10,8 @@ export const refreshPlayerId=(user_id,token_id)=>dispatch=>{
   var base_url =new Base()
   var REFRESH_TOKEN="http://" + base_url.baseUrl + "updateusertoken/"+user_id
   try {
+    console.log(REFRESH_TOKEN)
+    console.log(token_id)
     axios
       .put(REFRESH_TOKEN,{'token_id':token_id})
       .then((res) =>{
@@ -31,13 +33,14 @@ export const loginUser = (loginUser,context) => {
   return(dispatch) => {
     var base_url =new Base()
     var LOGIN_URL="http://" + base_url.baseUrl + "login"
+    console.log(LOGIN_URL)
+    console.log(JSON.stringify(loginUser))
     try{
       axios
         .post(LOGIN_URL, loginUser)
         .then((response)=> {
           let user = response.data
           console.log(user)
-          console.log(user.phone)
           if (user && user.phone != '') {
             dispatch({
               type: LOGIN,
@@ -65,12 +68,12 @@ export const loginUser = (loginUser,context) => {
   }
 }
 
-
-
 export const VerificationCodeActivation = (v_object,context) => {
   return(dispatch) => {
     var base_url =new Base()
     var ACTIVATION_CODE_URL="http://" + base_url.baseUrl + "activate"
+    console.log(ACTIVATION_CODE_URL)
+    console.log(JSON.stringify(v_object))
     try {
       axios
         .post(ACTIVATION_CODE_URL, v_object)
@@ -95,11 +98,6 @@ export const VerificationCodeActivation = (v_object,context) => {
           }*/
           if(response.status == 200 && response.data){
             const user = response.data
-            dispatch({
-              type: ACTIVATION_STATE,
-              payload: response,
-              context: context
-            })
             await AsyncStorage.multiSet([
               ['accommodation_type', user.accommodation_type? user.accommodation_type : ''],
               ['activate', user.activate? user.activate : ''],
@@ -114,6 +112,11 @@ export const VerificationCodeActivation = (v_object,context) => {
               ['user_name', user.user_name? user.user_name : ''],
               ['zone_id', user.zone_id? user.zone_id : ''],
             ])
+            dispatch({
+              type: ACTIVATION_STATE,
+              payload: response,
+              context: context
+            })
             const resetAction = NavigationActions.reset({
               index: 0,
               actions: [NavigationActions.navigate({ routeName: 'HomeScreen' })],

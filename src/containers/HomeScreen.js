@@ -43,8 +43,8 @@ class HomeScreen extends Component  {
     const user_id = await AsyncStorage.getItem('user_id')
     console.log(user_id)
     if(this.props.common.lat===''){
-
-    this.watchPosition()}
+      this.watchPosition()
+    }
   }
 
   componentWillUnmount() {
