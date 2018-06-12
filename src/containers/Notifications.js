@@ -8,9 +8,7 @@ import {
 import { connect } from 'react-redux'
 import { withNavigation } from "react-navigation";
 import axios from 'axios';
-import { Images } from '../Themes';
 import Base from "../Base"
-import strings from '../strings'
 
 class Notifications extends Component {
   constructor(props){
@@ -50,7 +48,7 @@ class Notifications extends Component {
       <View style={{flex: 1,height: 40,padding: 4,flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center'}}>
         <View style={{flexDirection: 'row',alignItems: 'center'}}>
           <Image
-            source={require('../assets/icons/User-icon.png')}
+            source={require('../assets/Icons/User-icon.png')}
             style={{width: 24,height: 24}}
           />
           <Text style={{marginLeft: 5,fontFamily: 'NeoSansArabic',fontSize: 16,color: '#707070',textAlign: 'left'}} >
