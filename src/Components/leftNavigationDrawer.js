@@ -109,7 +109,7 @@ class SideMenu extends Component {
                             </Text>
                         </View>
                     </TouchableOpacity>
-                    <TouchableOpacity
+                    {/*<TouchableOpacity
                         style={{marginTop: 2.5,flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center',marginHorizontal: 16,paddingVertical: 10,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => {
                             //navigation.navigate('Wallet',{title: strings.wallet})
@@ -127,7 +127,7 @@ class SideMenu extends Component {
                         <Text style={{marginTop: 8,fontFamily: 'NeoSansArabic',fontSize: 14,color: '#28918B',textAlign: 'right'}}>
                             150
                         </Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity>*/}
                     <TouchableOpacity
                         style={{marginTop: 2.5,flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center',marginHorizontal: 16,paddingVertical: 10,borderColor: '#7D7D7D',borderBottomWidth: 1}}
                         onPress={() => {

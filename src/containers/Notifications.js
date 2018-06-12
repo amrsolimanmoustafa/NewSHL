@@ -8,17 +8,9 @@ import {
 import { connect } from 'react-redux'
 import { withNavigation } from "react-navigation";
 import axios from 'axios';
-import masterStyle from './masterStyle';
-import Container from './Components/container';
-import { Images } from './../Themes';
+import { Images } from '../Themes';
 import Base from "../Base"
-import {aboutApp} from './../actions/ContentActions/contentActions'
 import strings from '../strings'
-// style //
-const {
-  appGreenColor,
-  appGrayColor,
-} = masterStyle;
 
 class Notifications extends Component {
   constructor(props){
@@ -42,8 +34,8 @@ class Notifications extends Component {
       axios
         .get(GET_NOTIFICATIONS_URL)
         .then((res) =>{
-          console.log('',res.data)
-          self.setState({notificationsList:res.data})
+          console.log(res.data)
+          this.setState({notificationsList: res.data})
         })
         .catch(function(error) {
         
@@ -55,18 +47,20 @@ class Notifications extends Component {
 
   renderNotificationItem(item){
     return (
-      <View style={[styles.rowStyle]}>
-      {console.log('item',item)}
-        <View style={[styles.subViewStyle, { flex: 1.8 }]}>
-          {/* <Image source={Images.userIcon} style={[styles.userIconStyle, { resizeMode: 'contain' }]}/>
-          <Text style={[appGrayColor, styles.textStyle]} >
-            {item.notification_ar?item.notification_ar:null}
-          </Text> */}
+      <View style={{flex: 1,height: 40,padding: 4,flexDirection: 'row',justifyContent: 'space-between',alignItems: 'center'}}>
+        <View style={{flexDirection: 'row',alignItems: 'center'}}>
+          <Image
+            source={require('../assets/icons/User-icon.png')}
+            style={{width: 24,height: 24}}
+          />
+          <Text style={{marginLeft: 5,fontFamily: 'NeoSansArabic',fontSize: 16,color: '#707070',textAlign: 'left'}} >
+            {item.notification_ar}
+          </Text>
         </View>
-        <View style={[styles.subViewStyle, { flex: 0.8, justifyContent: 'space-between', }]}>
-          {/* <Text style={[masterStyle.dateText, appGrayColor,]}> */}
-            {/* {item.created_at!=null?item.created_at:null} */}
-          {/* </Text> */}
+        <View style={{flexDirection: 'row',alignItems: 'center'}}>
+          <Text style={{fontFamily: 'NeoSansArabic',fontSize: 16,color: '#707070',textAlign: 'left'}} >
+            {item.created_at? item.created_at : ' 09:00'}
+          </Text>
         </View>
       </View>
     );
@@ -74,12 +68,13 @@ class Notifications extends Component {
 
   render() {   
     return (
-      <View style={[masterStyle.container]}>
-          <FlatList
-            data={this.state.notificationsList}
-            keyExtractor={(item, index) => index.toString() }
-            renderItem={this.renderNotificationItem}
-          />
+      <View style={{flex: 1,padding: 16}}>
+        <FlatList
+          style={{flex: 1}}
+          data={this.state.notificationsList}
+          keyExtractor={(item, index) => index.toString() }
+          renderItem={ ({item}) => this.renderNotificationItem(item) }
+        />
       </View>
     )
   }
@@ -89,12 +84,10 @@ const styles = {
   rowStyle: {
     flexDirection: 'row-reverse',    
     justifyContent: 'space-between',
-    shadowColor: '#000',
-    shadowOpacity: 1,
-    shadowOffset: { height: 1, width: 0 } ,
-    // elevation: 0.5,
+    shadowColor: '#000000',
+    shadowOpacity: 0.45,
+    shadowOffset: { height: 2, width: 0 } ,
     marginTop: 15,
-    width: '100%',
     borderWidth: 1,
     borderColor: '#ddd',
     paddingHorizontal: 7,

@@ -11,29 +11,28 @@ export default StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     height: "25%",
-marginLeft:"30%",
-    // marginTop: "3%"
+    marginLeft:"30%",
+    //marginTop: "3%"
   },
   opacityView: {
-    
     // backgroundColor:"green",
-    marginTop: "0%",
     borderRadius: 100,
-    width: "45%",
+    width: "40%",
     height: "90%",
-    marginLeft: "10%",
+    //marginLeft: "10%",
+    marginRight: 5,
     elevation: 10
   },
   opacityView2: {
     marginTop: "0%",
     borderRadius: 100,
-    width: "45%",
+    width: "40%",
     height: "90%",
-    marginRight: "10%",
+    //marginRight: "10%",
     elevation: 10,
-   marginLeft: "5%",
+    //marginLeft: "5%",
+    marginLeft: 5,
     alignItems: "center",
-
   },
   opacity: {
     marginTop: "0%",

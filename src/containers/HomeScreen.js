@@ -43,8 +43,8 @@ class HomeScreen extends Component  {
     const user_id = await AsyncStorage.getItem('user_id')
     console.log(user_id)
     if(this.props.common.lat===''){
-
-    this.watchPosition()}
+      this.watchPosition()
+    }
   }
 
   componentWillUnmount() {
@@ -251,7 +251,7 @@ const styles = StyleSheet.create({
   loginBackground:{
     width: width,
     height: height,
-    paddingTop: 20,
+    //paddingTop: 20,
   },
   Map:{
     position:"absolute",
