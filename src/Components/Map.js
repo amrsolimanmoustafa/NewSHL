@@ -297,6 +297,7 @@ class Map extends Component {
               this.setState({ servicesSliderState: true })
             }
           }}
+          zoomEnabled={true}
           mapType={this.state.mapState}
           style={{ flex: 1, borderRadius: 10, borderWidth: 2, zIndex: 0, borderColor: "#fff" }}
           region={{
