@@ -53,8 +53,8 @@ class HomeScreen extends Component  {
 
   refreshServices(lat,lng){
     var base_url =new Base()     
-    var  GOOGLEGEOLOCATION_URL="https://maps.googleapis.com/maps/api/geocode/json" 
-    var APIKEY='AIzaSyBSSYckZ59ZW5MBPlGmPDvZu5Rzh9snPaQ'
+    var GOOGLEGEOLOCATION_URL="https://maps.googleapis.com/maps/api/geocode/json" 
+    var APIKEY='AIzaSyAMVAuZSku-7gAMuWMFEj1kdjNtP2TLFOg'//'AIzaSyBSSYckZ59ZW5MBPlGmPDvZu5Rzh9snPaQ'
     try {
       axios.get(GOOGLEGEOLOCATION_URL+'?latlng=' + lat + ','
         + lng+ 
@@ -70,7 +70,7 @@ class HomeScreen extends Component  {
     }
   }
 
-   watchPosition(){      
+  watchPosition(){      
     self.watchId = navigator.geolocation.getCurrentPosition(
       (position) => {
         self.props.setCoordnates(position.coords.latitude,position.coords.longitude)
@@ -94,7 +94,7 @@ class HomeScreen extends Component  {
 
       },
       (error) => self.setState({ error: error.message }),
-      { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000, distanceFilter: 100 },
+      { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000, distanceFilter: 50 },
     );
   }
 
@@ -105,7 +105,9 @@ class HomeScreen extends Component  {
   }
 
   render(){
-    const {navigation} = this.props
+    const {
+      navigation
+    } = this.props
     const base = new Base
     return(
       <View style={styles.container}>
@@ -143,22 +145,6 @@ class HomeScreen extends Component  {
                 fullStarColor={'#1D7AB3'}
               />
             </View>
-            {/* <View style={{marginTop: 10}}>
-              {cancelResonesList.map((item,index)=>(
-                <TouchableOpacity
-                  key={index}
-                  onPress={()=> this.setState({selectedReason: item})}
-                  style={{flexDirection: 'row',alignItems: 'center',paddingVertical: 10}}
-                >
-                  <View style={{width: 20,height: 20,borderWidth: 1,borderColor: '#3C403F',borderRadius: 10,justifyContent: 'center',alignItems: 'center'}}>
-                    <View style={{width: 10,height: 10,backgroundColor: this.state.selectedReason == item? '#3C403F' : 'transparent',borderRadius: 5}}/>
-                  </View>
-                  <Text style={{marginLeft: 10,fontFamily: 'NeoSansArabic',fontSize: 12,color: '#1D7AB3',textAlign: 'left'}}>
-                    {item.cancel_order_reasons_en}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </View> */}
             <View style={{marginTop: 10}}>
               <TextInput
               onChangeText={text=>{
@@ -182,56 +168,6 @@ class HomeScreen extends Component  {
             </TouchableOpacity>
           </View>
         </PopupDialog>
-        {/* <PopupDialog
-          ref={(popupDialog) => { this.endPopupDialog = popupDialog; }}
-          width={220}
-          height={320}
-          haveTitleBar={false}
-        >
-          <View style={{flex: 1,backgroundColor: '#FFFFFF',borderRadius: 9,padding: 10}}>
-            <Text style={{fontFamily: 'NeoSansArabic',fontSize: 16,color: '#707070',textAlign: 'center'}}>
-              Rate Order
-            </Text>
-            <View style={{alignItems: 'center'}}>
-              <Image
-                source={require('../assets/images/Driver-image.png')}
-                style={{width: 90,height: 90,resizeMode: 'cover',borderRadius: 4}}
-              />
-              <Text style={{fontFamily: 'NeoSansArabic',fontSize: 14,color: '#707070',textAlign: 'center'}}>
-                محمد احمد مصطفي
-              </Text>
-              <StarRating
-                disabled={false}
-                emptyStar={'ios-star-outline'}
-                fullStar={'ios-star'}
-                halfStar={'ios-star-half'}
-                iconSet={'Ionicons'}
-                maxStars={5}
-                rating={this.state.starCount}
-                selectedStar={(rating) => this.onStarRatingPress(rating)}
-                fullStarColor={'#1D7AB3'}
-              />
-            </View>
-            <View style={{marginTop: 10}}>
-              <TextInput
-                style={{height: 60,borderWidth: 1,borderColor: '#000000',borderRadius: 4}}
-              />
-            </View>
-            <TouchableOpacity
-              onPress={()=> this.cancelOrder()}
-              style={{width: 180,height: 40,borderRadius: 20,marginTop: 18,alignSelf: 'center'}}
-            >
-              <ImageBackground
-                source={require('../assets/images/Gradient_WideBackground_image.png')}
-                style={{flex: 1,justifyContent: 'center',alignItems: 'center'}}
-              >
-                <Text style={{color: '#ffffff',fontSize: 13,fontFamily: 'NeoSansArabic'}}>
-                  {'Approve'}
-                </Text>
-              </ImageBackground>
-            </TouchableOpacity>
-          </View>
-        </PopupDialog> */}
       </View>
     );
   }

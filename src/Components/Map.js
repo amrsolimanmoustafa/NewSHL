@@ -19,7 +19,14 @@ import { reverseCoordinatesToAdress, setCoordnates, setDriverCoordnates } from "
 import { withNavigation } from "react-navigation";
 import { connect } from 'react-redux'
 import { setHomeComponent } from "../actions/UpdateComponentsStateAction/updateComponentsStateAction"
-import { getServices, selectedServices, favlocationlist, createorder, orderLater, providerInfo, setOrderID } from "../actions/makeOrderAction"
+import {
+  selectedServices,
+  favlocationlist,
+  createorder,
+  orderLater,
+  providerInfo,
+  setOrderID
+} from "../actions/makeOrderAction"
 import ProviderInfo from '../Components/ProviderInfo'
 import Base from '../Base'
 import LinearGradientForMap from "./LinearGradientForMap"
@@ -70,7 +77,6 @@ class Map extends Component {
     OneSignal.configure()
     this.props.setHomeComponent(1)
     // this.props.reverseCoordinatesToAdress(this.props.common.lat,this.props.common.lng)
-    // this.props.getServices('Mohammed Farid')
     // this.props.reverseCoordinatesToAdress()
     // console.log('lat ',this.props.common)
   }
@@ -185,25 +191,52 @@ class Map extends Component {
     }
   }
 
-  _renderItem({ item, index }) {
-    var base = new Base
-    return (item
-      // <Image style={{ width: 80, height: 80, marginHorizontal: 20 }}
-      //  source={ require('../assets/Assets/Group_1634.png') } />
-    );
+  _renderItem({ item }) {
+    console.log(item)
+    const base = new Base()
+    return (
+      <TouchableOpacity
+        key={item.services_id}
+        style={{
+          marginBottom: 40,
+          height: 130,
+          justifyContent: "center",
+          alignItems: "center"
+        }}
+      >
+        <Image
+          source={{
+            uri: base.icon_url + item.icone,
+            resizeMode: "contain"
+          }}
+          style={{
+            width: 70,
+            height: 70,
+            borderRadius: 35,
+          }} />
+        <Text
+          style={{
+            marginTop: 5,
+            fontSize: 12,
+            color: "rgb(30,123,177)"
+          }}
+        >
+          {item.services_name_ar}
+        </Text>
+      </TouchableOpacity>
+    )
   }
 
-  _renderSubItem({ item, index }) {
-    var base = new Base
-    return (item
-      // <Image style={{ width: 80, height: 80, marginHorizontal: 20 }}
-      //  source={ require('../assets/Assets/Group_1634.png') } />
-    );
+  _renderSubItem({ item }) {
+    return item
   }
 
   RenderSubCategories() {
+    const {
+      services
+    } = this.props
     var base = new Base
-    console.log(parseInt(self.state.page))
+    console.log(parseInt(this.state.page))
     // if(parseInt(self.state.page)){
     return (
       <View style={{ flex: .3, justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 70, right: 0, left: 0, overflow: 'hidden' }} >
@@ -211,10 +244,10 @@ class Map extends Component {
         <View style={{ position: 'absolute', bottom: 80, flex: 1, flexDirection: 'row', flexWrap: 'wrap', }}  >
           <Carousel
             firstItem={0}
-            inactiveSlideScale={.4}
+            inactiveSlideScale={.5}
             slideStyle={{}}
             data={
-              self.props.service[parseInt(self.state.page)].sup_serivces_data.map(subService => (
+              services[parseInt(this.state.page)].sup_serivces_data.map(subService => (
                 <TouchableOpacity
                   key={subService.services_id}
                   style={{
@@ -246,7 +279,7 @@ class Map extends Component {
                 </TouchableOpacity>
               ))
             }
-            renderItem={self._renderSubItem}
+            renderItem={this._renderSubItem}
             sliderWidth={width}
             itemWidth={width / 3}
           />
@@ -265,20 +298,18 @@ class Map extends Component {
         this.props.watchPosition(position.coords.latitude, position.coords.longitude)
       },
       (error) => self.setState({ error: error.message }),
-      { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000, distanceFilter: 100 },
+      { enableHighAccuracy: false, timeout: 20000, maximumAge: 1000, distanceFilter: 50 },
     );
   }
 
   render() {
     const {
-      service,
       selectedServices,
       services,
       createorder,
       navigation
     } = this.props
     const base = new Base()
-    console.log(service)
     return (
       <View style={{ flex: 1, position: "relative", zIndex: 0 }}>
         <View style={{ width: "100%", position: 'absolute', zIndex: 3 }}>
@@ -289,7 +320,7 @@ class Map extends Component {
           }
         </View>
         <MapView
-          showsMyLocationButton={true}
+          //showsMyLocationButton={true}
           onPress={() => {
             if (this.state.servicesSliderState == true) {
               this.setState({ servicesSliderState: false })
@@ -299,7 +330,7 @@ class Map extends Component {
           }}
           mapType={this.state.mapState}
           style={{ flex: 1, borderRadius: 10, borderWidth: 2, zIndex: 0, borderColor: "#fff" }}
-          region={{
+          initialRegion={{
             // latitude: this.props.common.lat ? this.props.common.lat : 6.2672295570373535,
             // longitude: this.props.common.lng ? this.props.common.lng : 31.229478498675235,
             latitude: this.props.common.lat ? this.props.common.lat : 0,
@@ -310,7 +341,7 @@ class Map extends Component {
           onRegionChangeComplete={(e) => {
             this.props.setCoordnates(e.latitude, e.longitude)
             this.props.watchPosition(e.latitude, e.longitude)
-            //  this.setState({ servicesSliderState: true })
+            //this.setState({ servicesSliderState: true })
           }}
         >
           {/* <MapView.Marker ref={(e)=>this.marker=e}
@@ -446,15 +477,14 @@ class Map extends Component {
             <Image source={Images.locatiOnMapIcon} style={styles.image} />
           </TouchableOpacity> */}
         </View> : null}
-        {service.length > 0 && this.props.compState.__CurrentComponent == 1 && this.props.common.driverLat == '' && this.state.servicesSliderState == true ?
+        {services.length > 0 && this.props.compState.__CurrentComponent == 1 && this.props.common.driverLat == '' && this.state.servicesSliderState == true ?
           <View style={{ position: "absolute", left: 0, bottom: 30, right: 0 }}>
             {parseInt(self.state.page) >= 0 ? this.RenderSubCategories() : null}
             <View style={{ flex: .3, justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 0, right: 0, left: 0, overflow: 'hidden' }} >
-              <View style={{ position: 'absolute', bottom: 20, flex: 1, flexDirection: 'row', flexWrap: 'wrap', right: 0, left: 0 }}  >
+              <View style={{ position: 'absolute', bottom: 10, flex: 1, flexDirection: 'row', right: 0, left: 0 }}  >
                 <Carousel
                   firstItem={0}
                   onSnapToItem={
-                    // currentMainCategory => this.setState({ currentMainCategory })
                     page => {
                       selectedServices([
                         services[page].sup_serivces_data[0],
@@ -468,41 +498,8 @@ class Map extends Component {
                       this.setState({ page: page.toString() })
                     }
                   }
-                  inactiveSlideScale={.4}
-                  slideStyle={{}}
-                  data={
-                    self.props.service.map(mainService => (
-                      <TouchableOpacity
-                        key={mainService.services_id}
-                        style={{
-                          marginBottom: 40,
-                          height: 130,
-                          justifyContent: "center",
-                          alignItems: "center"
-                        }}
-                      >
-                        <Image
-                          source={{
-                            uri: base.icon_url + mainService.icone,
-                            resizeMode: "contain"
-                          }}
-                          style={{
-                            width: 70,
-                            height: 70,
-                            borderRadius: 35,
-                          }} />
-                        <Text
-                          style={{
-                            marginTop: 5,
-                            fontSize: 12,
-                            color: "rgb(30,123,177)"
-                          }}
-                        >
-                          {mainService.services_name_ar}
-                        </Text>
-                      </TouchableOpacity>
-                    ))
-                  }
+                  inactiveSlideScale={0.5}
+                  data={services.reverse()}
                   renderItem={this._renderItem}
                   sliderWidth={width}
                   itemWidth={width / 3}
@@ -517,11 +514,6 @@ class Map extends Component {
         {this.props.common.driverLat != '' ?
           <ProviderInfo
             info={this.state.provider_info}
-            //name='محمد أحمد مصطفي ' 
-            //carType='Mercedes 2018' 
-            //mints={8} 
-            //phoneNumber='012345678'
-            //profileImage='http://www.status77.in/wp-content/uploads/2015/07/14533584_1117069508383461_6955991993080086528_n.jpg' 
           />
           :
           <View style={{ width: 0, height: 0 }} />
@@ -541,6 +533,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   image: {
+
   },
   icon: {
     width: 20,
@@ -550,8 +543,7 @@ const styles = StyleSheet.create({
 
 const mapStateToProps = state => {
   return {
-    services: state.makeOrder.services.data,
-    service: state.makeOrder.service,
+    services: state.makeOrder.services,
     common: state.common,
     compState: state.compState,
     makeOrder: state.makeOrder,
@@ -560,7 +552,6 @@ const mapStateToProps = state => {
 }
 
 export default connect(mapStateToProps, {
-  getServices,
   setHomeComponent,
   selectedServices,
   providerInfo,
