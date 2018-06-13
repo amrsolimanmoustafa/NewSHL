@@ -48,7 +48,7 @@ class SideMenu extends Component {
                             {strings.communicateWithManagement}
                         </Text>
                         <Image
-                            source={require('../assets/icons/CommunicateWithManagement-icon.png')}
+                            source={require('../assets/Icons/CommunicateWithManagement-icon.png')}
                             style={{marginLeft: 16,width: 25,height: 25}}
                         />
                     </TouchableOpacity>
@@ -62,7 +62,7 @@ class SideMenu extends Component {
                             {strings.termsAndConditions}
                         </Text>
                         <Image
-                            source={require('../assets/icons/TermsAndConditions-icon.png')}
+                            source={require('../assets/Icons/TermsAndConditions-icon.png')}
                             style={{marginLeft: 16,width: 25,height: 25}}
                         />
                     </TouchableOpacity>
@@ -76,7 +76,7 @@ class SideMenu extends Component {
                             {strings.about}
                         </Text>
                         <Image
-                            source={require('../assets/icons/About-icon.png')}
+                            source={require('../assets/Icons/About-icon.png')}
                             style={{marginLeft: 15,width: 25,height: 15}}
                         />
                     </TouchableOpacity>
@@ -90,7 +90,7 @@ class SideMenu extends Component {
                             {strings.pricesOfServices}
                         </Text>
                         <Image
-                            source={require('../assets/icons/PricesOfServices-icon.png')}
+                            source={require('../assets/Icons/PricesOfServices-icon.png')}
                             style={{marginLeft: 16,width: 25,height: 26}}
                         />
                     </TouchableOpacity>
@@ -104,7 +104,7 @@ class SideMenu extends Component {
                             {strings.joinAsAServiceProvider}
                         </Text>
                         <Image
-                            source={require('../assets/icons/JoinAsAServiceProvider-icon.png')}
+                            source={require('../assets/Icons/JoinAsAServiceProvider-icon.png')}
                             style={{marginLeft: 16,width: 25,height: 25}}
                         />
                     </TouchableOpacity>
@@ -118,7 +118,7 @@ class SideMenu extends Component {
                             {strings.shareYourOpinion}
                         </Text>
                         <Image
-                            source={require('../assets/icons/ShareYourOpinion-icon.png')}
+                            source={require('../assets/Icons/ShareYourOpinion-icon.png')}
                             style={{marginLeft: 16,width: 25,height: 24}}
                         />
                     </TouchableOpacity>
@@ -132,7 +132,7 @@ class SideMenu extends Component {
                             {strings.offers}
                         </Text>
                         <Image
-                            source={require('../assets/icons/Offers-icon.png')}
+                            source={require('../assets/Icons/Offers-icon.png')}
                             style={{marginLeft: 16,width: 25,height: 31}}
                         />
                     </TouchableOpacity>
@@ -142,7 +142,7 @@ class SideMenu extends Component {
                             style={styles.languageButton}
                         >
                             <Image
-                                source={require('../assets/icons/Twitter-icon.png')}
+                                source={require('../assets/Icons/Twitter-icon.png')}
                                 style={styles.languageImage}
                             />
                         </TouchableOpacity>
@@ -151,7 +151,7 @@ class SideMenu extends Component {
                             style={styles.languageButton}
                         >
                             <Image
-                                source={require('../assets/icons/Skype-icon.png')}
+                                source={require('../assets/Icons/Skype-icon.png')}
                                 style={styles.languageImage}
                             />
                         </TouchableOpacity>
@@ -160,7 +160,7 @@ class SideMenu extends Component {
                             style={styles.languageButton}
                         >
                             <Image
-                                source={require('../assets/icons/Instagram-icon.png')}
+                                source={require('../assets/Icons/Instagram-icon.png')}
                                 style={styles.languageImage}
                             />
                         </TouchableOpacity>
@@ -169,7 +169,7 @@ class SideMenu extends Component {
                             style={styles.languageButton}
                         >
                             <Image
-                                source={require('../assets/icons/Facebook-icon.png')}
+                                source={require('../assets/Icons/Facebook-icon.png')}
                                 style={styles.languageImage}
                             />
                         </TouchableOpacity>

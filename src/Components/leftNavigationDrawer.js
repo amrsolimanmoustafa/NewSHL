@@ -3,7 +3,6 @@ import {
     StyleSheet,
     Text,
     View,
-    ViewPropTypes,
     TouchableOpacity,
     Image,
     AsyncStorage,
@@ -53,7 +52,7 @@ class SideMenu extends Component {
                         }}
                     >
                         <Image
-                            source={require('../assets/icons/EditProfile-icon.png')}
+                            source={require('../assets/Icons/EditProfile-icon.png')}
                             style={{width: 25,height: 25}}
                         />
                         <Text style={{marginLeft: 16,marginTop: 5,fontFamily: 'NeoSansArabic',fontSize: 14,color: '#1B76BB',textAlign: 'left'}}>
@@ -67,7 +66,7 @@ class SideMenu extends Component {
                         }}
                     >
                         <Image
-                            source={require('../assets/icons/OrdersHistory-icon.png')}
+                            source={require('../assets/Icons/OrdersHistory-icon.png')}
                             style={{width: 25,height: 25}}
                         />
                         <Text style={{marginLeft: 16,fontFamily: 'NeoSansArabic',fontSize: 14,color: '#1B76BB',textAlign: 'left'}}>
@@ -81,7 +80,7 @@ class SideMenu extends Component {
                         }}
                     >
                         <Image
-                            source={require('../assets/icons/FavoritePlaces-icon.png')}
+                            source={require('../assets/Icons/FavoritePlaces-icon.png')}
                             style={{width: 18,height: 24}}
                         />
                         <Text style={{marginLeft: 22,fontFamily: 'NeoSansArabic',fontSize: 14,color: '#1B76BB',textAlign: 'left'}}>
@@ -96,7 +95,7 @@ class SideMenu extends Component {
                     >
                         <View style={{flexDirection: 'row',alignItems: 'center'}}>
                             <Image
-                                source={require('../assets/icons/Notifications-icon.png')}
+                                source={require('../assets/Icons/Notifications-icon.png')}
                                 style={{width: 20,height: 24}}
                             />
                             <Text style={{marginLeft: 20,fontFamily: 'NeoSansArabic',fontSize: 14,color: '#1B76BB',textAlign: 'left'}}>
@@ -117,7 +116,7 @@ class SideMenu extends Component {
                     >
                         <View style={{flexDirection: 'row',alignItems: 'center'}}>
                             <Image
-                                source={require('../assets/icons/Wallet-icon.png')}
+                                source={require('../assets/Icons/Wallet-icon.png')}
                                 style={{width: 25,height: 24}}
                             />
                             <Text style={{marginTop: 8,marginLeft: 17,fontFamily: 'NeoSansArabic',fontSize: 14,color: '#1B76BB',textAlign: 'left'}}>
@@ -136,7 +135,7 @@ class SideMenu extends Component {
                     >
                         <View style={{flexDirection: 'row',alignItems: 'center'}}>
                             <Image
-                                source={require('../assets/icons/Points-icon.png')}
+                                source={require('../assets/Icons/Points-icon.png')}
                                 style={{width: 24,height: 28}}
                             />
                             <Text style={{marginTop: 8,marginLeft: 16,fontFamily: 'NeoSansArabic',fontSize: 14,color: '#1B76BB',textAlign: 'left'}}>
@@ -152,7 +151,7 @@ class SideMenu extends Component {
                         onPress={() => this.logout()}
                     >
                         <Image
-                            source={require('../assets/icons/logout.png')}
+                            source={require('../assets/Icons/logout.png')}
                             style={{width: 24,height: 24}}
                         />
                         <Text style={{marginLeft: 16,fontFamily: 'NeoSansArabic',fontSize: 14,color: '#1B76BB',textAlign: 'left'}}>

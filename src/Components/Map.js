@@ -328,6 +328,7 @@ class Map extends Component {
               this.setState({ servicesSliderState: true })
             }
           }}
+          zoomEnabled={true}
           mapType={this.state.mapState}
           style={{ flex: 1, borderRadius: 10, borderWidth: 2, zIndex: 0, borderColor: "#fff" }}
           initialRegion={{
@@ -363,7 +364,7 @@ class Map extends Component {
             <MapView.Marker.Animated
               opacity={0.6}
               pinColor={"rgb(65, 118, 57)"}
-              // image={"../assets/icons/faq-icon.png"}
+              // image={"../assets/Icons/faq-icon.png"}
               coordinate={{
                 // new MapView.AnimatedRegion({
                 latitude: this.props.common.driverLat ? this.props.common.driverLat : 0,
@@ -375,7 +376,9 @@ class Map extends Component {
             <View style={{ width: 0, height: 0 }} />
           }
         </MapView>
-        <Image style={{ width: 20, height: 30, position: 'absolute', top: (height / 2) - 70, left: (width / 2) - 20 }} source={require("../assets/icons/marker.png")} />
+
+
+        <Image style={{ width: 40, height: 40, position: 'absolute', top: (height / 2) - 70, left: (width / 2) - 20 }} source={require("../assets/Icons/marker.png")} />
         {this.props.compState.__CurrentComponent === 2 ?
           <OtlobNow />
           :
